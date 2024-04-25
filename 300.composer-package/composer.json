@@ -1,0 +1,15 @@
+{
+    "name": "admin/300.composer-package",
+    "autoload": {
+        "psr-4": {
+            "Admin\\300ComposerPackage\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "langnang",
+            "email": "langnang.chen@outlook.com"
+        }
+    ],
+    "require": {}
+}
