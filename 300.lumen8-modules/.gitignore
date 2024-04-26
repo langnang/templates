@@ -22,3 +22,4 @@ modules_statuses.json
 artisan
 index.php
 phpunit.xml
+.htaccess
