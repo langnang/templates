@@ -10,7 +10,7 @@ modules_statuses.json
 /app
 /bootstrap
 /config
-/database
+# /database
 /public
 /resources
 /routes
