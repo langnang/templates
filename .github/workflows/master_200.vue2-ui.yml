@@ -1,0 +1,43 @@
+name: 🚀 Deploy master(vue2-ui) on push with FTP
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    name: 🎉 Deploy to templates.22web.org/200.vue2-ui
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🚚 Get latest code
+        uses: actions/checkout@v2
+
+      - name: Install node dependencies
+        run: cd 200.vue2-ui && yarn install
+
+      - name: Build pages
+        run: cd 200.vue2-ui && npm run build
+
+      # - name: Install composer dependencies
+      #   run: composer install
+
+      - name: 📂 Sync files
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          # ftp server
+          server: ftpupload.net
+          # ftp username
+          username: b32_28202196
+          # ftp password
+          password: ${{ secrets.ftp_password }}
+          # local dir
+          local-dir: ./200.vue2-ui/dist/
+          # Path to upload to on the server. Must end with trailing slash /
+          server-dir: /templates.22web.org/htdocs/200.vue2-ui/
+          # File to Exclude
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/.github*/**
+            **/node_modules/**

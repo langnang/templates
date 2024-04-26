@@ -6,3 +6,7 @@ node_modules/
 composer.lock
 package.lock
 pnpm-lock.yaml
+
+*-lock.yaml
+*-lock.json
+*.lock
