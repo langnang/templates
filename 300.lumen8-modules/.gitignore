@@ -7,19 +7,19 @@ Homestead.yaml
 
 modules_statuses.json
 
-/app
-/bootstrap
-/config
+# /app
+# /bootstrap
+# /config
 # /database
-/public
-/resources
-/routes
-/storage
-/tests
-.editorconfig
-.env.example
-.styleci.yml
-artisan
-index.php
-phpunit.xml
-.htaccess
+# /public
+# /resources
+# /routes
+# /storage
+# /tests
+# .editorconfig
+# .env.example
+# .styleci.yml
+# artisan
+# index.php
+# phpunit.xml
+# .htaccess

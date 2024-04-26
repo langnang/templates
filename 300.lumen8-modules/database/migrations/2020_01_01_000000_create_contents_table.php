@@ -15,6 +15,19 @@ class CreateContentsTable extends Migration
     {
         Schema::create('_contents', function (Blueprint $table) {
             $table->id('cid');
+
+            $table->string('slug')->unique()->nullable();
+            $table->string('ico')->nullable();
+            $table->string('title')->nullable();
+            $table->text('text')->nullable();
+
+            $table->string('type')->nullable()->default('post');
+            $table->string('status')->nullable()->default('publish');
+
+            $table->integer('order')->default(0);
+            $table->integer('parent')->default(0);
+            $table->integer('template')->default(0);
+
             $table->integer('user')->default(0);
             $table->timestamps();
             $table->timestamp("release_at")->nullable();
