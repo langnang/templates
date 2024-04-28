@@ -425,6 +425,66 @@
       fill: none !important;
     }
   </style>
+  <style>
+    :root {
+      --switchWidth: 44px;
+      --switchHeight: 24px;
+    }
+
+    /* 前置操作： 1. 外层定义switch的大小。 2. 隐藏checkbox框。 */
+    /* 定义开关的大小 */
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: var(--switchWidth);
+      height: var(--switchHeight);
+    }
+
+    /* 隐藏原本的复选框 */
+    .switch input {
+      display: none;
+    }
+
+    /* 第一步： 1.定义switch的背景：让span标签，填充满父元素，用作switch的背景。 2.定义switch的开关按钮：使用伪元素，给switch添加按钮。position:absolute会找离着自己最近的relative定位。 */
+    /* 开关背景 */
+    .slider {
+      position: absolute;
+      /* 子绝父相定位 */
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #eee;
+      transition: 0.5s;
+      /* 过渡，所有的都0.5S */
+      border-radius: 100px;
+    }
+
+    /* 开关按钮 */
+    .slider::before {
+      content: '';
+      height: 14px;
+      width: 14px;
+      border-radius: 20px;
+      position: absolute;
+      left: 8px;
+      bottom: 5px;
+      background-color: #aeaaae;
+      transition: 0.4s;
+    }
+
+    /* 第二步： 1.选中的时候更改起兄弟元素样式。也就是修改选中的背景色。 2.选中的时候，开关按钮向左移动一段距离且改变颜色。 */
+    input:checked+.slider {
+      background: green;
+    }
+
+    /* 使用伪类与伪元素。当input选中的时候，已经添加的伪类，颜色变白，且移动44px */
+    input:checked+.slider::before {
+      background-color: #fff;
+      transform: translateX(100%);
+    }
+  </style>
 </head>
 
 <body class="antialiased">
@@ -548,8 +608,14 @@
             <div class="p-6 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
               <div class="flex items-center">
                 <div class="ml-4 text-lg leading-7 font-semibold">
-                  <a href="#" class="underline text-gray-900 dark:text-white">{{ $module->getName() }}</a>
+                  <a href="/{{ $module->getLowerName() }}"
+                    class="underline text-gray-900 dark:text-white">{{ $module->getName() }}</a>
                 </div>
+                <label class="switch ml-4">
+                  <input type="checkbox" @if ($module->isEnabled()) checked @endif
+                    onchange="console.log(123)" />
+                  <span class="slider"></span>
+                </label>
               </div>
             </div>
           @endforeach
