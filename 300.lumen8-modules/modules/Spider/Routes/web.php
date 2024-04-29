@@ -16,9 +16,6 @@ use Modules\Spider\Supports\phpspider\phpspider;
 
 $router->group(['prefix' => 'spider'], function () use ($router) {
     $router->get('/', "SpiderController@index");
-    $router->get('/start/{slug}', "SpiderController@start");
-    $router->get('test', function () {
-        $spider = new phpspider([]);
-        $spider->start();
-    });
+    // $router->get('/start/{slug}', "SpiderController@start");
+    $router->get('/test', "SpiderController@test");
 });

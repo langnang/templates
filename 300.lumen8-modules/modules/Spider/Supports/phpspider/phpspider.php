@@ -1915,10 +1915,10 @@ class phpspider
                     self::$export_type = isset(self::$configs['export']['type']) ? self::$configs['export']['type'] : '';
                     // var_dump(['function' => __FUNCTION__, 'export_type' => self::$export_type]);
                     if (self::$export_type == 'csv') {
-                        // util::put_file(self::$export_file, // util::format_csv($fields) . "\n", FILE_APPEND);
+                        util::put_file(self::$export_file, util::format_csv($fields) . "\n", FILE_APPEND);
                     } elseif (self::$export_type == 'sql') {
                         $sql = db::insert(self::$export_table, $fields, true);
-                        // util::put_file(self::$export_file, $sql . ";\n", FILE_APPEND);
+                        util::put_file(self::$export_file, $sql . ";\n", FILE_APPEND);
                     } elseif (self::$export_type == 'db') {
                         $row = db::get_one("SELECT * FROM `" . self::$export_table . "` WHERE `" . self::$configs['export']['unique_column'] . "` = '" . $url . "'");
                         if (empty($row)) {

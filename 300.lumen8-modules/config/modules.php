@@ -106,7 +106,7 @@ return [
             'migration' => ['path' => 'Database' . DIRECTORY_SEPARATOR . 'Migrations', 'generate' => true],
             'seeder' => ['path' => 'Database' . DIRECTORY_SEPARATOR . 'Seeders', 'generate' => true],
             'factory' => ['path' => 'Database' . DIRECTORY_SEPARATOR . 'factories', 'generate' => true],
-            'model' => ['path' => 'Entities', 'generate' => true],
+            'model' => ['path' => 'Models', 'generate' => true],
             'routes' => ['path' => 'Routes', 'generate' => true],
             'controller' => ['path' => 'Http' . DIRECTORY_SEPARATOR . 'Controllers', 'generate' => true],
             'filter' => ['path' => 'Http' . DIRECTORY_SEPARATOR . 'Middleware', 'generate' => true],

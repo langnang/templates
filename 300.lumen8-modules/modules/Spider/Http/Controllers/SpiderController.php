@@ -5,6 +5,8 @@ namespace Modules\Spider\Http\Controllers;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Laravel\Lumen\Routing\Controller;
+use Modules\Spider\Models\SpiderContentModel;
+use Modules\Spider\Supports\phpspider\phpspider;
 
 class SpiderController extends Controller
 {
@@ -79,28 +81,59 @@ class SpiderController extends Controller
 
     public function start(Request $request, $slug)
     {
-        $configs = parse_ini_string('
-[spider]
-key1 = value1
-key2[] = value2
-key2[] = value2
-fields.name[] = 1
-fields.name[] = 1
+        $text = config('spider.contents.1.text');
 
-[spider.fields\[\]]
-name[] = 123
-selector[] = 123
-selector[] = 
-selector[] = 
-selector[] = 123
-3[] = 123
-[spider.fields[/]]
-name[] = 1234
-selector[] = 1234
-3[] = 1234
-[Section2]
-key3 = 42
-key4 = true', true);
+        $text_config = substr($text, strripos($text, "```ini"));
+        $ini = parse_ini_string($text_config, true, INI_SCANNER_RAW);
+
+        $configs = $ini['spider'];
+
+        $configs['export'] = [
+            'type' => 'csv',
+            'file' => './data/' . ($configs['slug'] ?? $configs['name']) . '.csv', // data目录下
+        ];
+
+
+        $configs['fields'] = array_map(function ($name, $index) use ($configs) {
+            return [
+                'name' => $name,
+                'selector' => $configs['fields.selector'][$index],
+                'required' => $configs['fields.required'][$index],
+                'repeated' => $configs['fields.repeated'][$index],
+                'default' => $configs['fields.default'][$index],
+                'filters' => $configs['fields.filters'][$index] ?? '',
+            ];
+        }, $configs['fields.name'], array_keys($configs['fields.name']));
+
         var_dump($configs);
+
+        $configs['max_fields'] = 5;
+        // foreach ($configs['fields.name'] as $index => $name) {
+        //     var_dump($index);
+        //     var_dump($name);
+        // }
+
+        $spider = new phpspider($configs);
+
+
+        $spider->on_download_page = function ($page, $phpspider) {
+            var_dump($page['url']);
+            return $page;
+        };
+
+        $spider->on_extract_page = function ($page, $data) {
+            var_dump($data);
+            return $data;
+        };
+        $spider->start();
+    }
+
+    public function test(Request $request)
+    {
+        // $paginator = SpiderContentModel::paginate();
+        // var_dump($paginator);
+        $item = SpiderContentModel::with(['metas'])->where('cid', 23)->first()->toArray();
+        var_dump($item);
+        var_dump($item['ini']['spider']);
     }
 }
