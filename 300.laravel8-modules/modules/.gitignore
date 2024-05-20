@@ -1,2 +1,8 @@
 *
 !.gitignore
+!/Admin
+!/Admin/**
+!/Home
+!/Home/**
+!/Market
+!/Market/**

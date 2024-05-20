@@ -24,6 +24,9 @@
       }
       if (in_array(sizeof($props), [2])) {
           $name = $props[sizeof($props) - 2];
+          if (!app('files')->exists('public/vendor/' . $name . '/')) {
+              return;
+          }
           $versions = app('files')->directories('public/vendor/' . $name . '/');
           $version = basename($versions[sizeof($versions) - 1]);
           //   var_dump($version);
