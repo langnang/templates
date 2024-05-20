@@ -10,6 +10,8 @@
 composer init
 ```
 
+### laravel-modules
+
 ### lumen8-modules
 
 ```sh
