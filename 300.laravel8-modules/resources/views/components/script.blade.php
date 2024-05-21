@@ -32,10 +32,7 @@
       }
       if (in_array(sizeof($props), [2])) {
           $name = $props[sizeof($props) - 2];
-          if (!app('files')->exists('public/vendor/' . $name . '/')) {
-              return;
-          }
-          $versions = app('files')->directories('public/vendor/' . $name . '/');
+          $versions = app('files')->directories('public/lib/' . $name . '/');
           $version = basename($versions[sizeof($versions) - 1]);
           //   var_dump($version);
           //   var_dump(app('files')->directories('public/vendor/' . $name . '/'));
@@ -50,7 +47,7 @@
       $path .= '/modules/' . $module;
   }
   if (!empty($name)) {
-      $path .= '/public/vendor/' . $name;
+      $path .= '/public/lib/' . $name;
   }
   if (!empty($version)) {
       $path .= '/' . $version;

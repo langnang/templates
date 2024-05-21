@@ -32,6 +32,7 @@ trait HasView
             echo "<script>window.\$app=" . json_encode($return, JSON_UNESCAPED_UNICODE) . ";</script>";
             echo "<script>console.log(`window.\$app`, window.\$app);</script>";
         }
+        dump($view);
         if (is_array($view) ? !isset($view['view']) : empty($view))
             abort(404);
 
