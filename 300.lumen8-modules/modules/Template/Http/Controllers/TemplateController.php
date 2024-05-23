@@ -4,7 +4,7 @@ namespace Modules\Template\Http\Controllers;
 
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
+use Laravel\Lumen\Routing\Controller;
 
 class TemplateController extends Controller
 {
