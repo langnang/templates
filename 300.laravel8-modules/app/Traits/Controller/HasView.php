@@ -32,16 +32,16 @@ trait HasView
             echo "<script>window.\$app=" . json_encode($return, JSON_UNESCAPED_UNICODE) . ";</script>";
             echo "<script>console.log(`window.\$app`, window.\$app);</script>";
         }
-        dump($view);
+        // dump($view);
         if (is_array($view) ? !isset($view['view']) : empty($view))
             abort(404);
 
         return view($return['view'], $return, $mergeData);
     }
-    public function view_index(Request $request)
-    {
-        $return = ['view' => 'home.index'];
-        return $this->view($return);
-    }
+    // public function view_index(Request $request)
+    // {
+    //     $return = ['view' => 'home.index'];
+    //     return $this->view($return);
+    // }
 
 }

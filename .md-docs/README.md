@@ -8,7 +8,12 @@
 
 ```sh
 composer init
+
+composer dump-autoload
 ```
+
+- laravel8-modules
+- lumen8-modules
 
 ### laravel-modules
 

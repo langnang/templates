@@ -85,7 +85,6 @@ trait ViewTrait
     public function view_index(Request $request)
     {
         $return = ['view' => 'index'];
-        dump(__FUNCTION__);
         return $this->view($return);
     }
     public function view_contents(Request $request)
