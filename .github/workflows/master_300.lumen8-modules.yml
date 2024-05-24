@@ -1,0 +1,43 @@
+name: 🚀 Deploy master(lumen8-modules) on push with FTP
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    name: 🎉 Deploy to langnang.byethost5.com
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🚚 Get latest code
+        uses: actions/checkout@v2
+
+      # - name: Install node dependencies
+      #   run: yarn install
+
+      # - name: Laravel mix
+      #   run: npm run prod
+
+      - name: Install composer dependencies
+        run: cd 300.lumen8-modules && composer install
+
+      - name: 📂 Sync files
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          # ftp server
+          server: ftpupload.net
+          # ftp username
+          username: b5_34048785
+          # ftp password
+          password: ${{ secrets.ftp_password }}
+          # local dir
+          local-dir: ./300.lumen8-modules/
+          # Path to upload to on the server. Must end with trailing slash /
+          server-dir: /htdocs/
+          # File to Exclude
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/.github*/**
+            **/node_modules/**
