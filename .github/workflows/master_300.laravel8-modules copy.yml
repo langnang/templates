@@ -20,7 +20,7 @@ jobs:
       #   run: npm run prod
 
       - name: Install composer dependencies
-        run: cd 300.lumen8-modules && composer install
+        run: cd 300.laravel8-modules && composer install
 
       - name: 📂 Sync files
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
