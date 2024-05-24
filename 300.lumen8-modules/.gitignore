@@ -5,7 +5,7 @@ Homestead.yaml
 .env
 .phpunit.result.cache
 
-modules_statuses.json
+# modules_statuses.json
 
 # /app
 # /bootstrap
