@@ -23,7 +23,7 @@ jobs:
       #   run: npm run prod
 
       - name: Install composer dependencies
-        run: cd 302.laravel8-modules&&composer install
+        run: cd 302.laravel8-modules && composer install
 
       - name: 📂 Sync files
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
