@@ -24,6 +24,7 @@ jobs:
 
       - name: Install composer dependencies
         run: composer install
+        needs: Switch to corresponding directory
 
       - name: 📂 Sync files
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
