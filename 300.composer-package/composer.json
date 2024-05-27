@@ -11,5 +11,9 @@
             "email": "langnang.chen@outlook.com"
         }
     ],
-    "require": {}
+    "require": {
+        "sebastian/environment": "^5.1",
+        "vlucas/phpdotenv": "^5.5",
+        "symfony/var-dumper": "^5.4"
+    }
 }
