@@ -14,6 +14,7 @@
     "require": {
         "sebastian/environment": "^5.1",
         "vlucas/phpdotenv": "^5.5",
-        "symfony/var-dumper": "^5.4"
+        "symfony/var-dumper": "^5.4",
+        "doctrine/dbal": "^3.3"
     }
 }

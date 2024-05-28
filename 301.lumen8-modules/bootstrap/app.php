@@ -1,14 +1,17 @@
 <?php
 
-require_once __DIR__ . '/../vendor/autoload.php';
+if (file_exists(__DIR__ . '/../vendor/autoload.php')) {
+  require_once __DIR__ . '/../vendor/autoload.php';
+} else if (file_exists(__DIR__ . '/../../../vendor/autoload.php')) {
+  require_once __DIR__ . '/../../../vendor/autoload.php';
+} else {
+  print ('Missing Require File');
+  exit;
+}
 
 require_once __DIR__ . '/helpers.php';
 
-(
-    new Laravel\Lumen\Bootstrap\LoadEnvironmentVariables(
-        dirname(__DIR__)
-    )
-)->bootstrap();
+(new Laravel\Lumen\Bootstrap\LoadEnvironmentVariables(dirname(__DIR__)))->bootstrap();
 
 date_default_timezone_set(env('APP_TIMEZONE', 'UTC'));
 
@@ -24,7 +27,7 @@ date_default_timezone_set(env('APP_TIMEZONE', 'UTC'));
 */
 
 $app = new Laravel\Lumen\Application(
-    dirname(__DIR__)
+  dirname(__DIR__)
 );
 
 $app->withFacades();
@@ -43,13 +46,13 @@ $app->withEloquent();
 */
 
 $app->singleton(
-    Illuminate\Contracts\Debug\ExceptionHandler::class,
-    App\Exceptions\Handler::class
+  Illuminate\Contracts\Debug\ExceptionHandler::class,
+  App\Exceptions\Handler::class
 );
 
 $app->singleton(
-    Illuminate\Contracts\Console\Kernel::class,
-    App\Console\Kernel::class
+  Illuminate\Contracts\Console\Kernel::class,
+  App\Console\Kernel::class
 );
 
 /*
@@ -99,7 +102,7 @@ $app->configure('app');
 // Laravel-modules uses path.public which isn't defined by default in Lumen. Register path.public before loading the service provider.
 
 $app->bind('path.public', function () {
-    return __DIR__ . '/../public/';
+  return __DIR__ . '/../public/';
 });
 $app->configure('modules');
 $app->register(\Nwidart\Modules\LumenModulesServiceProvider::class);
@@ -123,9 +126,9 @@ $app->register(\Nwidart\Modules\LumenModulesServiceProvider::class);
 */
 
 $app->router->group([
-    'namespace' => 'App\Http\Controllers',
+  'namespace' => 'App\Http\Controllers',
 ], function ($router) {
-    require __DIR__ . '/../routes/web.php';
+  require __DIR__ . '/../routes/web.php';
 });
 
 return $app;
