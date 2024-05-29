@@ -17,7 +17,7 @@ define('LARAVEL_START', microtime(true));
 */
 
 if (file_exists($maintenance = __DIR__ . '/../storage/framework/maintenance.php')) {
-    require $maintenance;
+  require $maintenance;
 }
 
 /*
@@ -30,14 +30,11 @@ if (file_exists($maintenance = __DIR__ . '/../storage/framework/maintenance.php'
 | into the script here so we don't need to manually load our classes.
 |
 */
-
+if (file_exists(__DIR__ . '/../../../vendor/autoload.php')) {
+  require_once __DIR__ . '/../../../vendor/autoload.php';
+}
 if (file_exists(__DIR__ . '/../vendor/autoload.php')) {
-    require_once __DIR__ . '/../vendor/autoload.php';
-} else if (file_exists(__DIR__ . '/../../../vendor/autoload.php')) {
-    require_once __DIR__ . '/../../../vendor/autoload.php';
-} else {
-    print ('Missing Require File');
-    exit;
+  require_once __DIR__ . '/../vendor/autoload.php';
 }
 /*
 |--------------------------------------------------------------------------
@@ -55,7 +52,7 @@ $app = require_once __DIR__ . '/../bootstrap/app.php';
 $kernel = $app->make(Kernel::class);
 
 $response = $kernel->handle(
-    $request = Request::capture()
+  $request = Request::capture()
 )->send();
 
 $kernel->terminate($request, $response);
