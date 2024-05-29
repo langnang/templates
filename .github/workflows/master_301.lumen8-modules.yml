@@ -1,4 +1,4 @@
-name: 🚀 Deploy master(lumen8-modules) on push with FTP
+name: 🚀 Deploy lumen8-modules on push with FTP
 
 on:
   push:

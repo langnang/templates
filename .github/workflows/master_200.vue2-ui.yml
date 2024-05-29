@@ -1,4 +1,4 @@
-name: 🚀 Deploy master(vue2-ui) on push with FTP
+name: 🚀 Deploy vue2-ui on push with FTP
 
 on:
   push:
