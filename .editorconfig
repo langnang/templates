@@ -14,7 +14,7 @@ insert_final_newline = false
 [*.md]
 trim_trailing_whitespace = false
 
-[*.{yml,yaml,html,css,js,php,json}]
+[*.{yml,yaml,html,css,js}]
 indent_size = 2
 
 [docker-compose.yml]
