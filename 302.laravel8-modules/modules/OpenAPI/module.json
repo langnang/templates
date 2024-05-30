@@ -1,0 +1,13 @@
+{
+    "name": "OpenAPI",
+    "alias": "openapi",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\OpenAPI\\Providers\\OpenAPIServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

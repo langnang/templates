@@ -1,5 +1,13 @@
 {
     "Admin": true,
     "Home": true,
-    "Market": true
+    "Market": true,
+    "Typecho": true,
+    "Website": true,
+    "Awesome": true,
+    "CheatSheet": true,
+    "Dependency": true,
+    "News": true,
+    "OpenAPI": true,
+    "Snippet": true
 }
