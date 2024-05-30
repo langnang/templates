@@ -12,9 +12,9 @@
 */
 
 if (is_lumen()) {
-  dump(is_lumen());
-  dump(is_laravel());
-  dump(\Module::all());
+  // dump(is_lumen());
+  // dump(is_laravel());
+  // dump(\Module::all());
   $router->get('', "HomeController@index");
   $router->group([], function () use ($router) {
     // $router->get('/', "HomeController@view_index");

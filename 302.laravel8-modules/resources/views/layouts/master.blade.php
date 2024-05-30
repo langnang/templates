@@ -17,6 +17,8 @@
 
   <title>@yield('title', 'Modular') | {{ env('APP_NAME') }}</title>
 
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+
   <!-- Fonts -->
   {{-- <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600;700&display=swap" rel="stylesheet"> --}}
 
