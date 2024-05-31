@@ -5,10 +5,26 @@
     .min-h-screen {
       min-height: calc(100vh - 56px);
     }
+
+    .card>.card-header .nav-link {
+      border-top-color: transparent;
+    }
+
+    .card>.card-header~.list-group {
+      border-top: 0;
+      height: 368px;
+      overflow-y: auto;
+    }
+
+    .card>.list-group {
+      border-bottom-width: 0;
+      border-bottom-right-radius: calc(.25rem - 1px);
+      border-bottom-left-radius: calc(.25rem - 1px);
+    }
   </style>
 @endpush
-@section('header')
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+@section('main')
+  <nav class="navbar navbar-expand-lg navbar-light bg-light mb-2">
     <a class="navbar-brand" href="#">
       <img src="/favicon.ico" width="30" height="30" class="d-inline-block align-top" alt="">
       {{ env('APP_NAME') }}
@@ -82,6 +98,82 @@
       </ul>
     </div>
   </nav>
+
+  <div class="container-fluid">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
+      @foreach (Module::all() ?? [] as $moduleName => $module)
+        @if (Module::isEnabled($moduleName))
+          <div class="col">
+            <div class="card tab-content mb-3">
+              <div class="card-header p-0">
+                <ul class="nav nav-tabs border-bottom-0">
+                  <li class="nav-item mr-auto">
+                    <a class="nav-link px-2"
+                      href="/{{ Config::get(strtolower($moduleName) . '.prefix') ?? strtolower($moduleName) }}">{{ $moduleName }}</a>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link px-2 active" id="{{ strtolower($moduleName) }}-latest-tab" data-toggle="tab"
+                      data-target="#{{ strtolower($moduleName) }}-latest" type="button" role="tab"
+                      aria-controls="{{ strtolower($moduleName) }}-latest" aria-selected="true">最新</button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link px-2" id="{{ strtolower($moduleName) }}-hottest-tab" data-toggle="tab"
+                      data-target="#{{ strtolower($moduleName) }}-hottest" type="button" role="tab"
+                      aria-controls="{{ strtolower($moduleName) }}-hottest" aria-selected="false">最热</button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link px-2" id="{{ strtolower($moduleName) }}-recommend-tab" data-toggle="tab"
+                      data-target="#{{ strtolower($moduleName) }}-recommend" type="button" role="tab"
+                      aria-controls="{{ strtolower($moduleName) }}-recommend" aria-selected="false">推荐</button>
+                  </li>
+
+                </ul>
+              </div>
+
+
+              <ul class="list-group list-group-flush tab-pane active" id="{{ strtolower($moduleName) }}-latest"
+                role="tabpanel" aria-labelledby="{{ strtolower($moduleName) }}-latest-tab">
+                <li class="list-group-item p-2">01. An item1</li>
+                <li class="list-group-item p-2">02. A second item</li>
+                <li class="list-group-item p-2">03. A third item</li>
+                <li class="list-group-item p-2">05</li>
+                <li class="list-group-item p-2">06</li>
+                <li class="list-group-item p-2">07</li>
+                <li class="list-group-item p-2">08</li>
+                <li class="list-group-item p-2">09</li>
+                <li class="list-group-item p-2">10</li>
+                <li class="list-group-item p-2">11</li>
+              </ul>
+              <ul class="list-group list-group-flush tab-pane" id="{{ strtolower($moduleName) }}-hottest"
+                role="tabpanel" aria-labelledby="{{ strtolower($moduleName) }}-hottest-tab">
+                <li class="list-group-item p-2">01. An item2</li>
+                <li class="list-group-item p-2">02. A second item</li>
+                <li class="list-group-item p-2">03. A third item</li>
+                <li class="list-group-item p-2">05</li>
+                <li class="list-group-item p-2">06</li>
+                <li class="list-group-item p-2">07</li>
+                <li class="list-group-item p-2">08</li>
+                <li class="list-group-item p-2">09</li>
+                <li class="list-group-item p-2">10</li>
+              </ul>
+              <ul class="list-group list-group-flush tab-pane" id="{{ strtolower($moduleName) }}-recommend"
+                role="tabpanel" aria-labelledby="{{ strtolower($moduleName) }}-recommend-tab">
+                <li class="list-group-item p-2">01. An item3</li>
+                <li class="list-group-item p-2">02. A second item</li>
+                <li class="list-group-item p-2">03. A third item</li>
+                <li class="list-group-item p-2">05</li>
+                <li class="list-group-item p-2">06</li>
+                <li class="list-group-item p-2">07</li>
+                <li class="list-group-item p-2">08</li>
+                <li class="list-group-item p-2">09</li>
+              </ul>
+
+            </div>
+          </div>
+        @endif
+      @endforeach
+    </div>
+  </div>
 @endsection
 
 @section('content')
