@@ -9,5 +9,10 @@
     "Dependency": true,
     "News": true,
     "OpenAPI": true,
-    "Snippet": true
+    "Snippet": true,
+    "Book": true,
+    "Novel": true,
+    "Audio": true,
+    "Video": true,
+    "Question": true
 }
