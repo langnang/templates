@@ -3,7 +3,7 @@
 namespace App\Models;
 
 
-class Content extends \App\Models\Model
+class Content extends \App\Support\Model
 {
     protected $table = "_contents";
 

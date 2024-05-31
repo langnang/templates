@@ -3,7 +3,7 @@
 namespace App\Models;
 
 
-class Link extends \App\Models\Model
+class Link extends \App\Support\Model
 {
 
     protected $table = "_links";

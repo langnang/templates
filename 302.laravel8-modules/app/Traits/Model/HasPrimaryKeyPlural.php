@@ -9,8 +9,13 @@ trait HasPrimaryKeyPlural
 
     public function setPrimaryKeyPlural($primaryKeyPlural = null)
     {
+        var_dump(__CLASS__);
+        var_dump($this->getKeyName());
+        var_dump(empty($primaryKeyPlural)
+            ? \Str::of($this->getKeyName())->plural()->__toString()
+            : $primaryKeyPlural);
         return $this->$primaryKeyPlural = empty($primaryKeyPlural)
-            ? \Str::of($this->getKeyName())->plural()
+            ? \Str::of($this->getKeyName())->plural()->__toString()
             : $primaryKeyPlural;
     }
     public function getPrimaryKeyPlural()

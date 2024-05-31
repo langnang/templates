@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-class Meta extends \App\Models\Model
+class Meta extends \App\Support\Model
 {
 
     protected $table = "_metas";

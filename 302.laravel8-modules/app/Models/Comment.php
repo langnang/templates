@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-class Comment extends \App\Models\Model
+class Comment extends \App\Support\Model
 {
     protected $table = "_comments";
 

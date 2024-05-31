@@ -34,16 +34,16 @@ class Controller extends \Illuminate\Routing\Controller
 
     use \App\Traits\Controller\HasView;
     protected $BaseModel;
-    protected $MetaModel = \App\Models\Base\Meta::class;
-    protected $ContentModel = \App\Models\Base\Content::class;
-    protected $FieldModel = \App\Models\Base\Field::class;
-    protected $CommentModel = \App\Models\Base\Comment::class;
-    protected $LinkModel = \App\Models\Base\Link::class;
-    protected $RuleModel = \App\Models\Base\Rule::class;
+    protected $MetaModel = \App\Models\Meta::class;
+    protected $ContentModel = \App\Models\Content::class;
+    protected $FieldModel = \App\Models\Field::class;
+    protected $CommentModel = \App\Models\Comment::class;
+    protected $LinkModel = \App\Models\Link::class;
+    protected $RuleModel = \App\Models\Rule::class;
     protected $RelationshipModel = \App\Models\Relationship::class;
     protected $UserModel = \App\Models\User::class;
     protected $OptionModel = \App\Models\Option::class;
-    protected $LogModel = \App\Models\Base\Log::class;
+    protected $LogModel = \App\Models\Log::class;
     /**
      * 函数组对象
      */
@@ -117,6 +117,7 @@ class Controller extends \Illuminate\Routing\Controller
     ];
     protected $extendImportMapping = [];
 
+    public $prefix;
     protected $_logs = [];
 
     function get_logs()
@@ -641,10 +642,13 @@ trait BaseView
         $return = array_merge([
             "prefix" => $this->prefix ?? 'home',
             "query" => $request->all(),
-            "view" => View::exists($this->prefix . '.index') ? $this->prefix . '.index' : '_view.index',
+            "view" => View::exists($this->prefix . '.index') ? $this->prefix . '.index' : 'index',
             "current_page" => request()->input('page', '1'),
             "last_page" => 1,
         ], $request->input('$return', []), );
+
+        return $this->view($return['view'], $return);
+
         $query = $return['$query'] ?? [];
         unset($return['query']['$return']);
         // 清除分页，便于生成分页地址

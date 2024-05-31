@@ -1,10 +1,17 @@
 @extends('home.index')
 
+@push('styles')
+  <style>
+    .min-h-screen {
+      min-height: calc(100vh - 56px);
+    }
+  </style>
+@endpush
 @section('header')
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="#">
       <img src="/favicon.ico" width="30" height="30" class="d-inline-block align-top" alt="">
-      laravel-modules
+      {{ env('APP_NAME') }}
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -59,13 +66,26 @@
         <li class="nav-item">
           <a class="nav-link disabled">Disabled</a>
         </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+            Modules
+          </a>
+          <div class="dropdown-menu dropdown-menu-right">
+            @foreach (Module::all() ?? [] as $moduleName => $module)
+              @if (Module::isEnabled($moduleName))
+                <a class="dropdown-item"
+                  href="/{{ Config::get(strtolower($moduleName) . '.prefix') ?? strtolower($moduleName) }}">{{ $moduleName }}</a>
+              @endif
+            @endforeach
+          </div>
+        </li>
       </ul>
     </div>
   </nav>
 @endsection
 
 @section('content')
-  <div class="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 ml:-1 mr:-1">
+  <div class="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 ml:-1 mr:-1 d-none">
     @foreach (Module::all() ?? [] as $moduleName => $module)
       @if (Module::isEnabled($moduleName))
         <a class="m-1 bg-white dark:bg-gray-800 overflow-hidden shadow sm:rounded-lg"

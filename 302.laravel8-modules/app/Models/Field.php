@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-class Field extends \App\Models\Model
+class Field extends \App\Support\Model
 {
 
     protected $table = "_fields";
