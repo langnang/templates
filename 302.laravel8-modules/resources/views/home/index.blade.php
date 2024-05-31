@@ -2,6 +2,7 @@
 
 @section('main')
   <div class="antialiased">
+    @yield('header')
 
     <div class="relative flex items-top justify-center min-h-screen sm:items-center py-4 sm:pt-0">
       @if (Route::has('login'))
