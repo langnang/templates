@@ -14,5 +14,6 @@
     "Novel": true,
     "Audio": true,
     "Video": true,
-    "Question": true
+    "Question": true,
+    "Demo": true
 }
