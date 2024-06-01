@@ -15,5 +15,6 @@
     "Audio": true,
     "Video": true,
     "Question": true,
-    "Demo": true
+    "Demo": true,
+    "Work": true
 }
