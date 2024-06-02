@@ -5,14 +5,11 @@ namespace App\Models;
 class Field extends \App\Support\Model
 {
 
-    protected $table = "_fields";
+    protected $table = "fields";
 
     protected $primaryKey = 'id';
 
-    protected $fillable = [];
+    protected $fillable = [
 
-    protected static function newFactory()
-    {
-        return \Modules\Admin\Database\factories\FieldFactory::new();
-    }
+    ];
 }

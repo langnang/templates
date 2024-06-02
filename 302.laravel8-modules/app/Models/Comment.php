@@ -4,14 +4,10 @@ namespace App\Models;
 
 class Comment extends \App\Support\Model
 {
-    protected $table = "_comments";
+    protected $table = "comments";
 
     protected $primaryKey = 'coid';
 
     protected $fillable = [];
 
-    protected static function newFactory()
-    {
-        return \Modules\Admin\Database\factories\CommentFactory::new();
-    }
 }

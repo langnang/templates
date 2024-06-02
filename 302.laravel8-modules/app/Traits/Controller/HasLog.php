@@ -2,7 +2,7 @@
 
 namespace App\Traits\Controller;
 
-trait HasRequest
+trait HasLog
 {
 
 }

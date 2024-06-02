@@ -16,7 +16,7 @@
 
 - 300.composer-package
 - 301.lumen8-modules
-- 302.laravel8-modules
+- [302.laravel8-modules](./302.laravel8-modules/)
 
 ```sh
 composer init

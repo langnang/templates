@@ -5,7 +5,7 @@ namespace App\Models;
 
 class Content extends \App\Support\Model
 {
-    protected $table = "_contents";
+    protected $table = "contents";
 
     protected $primaryKey = 'cid';
 
@@ -32,4 +32,33 @@ class Content extends \App\Support\Model
         'options' => 'array',
         'download_urls' => 'array',
     ];
+    /**
+     * Summary of latest
+     * @param mixed $perPage
+     * @param mixed $columns
+     * @param mixed $pageName
+     * @param mixed $page
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public static function latest_updated($perPage = null, $columns = ['*'], $pageName = 'page', $page = null)
+    {
+        return self::latest("updated_at")->paginate($perPage, $columns, $pageName, $page);
+    }
+    public static function hottest($perPage = null, $columns = ['*'], $pageName = 'page', $page = null)
+    {
+        return self::orderBy("views", "desc")->paginate($perPage, $columns, $pageName, $page);
+    }
+
+    public static function toplist($perPage = null, $columns = ['*'], $pageName = 'page', $page = null)
+    {
+        return self::paginate($perPage, $columns, $pageName, $page);
+    }
+    public static function recommend($perPage = null, $columns = ['*'], $pageName = 'page', $page = null)
+    {
+        return self::paginate($perPage, $columns, $pageName, $page);
+    }
+    public static function collection($perPage = null, $columns = ['*'], $pageName = 'page', $page = null)
+    {
+        return self::paginate($perPage, $columns, $pageName, $page);
+    }
 }

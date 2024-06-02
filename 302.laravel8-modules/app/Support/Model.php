@@ -23,9 +23,9 @@ use Illuminate\Support\Facades\Config;
  */
 class Model extends \Illuminate\Database\Eloquent\Model
 {
-    // use HasFactory;
+    use HasFactory;
     use \App\Traits\Model\HasPrefix,
-        \App\Traits\Model\HasPrimaryKeyPlural,
+        // \App\Traits\Model\HasPrimaryKeyPlural,
         \App\Traits\Model\HasFamily;
 
     protected $dates = [

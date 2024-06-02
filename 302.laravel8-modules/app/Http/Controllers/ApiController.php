@@ -19,10 +19,4 @@ use Illuminate\Support\Arr;
 class ApiController extends \Illuminate\Routing\Controller
 {
 
-  public function select_content_list()
-  {
-  }
-  public function select_meta_list()
-  {
-  }
 }
