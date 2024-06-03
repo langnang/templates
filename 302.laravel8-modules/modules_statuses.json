@@ -16,5 +16,7 @@
     "Video": true,
     "Question": true,
     "Demo": true,
-    "Work": true
+    "Work": true,
+    "Spider": true,
+    "Dictionary": true
 }

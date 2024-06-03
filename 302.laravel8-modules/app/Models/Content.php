@@ -61,4 +61,9 @@ class Content extends \App\Support\Model
     {
         return self::paginate($perPage, $columns, $pageName, $page);
     }
+
+    public function fields()
+    {
+        return $this->hasMany(\App\Models\Field::class, $this->primaryKey, $this->primaryKey);
+    }
 }
