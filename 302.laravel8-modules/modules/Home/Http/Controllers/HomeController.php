@@ -80,6 +80,10 @@ class HomeController extends \App\Http\Controllers\Controller
     {
         //
     }
+
+    public function select_latest_module_contents(Request $request)
+    {
+    }
 }
 
 trait ViewTrait
@@ -89,20 +93,28 @@ trait ViewTrait
         $return = [
             'view' => 'index',
             "tabs" => [
+                'home-latest' => \App\Models\Content::latest('updated_at')->paginate(30)
             ]
         ];
         foreach (\Module::all() ?? [] as $moduleName => $module) {
-            if (\Module::isEnabled($moduleName)) {
-                // $return['tabs'][strtolower($moduleName) . '-toplist'] = new Paginator(Content::factory(30)->raw([], ), 30, 1);
-                // $return['tabs'][strtolower($moduleName) . '-latest'] = new Paginator(Content::factory(30)->raw([], ), 30, 1);
-                // $return['tabs'][strtolower($moduleName) . '-latest'] = \App\Models\Content::latest_updated(30);
-                $return['tabs'][strtolower($moduleName) . '-latest'] = \App\Models\Field::with('content')
-                    ->where([['name', 'module_' . strtolower($moduleName)]])
-                    ->latest('updated_at')
-                    ->paginate(30);
-                // $return['tabs'][strtolower($moduleName) . '-hottest'] = new Paginator(Content::factory(30)->raw([], ), 30, 1);
-                // $return['tabs'][strtolower($moduleName) . '-recommend'] = new Paginator(Content::factory(30)->raw([], ), 30, 1);
-                // $return['tabs'][strtolower($moduleName) . '-collection'] = new Paginator(Content::factory(30)->raw([], ), 30, 1);
+            $moduleSlug = config(strtolower($moduleName) . ".slug") ?? strtolower($moduleName);
+
+            if (\Module::isEnabled($moduleName) && config($moduleSlug . ".home.index.visible")) {
+                if ($moduleSlug == 'home')
+                    continue;
+                // $return['tabs'][$moduleSlug . '-toplist'] = new Paginator(Content::factory(30)->raw([], ), 30, 1);
+                // $return['tabs'][$moduleSlug . '-latest'] = new Paginator(Content::factory(30)->raw([], ), 30, 1);
+                // $return['tabs'][$moduleSlug . '-latest'] = \App\Models\Content::latest_updated(30);
+                $return['tabs'][$moduleSlug . '-latest'] =
+                    \App\Models\Field::whereHas('content', function ($query) {
+                        $query->where([['type', 'post'], ['status', 'publish']]);
+                    })
+                        ->where([['name', 'module_' . $moduleSlug]])
+                        ->latest('updated_at')
+                        ->paginate(30);
+                // $return['tabs'][$moduleSlug . '-hottest'] = new Paginator(Content::factory(30)->raw([], ), 30, 1);
+                // $return['tabs'][$moduleSlug . '-recommend'] = new Paginator(Content::factory(30)->raw([], ), 30, 1);
+                // $return['tabs'][$moduleSlug . '-collection'] = new Paginator(Content::factory(30)->raw([], ), 30, 1);
             }
 
         }
@@ -116,4 +128,5 @@ trait ViewTrait
         $return = ['view' => 'contents', 'paginator' => HomeContent::paginate(15)];
         return $this->view($return);
     }
+
 }

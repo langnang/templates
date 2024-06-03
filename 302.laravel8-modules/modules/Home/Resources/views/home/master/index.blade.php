@@ -95,6 +95,12 @@
             @endforeach
           </div>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/sign-in">Sign In</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/sign-up">Sign Up</a>
+        </li>
       </ul>
     </div>
   </nav>
@@ -102,54 +108,55 @@
   <div class="container-fluid">
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
       @foreach (Module::all() ?? [] as $moduleName => $module)
-        @if (Module::isEnabled($moduleName) && !in_array($moduleName, ['Admin', 'Home']))
+        @php $moduleSlug = config(strtolower($moduleName) . ".slug") ?? strtolower($moduleName) @endphp
+        @if (Module::isEnabled($moduleName) && config($moduleSlug . '.home.index.visible'))
           <div class="col">
             <div class="card tab-content mb-3">
               <div class="card-header p-0 pr-1">
                 <ul class="nav nav-tabs border-bottom-0">
                   <li class="nav-item mr-auto">
-                    <a class="nav-link px-2"
-                      href="/{{ Config::get(strtolower($moduleName) . '.prefix') ?? strtolower($moduleName) }}">
-                      {{ Config::get(strtolower($moduleName) . '.nameCn') ?? Config::get(strtolower($moduleName) . '.name') }}
+                    <a class="nav-link px-2" href="/{{ Config::get($moduleSlug . '.slug') ?? $moduleSlug }}">
+                      {{ Config::get($moduleSlug . '.nameCn') ?? Config::get($moduleSlug . '.name') }}
                     </a>
                   </li>
-                  @isset($tabs[strtolower($moduleName) . '-latest'])
+                  @isset($tabs[$moduleSlug . '-latest'])
                     <li class="nav-item" role="presentation">
-                      <button class="nav-link px-2 active" id="{{ strtolower($moduleName) }}-latest-tab" data-toggle="tab"
-                        data-target="#{{ strtolower($moduleName) }}-latest" type="button" role="tab"
-                        aria-controls="{{ strtolower($moduleName) }}-latest" aria-selected="true">最新</button>
+                      <button class="nav-link px-2 active" id="{{ $moduleSlug }}-latest-tab" data-toggle="tab"
+                        data-target="#{{ $moduleSlug }}-latest" type="button" role="tab"
+                        aria-controls="{{ $moduleSlug }}-latest" aria-selected="true">最新</button>
                     </li>
                   @endisset
-                  @isset($tabs[strtolower($moduleName) . '-hottest'])
+                  @isset($tabs[$moduleSlug . '-hottest'])
                     <li class="nav-item" role="presentation">
-                      <button class="nav-link px-2" id="{{ strtolower($moduleName) }}-hottest-tab" data-toggle="tab"
-                        data-target="#{{ strtolower($moduleName) }}-hottest" type="button" role="tab"
-                        aria-controls="{{ strtolower($moduleName) }}-hottest" aria-selected="false">最热</button>
+                      <button class="nav-link px-2" id="{{ $moduleSlug }}-hottest-tab" data-toggle="tab"
+                        data-target="#{{ $moduleSlug }}-hottest" type="button" role="tab"
+                        aria-controls="{{ $moduleSlug }}-hottest" aria-selected="false">最热</button>
                     </li>
                   @endisset
-                  @isset($tabs[strtolower($moduleName) . '-recommend'])
+                  @isset($tabs[$moduleSlug . '-recommend'])
                     <li class="nav-item" role="presentation">
-                      <button class="nav-link px-2" id="{{ strtolower($moduleName) }}-recommend-tab" data-toggle="tab"
-                        data-target="#{{ strtolower($moduleName) }}-recommend" type="button" role="tab"
-                        aria-controls="{{ strtolower($moduleName) }}-recommend" aria-selected="false">推荐</button>
+                      <button class="nav-link px-2" id="{{ $moduleSlug }}-recommend-tab" data-toggle="tab"
+                        data-target="#{{ $moduleSlug }}-recommend" type="button" role="tab"
+                        aria-controls="{{ $moduleSlug }}-recommend" aria-selected="false">推荐</button>
                     </li>
                   @endisset
-                  @isset($tabs[strtolower($moduleName) . '-collection'])
+                  @isset($tabs[$moduleSlug . '-collection'])
                     <li class="nav-item" role="presentation">
-                      <button class="nav-link px-2" id="{{ strtolower($moduleName) }}-collection-tab" data-toggle="tab"
-                        data-target="#{{ strtolower($moduleName) }}-collection" type="button" role="tab"
-                        aria-controls="{{ strtolower($moduleName) }}-collection" aria-selected="false">合集</button>
+                      <button class="nav-link px-2" id="{{ $moduleSlug }}-collection-tab" data-toggle="tab"
+                        data-target="#{{ $moduleSlug }}-collection" type="button" role="tab"
+                        aria-controls="{{ $moduleSlug }}-collection" aria-selected="false">合集</button>
                     </li>
                   @endisset
                 </ul>
               </div>
 
-              <ul class="list-group list-group-flush tab-pane active" id="{{ strtolower($moduleName) }}-latest"
-                role="tabpanel" aria-labelledby="{{ strtolower($moduleName) }}-latest-tab">
-                @isset($tabs[strtolower($moduleName) . '-latest'])
-                  @foreach ($tabs[strtolower($moduleName) . '-latest'] as $content)
+              <ul class="list-group list-group-flush tab-pane active" id="{{ $moduleSlug }}-latest" role="tabpanel"
+                aria-labelledby="{{ $moduleSlug }}-latest-tab">
+                @isset($tabs[$moduleSlug . '-latest'])
+                  @foreach ($tabs[$moduleSlug . '-latest'] as $content)
                     <a class="list-group-item list-group-item-action text-truncate p-2"
-                      title="{{ $content['content']['title'] }}" href="/{{ strtolower($moduleName) }}">
+                      title="{{ $content['content']['title'] ?? $content['title'] }}"
+                      href="/{{ $moduleSlug }}/{{ $content['cid'] }}">
                       @if ($loop->iteration == 1)
                         <span class="badge badge-danger">{{ \Str::substr('00' . $loop->iteration, -2) }}</span>
                       @elseif($loop->iteration == 2)
@@ -159,17 +166,18 @@
                       @else
                         <span class="badge badge-secondary">{{ \Str::substr('00' . $loop->iteration, -2) }}</span>
                       @endif
-                      {{ $content['content']['title'] }}
+                      {{ $content['content']['title'] ?? $content['title'] }}
                     </a>
                   @endforeach
                 @endisset
               </ul>
-              <ul class="list-group list-group-flush tab-pane" id="{{ strtolower($moduleName) }}-hottest"
-                role="tabpanel" aria-labelledby="{{ strtolower($moduleName) }}-hottest-tab">
-                @isset($tabs[strtolower($moduleName) . '-hottest'])
-                  @foreach ($tabs[strtolower($moduleName) . '-hottest'] as $content)
-                    <a class="list-group-item list-group-item-action text-truncate p-2" title="{{ $content['title'] }}"
-                      href="/{{ strtolower($moduleName) }}">
+              <ul class="list-group list-group-flush tab-pane" id="{{ $moduleSlug }}-hottest" role="tabpanel"
+                aria-labelledby="{{ $moduleSlug }}-hottest-tab">
+                @isset($tabs[$moduleSlug . '-hottest'])
+                  @foreach ($tabs[$moduleSlug . '-hottest'] as $content)
+                    <a class="list-group-item list-group-item-action text-truncate p-2"
+                      title="{{ $content['content']['title'] ?? $content['title'] }}"
+                      href="/{{ $moduleSlug }}/{{ $content['cid'] }}">
                       @if ($loop->iteration == 1)
                         <span class="badge badge-danger">{{ \Str::substr('00' . $loop->iteration, -2) }}</span>
                       @elseif($loop->iteration == 2)
@@ -179,29 +187,31 @@
                       @else
                         <span class="badge badge-secondary">{{ \Str::substr('00' . $loop->iteration, -2) }}</span>
                       @endif
-                      {{ $content['title'] }}
+                      {{ $content['content']['title'] ?? $content['title'] }}
                     </a>
                   @endforeach
                 @endisset
               </ul>
-              <ul class="list-group list-group-flush tab-pane" id="{{ strtolower($moduleName) }}-recommend"
-                role="tabpanel" aria-labelledby="{{ strtolower($moduleName) }}-recommend-tab">
-                @isset($tabs[strtolower($moduleName) . '-recommend'])
-                  @foreach ($tabs[strtolower($moduleName) . '-recommend'] as $content)
-                    <a class="list-group-item list-group-item-action text-truncate p-2" title="{{ $content['title'] }}"
-                      href="/{{ strtolower($moduleName) }}">
-                      {{ $content['title'] }}
+              <ul class="list-group list-group-flush tab-pane" id="{{ $moduleSlug }}-recommend" role="tabpanel"
+                aria-labelledby="{{ $moduleSlug }}-recommend-tab">
+                @isset($tabs[$moduleSlug . '-recommend'])
+                  @foreach ($tabs[$moduleSlug . '-recommend'] as $content)
+                    <a class="list-group-item list-group-item-action text-truncate p-2"
+                      title="{{ $content['content']['title'] ?? $content['title'] }}"
+                      href="/{{ $moduleSlug }}/{{ $content['cid'] }}">
+                      {{ $content['content']['title'] ?? $content['title'] }}
                     </a>
                   @endforeach
                 @endisset
               </ul>
-              <ul class="list-group list-group-flush tab-pane" id="{{ strtolower($moduleName) }}-collection"
-                role="tabpanel" aria-labelledby="{{ strtolower($moduleName) }}-collection-tab">
-                @isset($tabs[strtolower($moduleName) . '-collection'])
-                  @foreach ($tabs[strtolower($moduleName) . '-collection'] as $content)
-                    <a class="list-group-item list-group-item-action text-truncate p-2" title="{{ $content['title'] }}"
-                      href="/{{ strtolower($moduleName) }}">
-                      {{ $content['title'] }}
+              <ul class="list-group list-group-flush tab-pane" id="{{ $moduleSlug }}-collection" role="tabpanel"
+                aria-labelledby="{{ $moduleSlug }}-collection-tab">
+                @isset($tabs[$moduleSlug . '-collection'])
+                  @foreach ($tabs[$moduleSlug . '-collection'] as $content)
+                    <a class="list-group-item list-group-item-action text-truncate p-2"
+                      title="{{ $content['content']['title'] ?? $content['title'] }}"
+                      href="/{{ $moduleSlug }}/{{ $content['cid'] }}">
+                      {{ $content['content']['title'] ?? $content['title'] }}
                     </a>
                   @endforeach
                 @endisset

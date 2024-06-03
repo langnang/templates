@@ -8,8 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Option extends \App\Support\Model
 {
-    public $table = '_options';
-    public $primaryKey = 'name';
+    public $table = 'options';
     public $incrementing = false;
     protected $hidden = [
         'user',
@@ -20,16 +19,16 @@ class Option extends \App\Support\Model
         'user',
         'type',
         'value',
-        'description',
         'created_at',
         'updated_at',
         'release_at',
         'deleted_at'
     ];
 
-    function toArray()
+    public function toArray()
     {
         $return = parent::{__FUNCTION__}();
+        // dump(__FUNCTION__);
         if (in_array($return['type'], ['json', 'array', 'object'], )) {
             $return['value'] = unserialize($this->value);
         }

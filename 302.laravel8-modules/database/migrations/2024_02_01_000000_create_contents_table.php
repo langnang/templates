@@ -25,7 +25,7 @@ class CreateContentsTable extends Migration
             $table->string('description')->nullable()->comment('描述');
             $table->string('type')->nullable()->comment('类型');
             $table->string('status')->nullable()->comment('状态');
-            $table->longText('text')->default("<!-- markdown -->")->nullable()->comment('内容');
+            $table->longText('text')->nullable()->comment('内容');
 
             $table->string('template')->default(0)->nullable()->comment('模板');
             $table->string('views')->default(0)->nullable()->comment('视图');

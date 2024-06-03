@@ -13,9 +13,16 @@ class FieldFactory extends Factory
      */
     public function definition()
     {
+        $moduleSlugs = array_map(function ($moduleName) {
+            return 'module_' . (config(strtolower($moduleName) . ".slug") ?? strtolower($moduleName));
+        }, array_keys(\Module::all()));
+
         return [
             //
-            "name" => $this->faker->sentence(),
+            "cid" => $this->faker->randomNumber(),
+            "name" => $this->faker->randomElement(array_merge(['name', 'ico', 'keywords', 'description'], $moduleSlugs)),
+            // "name" => $this->faker->word(),
+            "type" => $this->faker->randomElement(['str_value', 'float_value', 'int_value', 'text_value', 'object_value']),
         ];
     }
 }

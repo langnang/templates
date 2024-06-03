@@ -5,7 +5,7 @@ namespace App\Models;
 class Meta extends \App\Support\Model
 {
 
-    protected $table = "_metas";
+    protected $table = "metas";
 
     protected $primaryKey = 'mid';
 

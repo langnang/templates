@@ -16,4 +16,5 @@ use App\Support\Module;
 Route::prefix(Module::currentConfig('web.prefix'))->group(function () {
     Route::get('/', 'HomeController@view_index');
     Route::get('/contents', 'HomeController@view_contents');
+    Route::get('/content/{:cid}', 'HomeController@view_content_item');
 });

@@ -14,12 +14,14 @@ class HomeDatabaseSeeder extends Seeder
      */
     public function run()
     {
-        Model::unguard();
+        // Model::unguard();
 
         // $this->call("OthersTableSeeder");
-        $this->call([
-            HomeMetaTableSeeder::class,
-            HomeContentTableSeeder::class,
-        ]);
+        // $this->call([
+        //     HomeMetaTableSeeder::class,
+        //     HomeContentTableSeeder::class,
+        // ]);
+
+        \App\Models\Option::upsert([['name' => "module_home", "user" => 0, 'type' => 'object', "value" => serialize([])]], ['name', "user"]);
     }
 }

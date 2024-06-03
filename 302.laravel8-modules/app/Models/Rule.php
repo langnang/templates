@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Rule extends Model
 {
 
-    protected $table = "_rules";
+    protected $table = "rules";
 
     protected $fillable = [
         'timestamp'

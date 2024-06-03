@@ -10,7 +10,14 @@ class Field extends \App\Support\Model
     // protected $primaryKey = 'id';
 
     protected $fillable = [
-
+        "cid",
+        "name",
+        "type",
+        "float_value",
+        "int_value",
+        "str_value",
+        "text_value",
+        "object_value",
     ];
 
 
