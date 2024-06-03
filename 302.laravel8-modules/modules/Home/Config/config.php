@@ -1,9 +1,6 @@
 <?php
 
-$configs = \App\Models\Option::where([['name', 'module_home']])->first();
-
-// dump($configs->toArray());
-return array_merge([
+return [
     'name' => 'Home',
     'nameCn' => '总览',
     'prefix' => '',
@@ -15,4 +12,4 @@ return array_merge([
             "visible" => true,
         ]
     ],
-], []);
+];
