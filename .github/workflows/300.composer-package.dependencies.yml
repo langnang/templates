@@ -1,0 +1,136 @@
+name: 🚀 Deploy vendor of composer-package on push with FTP
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - "300.composer-package/composer.json"
+      - "301.lumen8-modules/composer.json"
+      - "302.laravel8-modules/composer.json"
+
+jobs:
+  deploy_300:
+    name: 🎉 Deploy to langnang.byethost5.com
+    runs-on: ubuntu-latest
+    if: github.event.push.commits[0].added.includes('300.composer-package/') || github.event.push.commits[0].modified.includes('300.composer-package/')
+    steps:
+      - name: 🚚 Get latest code
+        uses: actions/checkout@v2
+
+      # - name: Switch to corresponding directory
+      #   run: cd 300.composer-package
+
+      # - name: Install node dependencies
+      #   run: yarn install
+
+      # - name: Laravel mix
+      #   run: npm run prod
+
+      - name: Install composer dependencies
+        if: github.event.push.commits[0].added.includes('300.composer-package/') || github.event.push.commits[0].modified.includes('300.composer-package/')
+        run: cd 300.composer-package && composer install
+
+      - name: 📂 Sync files
+        if: github.event.push.commits[0].added.includes('300.composer-package/') || github.event.push.commits[0].modified.includes('300.composer-package/')
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          # ftp server
+          server: ftpupload.net
+          # ftp username
+          username: b32_28202196
+          # ftp password
+          password: ${{ secrets.ftp_password }}
+          # local dir
+          local-dir: ./300.composer-package/vendor/
+          # Path to upload to on the server. Must end with trailing slash /
+          server-dir: /vendor/
+          # File to Exclude
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/.github*/**
+            **/node_modules/**
+
+  deploy_301:
+    name: 🎉 Deploy to langnang.byethost5.com
+    runs-on: ubuntu-latest
+    if: github.event.push.commits[0].added.includes('300.composer-package/') || github.event.push.commits[0].modified.includes('300.composer-package/')
+    steps:
+      - name: 🚚 Get latest code
+        uses: actions/checkout@v2
+
+      # - name: Switch to corresponding directory
+      #   run: cd 300.composer-package
+
+      # - name: Install node dependencies
+      #   run: yarn install
+
+      # - name: Laravel mix
+      #   run: npm run prod
+
+      - name: Install composer dependencies
+        if: github.event.push.commits[0].added.includes('300.composer-package/') || github.event.push.commits[0].modified.includes('300.composer-package/')
+        run: cd 300.composer-package && composer install
+
+      - name: 📂 Sync files
+        if: github.event.push.commits[0].added.includes('300.composer-package/') || github.event.push.commits[0].modified.includes('300.composer-package/')
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          # ftp server
+          server: ftpupload.net
+          # ftp username
+          username: b32_28202196
+          # ftp password
+          password: ${{ secrets.ftp_password }}
+          # local dir
+          local-dir: ./300.composer-package/vendor/
+          # Path to upload to on the server. Must end with trailing slash /
+          server-dir: /vendor/
+          # File to Exclude
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/.github*/**
+            **/node_modules/**
+  deploy_302:
+    name: 🎉 Deploy to langnang.byethost5.com
+    runs-on: ubuntu-latest
+    if: github.event.push.commits[0].added.includes('300.composer-package/') || github.event.push.commits[0].modified.includes('300.composer-package/')
+    steps:
+      - name: 🚚 Get latest code
+        uses: actions/checkout@v2
+
+      # - name: Switch to corresponding directory
+      #   run: cd 300.composer-package
+
+      # - name: Install node dependencies
+      #   run: yarn install
+
+      # - name: Laravel mix
+      #   run: npm run prod
+
+      - name: Install composer dependencies
+        if: github.event.push.commits[0].added.includes('300.composer-package/') || github.event.push.commits[0].modified.includes('300.composer-package/')
+        run: cd 300.composer-package && composer install
+
+      - name: 📂 Sync files
+        if: github.event.push.commits[0].added.includes('300.composer-package/') || github.event.push.commits[0].modified.includes('300.composer-package/')
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          # ftp server
+          server: ftpupload.net
+          # ftp username
+          username: b32_28202196
+          # ftp password
+          password: ${{ secrets.ftp_password }}
+          # local dir
+          local-dir: ./300.composer-package/vendor/
+          # Path to upload to on the server. Must end with trailing slash /
+          server-dir: /vendor/
+          # File to Exclude
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/.github*/**
+            **/node_modules/**

@@ -108,8 +108,8 @@
   <div class="container-fluid">
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
       @foreach (Module::all() ?? [] as $moduleName => $module)
-        @php $moduleSlug = config(strtolower($moduleName) . ".slug") ?? strtolower($moduleName) @endphp
-        @if (Module::isEnabled($moduleName) && config($moduleSlug . '.home.index.visible'))
+        @if (Module::isEnabled($moduleName) && in_array($moduleName, config('home.view_index.modules') ?? []))
+          @php $moduleSlug = config(strtolower($moduleName) . ".slug") ?? strtolower($moduleName) @endphp
           <div class="col">
             <div class="card tab-content mb-3">
               <div class="card-header p-0 pr-1">

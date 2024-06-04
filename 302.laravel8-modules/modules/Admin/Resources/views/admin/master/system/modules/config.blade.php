@@ -54,6 +54,12 @@
               <a class="nav-link" id="pills-market-tab" data-toggle="pill" data-target="#pills-market" type="button"
                 role="tab" aria-controls="pills-market" aria-selected="true">Market</a>
             </li>
+            @if (View::exists($config['slug'] . '::admin' . $config['layout'] . '.system.modules.config'))
+              <li class="nav-item" role="presentation">
+                <a class="nav-link" id="pills-modules-tab" data-toggle="pill" data-target="#pills-market"
+                  type="button" role="tab" aria-controls="pills-modules" aria-selected="true">Modules</a>
+              </li>
+            @endif
           </ul>
         </div>
 
@@ -78,6 +84,11 @@
             </div>
             <div class="tab-pane fade" id="pills-market" role="tabpanel" aria-labelledby="pills-market-tab">
             </div>
+            @if (View::exists($config['slug'] . '::admin' . $config['layout'] . '.system.modules.config'))
+              <div class="tab-pane fade" id="pills-modules" role="tabpanel" aria-labelledby="pills-modules-tab">
+
+              </div>
+            @endif
           </div>
         </div>
       </div>

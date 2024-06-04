@@ -97,11 +97,13 @@ trait ViewTrait
             ]
         ];
         foreach (\Module::all() ?? [] as $moduleName => $module) {
-            $moduleSlug = config(strtolower($moduleName) . ".slug") ?? strtolower($moduleName);
 
-            if (\Module::isEnabled($moduleName) && config($moduleSlug . ".home.index.visible")) {
-                if ($moduleSlug == 'home')
+            if (\Module::isEnabled($moduleName) && in_array($moduleName, config("home.view_index.modules") ?? [])) {
+                if ($moduleName == 'Home')
                     continue;
+
+                $moduleSlug = config(strtolower($moduleName) . ".slug") ?? strtolower($moduleName);
+
                 // $return['tabs'][$moduleSlug . '-toplist'] = new Paginator(Content::factory(30)->raw([], ), 30, 1);
                 // $return['tabs'][$moduleSlug . '-latest'] = new Paginator(Content::factory(30)->raw([], ), 30, 1);
                 // $return['tabs'][$moduleSlug . '-latest'] = \App\Models\Content::latest_updated(30);

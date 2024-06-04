@@ -1,4 +1,4 @@
-name: 🚀 Deploy vendor of laravel8-modules on push with FTP
+name: 🚀 Deploy dependencies of laravel8-modules on push with FTP
 
 on:
   push:

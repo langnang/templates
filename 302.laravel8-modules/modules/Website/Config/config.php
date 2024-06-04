@@ -1,18 +1,16 @@
 <?php
 
 return [
-    'name' => 'Home',
-    'nameCn' => '总览',
-    'prefix' => '',
-    'layout' => 'master',
-    'admin_layout' => 'master',
+    'name' => 'Website',
+    "slug" => "website",
+    "nameCn" => "网站",
+
     // Modules
     "view_index" => [
         "visible" => true,
         "modules" => [
-            "Home",
             "Question",
             "Website",
         ]
-    ],
+    ]
 ];
