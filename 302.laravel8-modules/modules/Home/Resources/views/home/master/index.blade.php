@@ -96,7 +96,7 @@
           </div>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/sign-in">Sign In</a>
+          <a class="nav-link" href="/admin/login">Sign In</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/sign-up">Sign Up</a>
