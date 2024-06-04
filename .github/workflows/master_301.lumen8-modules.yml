@@ -1,10 +1,11 @@
-name: 🚀 Deploy composer-package on push with FTP
+name: 🚀 Deploy lumen8-modules on push with FTP
 
 on:
   push:
     branches:
       - master
-
+    paths:
+      - "301.lumen8-modules/**"
 jobs:
   deploy:
     name: 🎉 Deploy to langnang.byethost5.com
@@ -14,7 +15,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Switch to corresponding directory
-        run: cd 300.composer-package
+        run: cd 301.lumen8-modules
 
       # - name: Install node dependencies
       #   run: yarn install
@@ -23,7 +24,7 @@ jobs:
       #   run: npm run prod
 
       - name: Install composer dependencies
-        run: cd 300.composer-package && composer install
+        run: cd 301.lumen8-modules && composer install
 
       - name: 📂 Sync files
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
@@ -31,13 +32,13 @@ jobs:
           # ftp server
           server: ftpupload.net
           # ftp username
-          username: b32_28202196
+          username: b5_34048785
           # ftp password
           password: ${{ secrets.ftp_password }}
           # local dir
-          local-dir: ./300.composer-package/vendor/
+          local-dir: ./301.lumen8-modules/
           # Path to upload to on the server. Must end with trailing slash /
-          server-dir: /vendor/
+          server-dir: /htdocs/
           # File to Exclude
           exclude: |
             **/.git*

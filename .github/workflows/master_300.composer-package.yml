@@ -1,22 +1,21 @@
-name: 🚀 Deploy dependencies of laravel8-modules on push with FTP
+name: 🚀 Deploy composer-package on push with FTP
 
 on:
   push:
     branches:
       - master
     paths:
-      - "302.laravel8-modules/composer.json"
-
+      - "300.composer-package/**"
 jobs:
   deploy:
-    name: 🎉 Deploy to langnang.byethost9.com
+    name: 🎉 Deploy to langnang.byethost5.com
     runs-on: ubuntu-latest
     steps:
       - name: 🚚 Get latest code
         uses: actions/checkout@v2
 
-      # - name: Switch to corresponding directory
-      #   run: cd 302.laravel8-modules
+      - name: Switch to corresponding directory
+        run: cd 300.composer-package
 
       # - name: Install node dependencies
       #   run: yarn install
@@ -25,7 +24,7 @@ jobs:
       #   run: npm run prod
 
       - name: Install composer dependencies
-        run: cd 302.laravel8-modules && composer install
+        run: cd 300.composer-package && composer install
 
       - name: 📂 Sync files
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
@@ -33,13 +32,13 @@ jobs:
           # ftp server
           server: ftpupload.net
           # ftp username
-          username: b9_36151388
+          username: b32_28202196
           # ftp password
           password: ${{ secrets.ftp_password }}
           # local dir
-          local-dir: ./302.laravel8-modules/vendor/
+          local-dir: ./300.composer-package/vendor/
           # Path to upload to on the server. Must end with trailing slash /
-          server-dir: /htdocs/vendor/
+          server-dir: /vendor/
           # File to Exclude
           exclude: |
             **/.git*
