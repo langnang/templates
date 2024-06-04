@@ -30,7 +30,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install composer dependencies
-        if: github.event.push.commits[0].added.includes('300.composer-package/package.json') || github.event.push.commits[0].modified.includes('300.composer-package/package.json')
+        if: ${{ github.event.push.commits[0].added.includes('300.composer-package/package.json') || github.event.push.commits[0].modified.includes('300.composer-package/package.json') }}
         run: cd 300.composer-package && composer install
 
       - name: Install composer dependencies
