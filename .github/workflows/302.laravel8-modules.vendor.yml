@@ -1,4 +1,4 @@
-name: 🚀 Deploy laravel8-modules on push with FTP
+name: 🚀 Deploy vendor of laravel8-modules on push with FTP
 
 on:
   push:
@@ -15,8 +15,8 @@ jobs:
       - name: 🚚 Get latest code
         uses: actions/checkout@v2
 
-      - name: Switch to corresponding directory
-        run: cd 302.laravel8-modules
+      # - name: Switch to corresponding directory
+      #   run: cd 302.laravel8-modules
 
       # - name: Install node dependencies
       #   run: yarn install
