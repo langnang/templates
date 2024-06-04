@@ -11,6 +11,7 @@
 |
 */
 
-Route::prefix('website')->group(function() {
+Route::prefix('website')->group(function () {
     Route::get('/', 'WebsiteController@index');
+    Route::get('/content/{cid}', 'WebsiteController@view_content_item');
 });

@@ -8,6 +8,7 @@ use Illuminate\Routing\Controller;
 
 class QuestionController extends Controller
 {
+    protected $module = "Question";
     /**
      * Display a listing of the resource.
      * @return Renderable

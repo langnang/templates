@@ -11,6 +11,8 @@ use Modules\Home\Models\HomeContent;
 
 class HomeController extends \App\Http\Controllers\Controller
 {
+    protected $module = "Home";
+
     use ViewTrait;
     /**
      * Display a listing of the resource.
@@ -114,6 +116,12 @@ trait ViewTrait
                         ->where([['name', 'module_' . $moduleSlug]])
                         ->latest('updated_at')
                         ->paginate(30);
+                // \App\Models\Field::whereHas('content', function ($query) {
+                //     $query->where([['type', 'post'], ['status', 'publish']]);
+                // })
+                //     ->where([['name', 'module_' . $moduleSlug]])
+                //     ->latest('updated_at')
+                //     ->paginate(30);
                 // $return['tabs'][$moduleSlug . '-hottest'] = new Paginator(Content::factory(30)->raw([], ), 30, 1);
                 // $return['tabs'][$moduleSlug . '-recommend'] = new Paginator(Content::factory(30)->raw([], ), 30, 1);
                 // $return['tabs'][$moduleSlug . '-collection'] = new Paginator(Content::factory(30)->raw([], ), 30, 1);
@@ -125,10 +133,4 @@ trait ViewTrait
 
         return $this->view($return);
     }
-    public function view_contents(Request $request)
-    {
-        $return = ['view' => 'contents', 'paginator' => HomeContent::paginate(15)];
-        return $this->view($return);
-    }
-
 }

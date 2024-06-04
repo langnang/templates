@@ -13,8 +13,13 @@
 
 use App\Support\Module;
 
-Route::prefix(Module::currentConfig('web.prefix'))->group(function () {
+Route::prefix('/')->group(function () {
     Route::get('/', 'HomeController@view_index');
-    Route::get('/contents', 'HomeController@view_contents');
-    Route::get('/content/{:cid}', 'HomeController@view_content_item');
+});
+
+Route::prefix('home')->group(function () {
+    Route::get('/', 'HomeController@view_index');
+    Route::get('/metas', 'HomeController@view_meta_list');
+    Route::get('/contents', 'HomeController@view_content_list');
+    Route::get('/content/{cid}', 'HomeController@view_content_item');
 });

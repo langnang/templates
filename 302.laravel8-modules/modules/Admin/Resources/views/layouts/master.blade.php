@@ -2,6 +2,11 @@
 
 @push('styles')
   <x-styles :props="[['modules/Admin/Public/admin/master/css/adminlte.min.css']]"></x-styles>
+  <style>
+    .nav-sidebar .nav-treeview {
+      padding-left: .5rem;
+    }
+  </style>
 @endpush
 
 @section('main')

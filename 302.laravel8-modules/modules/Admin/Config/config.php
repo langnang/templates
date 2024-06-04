@@ -61,12 +61,32 @@ return array(
                         ),
                     1 =>
                         array(
-                            'path' => '/basic',
-                            'title' => '基础数据',
+                            'path' => '/table',
+                            'title' => '数据管理',
                             'icon' => 'fas fa-database',
                             'slug' => '',
-                            'children' =>
-                                array(),
+                            'children' => [
+                                [
+                                    "path" => '/metas',
+                                    'title' => 'Metas',
+                                ],
+                                [
+                                    "path" => '/contents',
+                                    'title' => 'Contents',
+                                ],
+                                [
+                                    "path" => '/comments',
+                                    'title' => 'Comments',
+                                ],
+                                [
+                                    "path" => '/links',
+                                    'title' => 'Links',
+                                ],
+                                [
+                                    "path" => '/logs',
+                                    'title' => 'Logs',
+                                ]
+                            ]
                         ),
                     2 =>
                         array(
@@ -91,6 +111,16 @@ return array(
                                 array(),
                         ),
                     4 =>
+                        array(
+                            'path' => '/modules',
+                            'title' => '模块管理',
+                            'icon' => 'fas fa-users',
+                            'slug' => '',
+                            'children' =>
+
+                                array(),
+                        ),
+                    5 =>
                         array(
                             'path' => '/system',
                             'title' => '系统管理',
@@ -161,7 +191,7 @@ return array(
                                         ),
                                 ),
                         ),
-                    5 =>
+                    6 =>
                         array(
                             'path' => '',
                             'title' => 'Dashboard',

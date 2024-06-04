@@ -18,5 +18,5 @@ use Illuminate\Support\Arr;
 
 class ApiController extends \Illuminate\Routing\Controller
 {
-
+    use \App\Traits\Controller\HasModule;
 }

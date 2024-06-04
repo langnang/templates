@@ -22,6 +22,7 @@ use App\Support\Module;
 
 class AdminController extends \App\Http\Controllers\Controller
 {
+    protected $module = "Admin";
     use ApiTrait, ViewTrait, ViewWebTrait, ViewAdminTrait;
     /**
      * Display a listing of the resource.
@@ -131,7 +132,7 @@ class AdminController extends \App\Http\Controllers\Controller
                 [$item['children'], $activeTree] = self::getSidebarMenu($item['children'], $item);
                 // 根据子元素修改父元素
                 $hasActiveChild = sizeof(array_filter($item['children'], function ($subItem) {
-                    return !empty ($subItem['active']);
+                    return !empty($subItem['active']);
                 })) > 0;
                 if ($hasActiveChild) {
                     $item['active'] = true;

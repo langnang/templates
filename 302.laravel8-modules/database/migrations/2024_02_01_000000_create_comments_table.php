@@ -18,6 +18,7 @@ class CreateCommentsTable extends Migration
         // 基本评论表
         Schema::create('comments', function (Blueprint $table) {
             $table->id('coid');
+            $table->integer('cid')->default(0)->comment("内容编号");
 
             $table->text("text")->nullable()->comment("内容");
 

@@ -61,9 +61,41 @@ class Content extends \App\Support\Model
     {
         return self::paginate($perPage, $columns, $pageName, $page);
     }
+    public function metas()
+    {
+        return $this
+            ->hasMany(\App\Models\Relationship::class, $this->primaryKey, $this->primaryKey)
+            ->leftJoin("metas", "relationships.mid", '=', "metas.mid");
+    }
 
+    public function links()
+    {
+        return $this
+            ->hasMany(\App\Models\Relationship::class, $this->primaryKey, $this->primaryKey)
+            ->leftJoin("links", "relationships.lid", '=', "links.lid");
+    }
+
+    public function relationships()
+    {
+        return $this->hasMany(\App\Models\Relationship::class, $this->primaryKey, $this->primaryKey);
+    }
     public function fields()
     {
         return $this->hasMany(\App\Models\Field::class, $this->primaryKey, $this->primaryKey);
+    }
+    public function comments()
+    {
+        return $this->hasMany(\App\Models\Comment::class, $this->primaryKey, $this->primaryKey);
+    }
+
+    public function toArray()
+    {
+        $return = parent::toArray();
+
+        foreach ($return['fields'] ?? [] as $index => $field) {
+            $return['fields'][$field['name']] = (new \App\Models\Field($field))->toArray();
+            unset($return['fields'][$index]);
+        }
+        return $return;
     }
 }

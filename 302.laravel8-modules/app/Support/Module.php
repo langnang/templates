@@ -21,18 +21,19 @@ class Module extends \Nwidart\Modules\Facades\Module
 
     public static function current()
     {
+        // var_dump(debug_backtrace());
         // 查找当前模块
         $backtrace = Arr::first(debug_backtrace(), function ($debug) {
+            // var_dump($debug['file']);
             return strtolower(substr($debug['file'] ?? '', 0, strlen(base_path('modules')))) == strtolower(base_path('modules'));
         });
+        // var_dump($backtrace);
         if (empty($backtrace))
             return;
-        // var_dump($backtrace);
         $file_path = $backtrace['file'];
         $file_path = substr($file_path, strlen(base_path('modules')) + 1);
         // var_dump($file_path);
         $module_dir = substr($file_path, 0, strpos($file_path, DIRECTORY_SEPARATOR));
-        // var_dump($module_dir);
         return is_win() ? strtolower($module_dir) : $module_dir;
     }
 
@@ -40,12 +41,13 @@ class Module extends \Nwidart\Modules\Facades\Module
     public static function currentConfig($key = null, $current = null, ...$extras)
     {
         $current = empty($current) ? Module::current() : $current;
+        // var_dump($current);
         // 未检测到模块名称，终止
         if (empty($current))
             return;
         $config = Config::get($current) ?? require base_path('modules' . DIRECTORY_SEPARATOR . $current . DIRECTORY_SEPARATOR . 'Config' . DIRECTORY_SEPARATOR . 'config.php');
 
-        // var_dump([$current, $config]);
+        // var_dump($config);
         // slug
         if (!isset($config['slug']))
             $config['slug'] = strtolower($config['name']);

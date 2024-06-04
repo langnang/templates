@@ -6,8 +6,10 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
-class WebsiteController extends Controller
+class WebsiteController extends \App\Http\Controllers\Controller
 {
+    protected $module = "Website";
+
     /**
      * Display a listing of the resource.
      * @return Renderable

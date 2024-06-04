@@ -3,9 +3,10 @@
 return [
     'name' => 'Home',
     'nameCn' => '总览',
-    'prefix' => '',
     'layout' => 'master',
     'admin_layout' => 'master',
+    "api" => [],
+    "web" => [],
     // Modules
     "view_index" => [
         "visible" => true,
