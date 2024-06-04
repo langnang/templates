@@ -2,7 +2,7 @@
 
 {{-- @php var_dump($content); @endphp --}}
 @php $module_field = $content['fields']['module_'.$config['slug']]; @endphp
-@php var_dump($module_field); @endphp
+{{-- @php var_dump($module_field); @endphp --}}
 
 @section('content')
   <div class="container d-flex align-items-center" style="height: 100vh;">
