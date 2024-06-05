@@ -6,7 +6,7 @@
       @foreach (Module::all() ?? [] as $moduleName => $module)
         @if (Module::isEnabled($moduleName) && !in_array($moduleName, config('home.view_index.ignore_modules') ?? []))
           @php $moduleSlug = config(strtolower($moduleName) . ".slug") ?? strtolower($moduleName) @endphp
-          <div class="col @if (in_array($moduleName, config('home.view_index.fixed_modules') ?? [])) order-1 @else order-12 @endif">
+          <div class="col @if (in_array($moduleName, config('home.view_index.fixed_modules') ?? [])) order-1 @else order-6 @endif">
             <div class="card tab-content mb-3">
               <div class="card-header p-0 pr-1">
                 <ul class="nav nav-tabs border-bottom-0">
@@ -125,6 +125,120 @@
           </div>
         @endif
       @endforeach
+
+      <div class="col order-12">
+        <div class="card tab-content mb-3">
+          <div class="card-header p-0 pr-1">
+            <ul class="nav nav-tabs border-bottom-0">
+              <li class="nav-item">
+                <a class="nav-link px-1" style="font-size: 24px;" href="#">
+                  <i class="bi bi-pin-angle"></i>
+                </a>
+              </li>
+              <li class="nav-item mr-auto">
+                <a class="nav-link px-1 pl-0" href="/home">
+                  无关联
+                </a>
+              </li>
+              @isset($tabs['nofield-latest'])
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link px-2 active" id="nofield-latest-tab" data-toggle="tab"
+                    data-target="#nofield-latest" type="button" role="tab" aria-controls="nofield-latest"
+                    aria-selected="true">最新</button>
+                </li>
+              @endisset
+              @isset($tabs['nofield-hottest'])
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link px-2" id="nofield-hottest-tab" data-toggle="tab"
+                    data-target="#nofield-hottest" type="button" role="tab" aria-controls="nofield-hottest"
+                    aria-selected="false">最热</button>
+                </li>
+              @endisset
+              @isset($tabs['nofield-recommend'])
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link px-2" id="nofield-recommend-tab" data-toggle="tab"
+                    data-target="#nofield-recommend" type="button" role="tab" aria-controls="nofield-recommend"
+                    aria-selected="false">推荐</button>
+                </li>
+              @endisset
+              @isset($tabs['nofield-collection'])
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link px-2" id="nofield-collection-tab" data-toggle="tab"
+                    data-target="#nofield-collection" type="button" role="tab" aria-controls="nofield-collection"
+                    aria-selected="false">合集</button>
+                </li>
+              @endisset
+            </ul>
+          </div>
+
+          <ul class="list-group list-group-flush tab-pane active" id="nofield-latest" role="tabpanel"
+            aria-labelledby="nofield-latest-tab">
+            @isset($tabs['nofield-latest'])
+              @foreach ($tabs['nofield-latest'] as $content)
+                <a class="list-group-item list-group-item-action text-truncate p-2"
+                  title="{{ $content['content']['title'] ?? $content['title'] }}"
+                  href="/home/content/{{ $content['cid'] }}">
+                  @if ($loop->iteration == 1)
+                    <span class="badge badge-danger">{{ \Str::substr('00' . $loop->iteration, -2) }}</span>
+                  @elseif($loop->iteration == 2)
+                    <span class="badge badge-success">{{ \Str::substr('00' . $loop->iteration, -2) }}</span>
+                  @elseif($loop->iteration == 3)
+                    <span class="badge badge-primary">{{ \Str::substr('00' . $loop->iteration, -2) }}</span>
+                  @else
+                    <span class="badge badge-secondary">{{ \Str::substr('00' . $loop->iteration, -2) }}</span>
+                  @endif
+                  {{ $content['content']['title'] ?? $content['title'] }}
+                </a>
+              @endforeach
+            @endisset
+          </ul>
+          <ul class="list-group list-group-flush tab-pane" id="nofield-hottest" role="tabpanel"
+            aria-labelledby="nofield-hottest-tab">
+            @isset($tabs['nofield-hottest'])
+              @foreach ($tabs['nofield-hottest'] as $content)
+                <a class="list-group-item list-group-item-action text-truncate p-2"
+                  title="{{ $content['content']['title'] ?? $content['title'] }}"
+                  href="/home/content/{{ $content['cid'] }}">
+                  @if ($loop->iteration == 1)
+                    <span class="badge badge-danger">{{ \Str::substr('00' . $loop->iteration, -2) }}</span>
+                  @elseif($loop->iteration == 2)
+                    <span class="badge badge-success">{{ \Str::substr('00' . $loop->iteration, -2) }}</span>
+                  @elseif($loop->iteration == 3)
+                    <span class="badge badge-primary">{{ \Str::substr('00' . $loop->iteration, -2) }}</span>
+                  @else
+                    <span class="badge badge-secondary">{{ \Str::substr('00' . $loop->iteration, -2) }}</span>
+                  @endif
+                  {{ $content['content']['title'] ?? $content['title'] }}
+                </a>
+              @endforeach
+            @endisset
+          </ul>
+          <ul class="list-group list-group-flush tab-pane" id="nofield-recommend" role="tabpanel"
+            aria-labelledby="nofield-recommend-tab">
+            @isset($tabs['nofield-recommend'])
+              @foreach ($tabs['nofield-recommend'] as $content)
+                <a class="list-group-item list-group-item-action text-truncate p-2"
+                  title="{{ $content['content']['title'] ?? $content['title'] }}"
+                  href="/home/content/{{ $content['cid'] }}">
+                  {{ $content['content']['title'] ?? $content['title'] }}
+                </a>
+              @endforeach
+            @endisset
+          </ul>
+          <ul class="list-group list-group-flush tab-pane" id="nofield-collection" role="tabpanel"
+            aria-labelledby="nofield-collection-tab">
+            @isset($tabs['nofield-collection'])
+              @foreach ($tabs['nofield-collection'] as $content)
+                <a class="list-group-item list-group-item-action text-truncate p-2"
+                  title="{{ $content['content']['title'] ?? $content['title'] }}"
+                  href="/home/content/{{ $content['cid'] }}">
+                  {{ $content['content']['title'] ?? $content['title'] }}
+                </a>
+              @endforeach
+            @endisset
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
   <div class="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 ml:-1 mr:-1 d-none">

@@ -89,7 +89,9 @@ class HomeController extends \App\Http\Controllers\Controller
             'view' => 'index',
             "tabs" => [
                 'home-latest' => \App\Models\Content::where([['type', 'post'], ['status', 'publish']])->latest('updated_at')->paginate(30),
-                'home-hottest' => \App\Models\Content::where([['type', 'post'], ['status', 'publish']])->orderBy('views', 'desc')->paginate(30)
+                'home-hottest' => \App\Models\Content::where([['type', 'post'], ['status', 'publish']])->orderBy('views', 'desc')->paginate(30),
+                'nofield-latest' => \App\Models\Content::doesntHave('fields')->where([['type', 'post'], ['status', 'publish']])->latest('updated_at')->paginate(30),
+                'nofield-hottest' => \App\Models\Content::doesntHave('fields')->orderBy('views', 'desc')->paginate(30),
             ]
         ];
         foreach (\Module::all() ?? [] as $moduleName => $module) {
@@ -104,7 +106,7 @@ class HomeController extends \App\Http\Controllers\Controller
                 // $return['tabs'][$moduleSlug . '-latest'] = new Paginator(Content::factory(30)->raw([], ), 30, 1);
                 // $return['tabs'][$moduleSlug . '-latest'] = \App\Models\Content::latest_updated(30);
                 $return['tabs'][$moduleSlug . '-latest'] =
-                    \App\Models\Content::with(['fields'])->whereHas('fields', function ($query) use ($moduleSlug) {
+                    \App\Models\Content::whereHas('fields', function ($query) use ($moduleSlug) {
                         $query->where([['name', 'module_' . $moduleSlug]]);
                     })
                         ->where([['type', 'post'], ['status', 'publish']])
