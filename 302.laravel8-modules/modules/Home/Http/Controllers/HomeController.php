@@ -2,7 +2,6 @@
 
 namespace Modules\Home\Http\Controllers;
 
-use App\Models\Content;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
@@ -95,7 +94,8 @@ trait ViewTrait
         $return = [
             'view' => 'index',
             "tabs" => [
-                'home-latest' => \App\Models\Content::latest('updated_at')->paginate(30)
+                'home-latest' => \App\Models\Content::where([['type', 'post'], ['status', 'publish']])->latest('updated_at')->paginate(30),
+                'home-hottest' => \App\Models\Content::where([['type', 'post'], ['status', 'publish']])->orderBy('views', 'desc')->paginate(30)
             ]
         ];
         foreach (\Module::all() ?? [] as $moduleName => $module) {

@@ -185,11 +185,16 @@ trait HasView
                 'fields',
                 'links',
                 'comments'
-            ])->whereHas("fields", function ($query) {
+            ])
+        ];
+        if (!in_array($this->module, ['Home'])) {
+            $return['content'] = $return['content']->whereHas("fields", function ($query) {
                 $query->where([['name', 'module_' . strtolower($this->module)]]);
 
-            })->find($cid)
-        ];
+            });
+        }
+        $return['content'] = $return['content']->find($cid);
+        // var_dump($return['content']);
         if (empty($return['content']))
             abort(404);
         $return['content'] = $return['content']->toArray();
