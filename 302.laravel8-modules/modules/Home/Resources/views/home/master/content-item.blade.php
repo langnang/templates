@@ -11,7 +11,7 @@
               <div class="card-title mb-0">{{ $content['title'] }}</div>
             </div>
             <div class="card-body">
-              <p class="lead">{{ markdown_to_html($content['text']) }}</p>
+              {!! markdown_to_html($content['text']) !!}
             </div>
           </div>
         </div>
