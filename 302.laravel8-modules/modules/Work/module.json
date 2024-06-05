@@ -1,0 +1,13 @@
+{
+    "name": "Work",
+    "alias": "work",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Work\\Providers\\WorkServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

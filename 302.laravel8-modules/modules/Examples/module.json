@@ -1,0 +1,33 @@
+{
+    "name": "Examples",
+    "alias": "examples",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Examples\\Providers\\ExamplesServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": [],
+    "dependencies": {
+        "master": [
+            {
+                "name": "jquery",
+                "version": "1.12.4",
+                "files": [
+                    "jquery.min.js"
+                ]
+            },
+            {
+                "name": "bootstrap",
+                "version": "3.4.1",
+                "files": [
+                    "bootstrap.min.css",
+                    "bootstrap-theme.min.css",
+                    "bootstrap.min.js"
+                ]
+            }
+        ]
+    }
+}

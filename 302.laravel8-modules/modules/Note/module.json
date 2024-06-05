@@ -1,0 +1,14 @@
+{
+    "name": "Note",
+    "alias": "note",
+    "type": "project",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Note\\Providers\\NoteServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
