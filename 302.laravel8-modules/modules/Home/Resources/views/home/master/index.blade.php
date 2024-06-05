@@ -4,7 +4,7 @@
   <div class="container-fluid">
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
       @foreach (Module::all() ?? [] as $moduleName => $module)
-        @if (Module::isEnabled($moduleName) && in_array($moduleName, config('home.view_index.modules') ?? []))
+        @if (Module::isEnabled($moduleName) && !in_array($moduleName, config('home.view_index.ignore_modules') ?? []))
           @php $moduleSlug = config(strtolower($moduleName) . ".slug") ?? strtolower($moduleName) @endphp
           <div class="col">
             <div class="card tab-content mb-3">

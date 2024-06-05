@@ -100,7 +100,7 @@ trait ViewTrait
         ];
         foreach (\Module::all() ?? [] as $moduleName => $module) {
 
-            if (\Module::isEnabled($moduleName) && in_array($moduleName, config("home.view_index.modules") ?? [])) {
+            if (\Module::isEnabled($moduleName) && !in_array($moduleName, config("home.view_index.ignore_modules") ?? [])) {
                 if ($moduleName == 'Home')
                     continue;
 

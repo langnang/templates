@@ -10,10 +10,8 @@ return [
     // Modules
     "view_index" => [
         "visible" => true,
-        "modules" => [
-            "Home",
-            "Question",
-            "Website",
-        ]
+        "ignore_modules" => [
+            "Admin",
+        ],
     ],
 ];
