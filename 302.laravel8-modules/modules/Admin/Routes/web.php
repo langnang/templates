@@ -23,26 +23,35 @@ use App\Support\Module;
 // var_dump(Module::currentConfig('name'));
 Route::prefix(Module::currentConfig('web.prefix'))->group(function () {
     Route::get('/', 'AdminController@view_index');
-    Route::match (['get', 'post'], '/register', 'AdminController@view_register');
-    Route::match (['get', 'post'], '/login', 'AdminController@view_login');
-    Route::match (['get', 'post'], '/forgot-password', 'AdminController@view_forgot_password');
+    Route::match(['get', 'post'], '/register', 'AdminController@view_register');
+    Route::match(['get', 'post'], '/login', 'AdminController@view_login');
+    Route::match(['get', 'post'], '/forgot-password', 'AdminController@view_forgot_password');
     Route::get('/config', 'AdminController@view_config');
     Route::get('/basic', 'AdminController@view_admin_basic_index');
+
+
+    Route::prefix('data')->group(function () {
+        Route::match(['get', 'post'], '/contents', 'AdminController@view_content_list');
+        Route::match(['get', 'post'], '/contents/{cid}', 'AdminController@view_content_item');
+        Route::match(['get', 'post'], '/contents/insert', 'AdminController@view_content_item');
+    });
+
+
     Route::prefix('system')->group(function () {
         // view_admin_system_database
-        Route::match (['get', 'post'], '/database', 'AdminController@view_admin_system_database');
-        Route::match (['get', 'post'], '/database/{table?}', 'AdminController@view_admin_system_database');
-        Route::match (['get', 'post'], '/artisan/{part?}', 'AdminController@view_admin_system_artisan');
-        Route::match (['get', 'post'], '/config', 'AdminController@view_admin_modules_config');
-        Route::match (['get'], '/modules', 'AdminController@view_admin_system_modules');
-        Route::match (['get', 'post'], '/modules/{table}', 'AdminController@view_admin_system_modules_config')
+        Route::match(['get', 'post'], '/database', 'AdminController@view_admin_system_database');
+        Route::match(['get', 'post'], '/database/{table?}', 'AdminController@view_admin_system_database');
+        Route::match(['get', 'post'], '/artisan/{part?}', 'AdminController@view_admin_system_artisan');
+        Route::match(['get', 'post'], '/config', 'AdminController@view_admin_modules_config');
+        Route::match(['get'], '/modules', 'AdminController@view_admin_system_modules');
+        Route::match(['get', 'post'], '/modules/{table}', 'AdminController@view_admin_system_modules_config')
             ->where([
                 'module' => '(' . implode('|', array_filter(array_values(Module::allConfig('web.prefix')), function ($value) {
                     return $value !== strtolower(Module::current());
                 })) . ')'
             ]);
-        Route::match (['get'], '/helpers', 'AdminController@view_system_helpers');
-        Route::match (['get'], '/helpers/{class}', 'AdminController@view_system_helpers_class');
+        Route::match(['get'], '/helpers', 'AdminController@view_system_helpers');
+        Route::match(['get'], '/helpers/{class}', 'AdminController@view_system_helpers_class');
     });
 
     /**
@@ -55,13 +64,13 @@ Route::prefix(Module::currentConfig('web.prefix'))->group(function () {
             })) . ')'
         ])
         ->group(function () {
-            Route::match (['get', 'post'], '', 'AdminController@view_admin_modules_index');
+            Route::match(['get', 'post'], '', 'AdminController@view_admin_modules_index');
             Route::prefix('{table}')->where(['table' => '(metas|contents|comments|links)'])->group(function () {
                 Route::get('', 'AdminController@view_admin_modules_select_list');
 
-                Route::match (['get', 'post'], '/insert', 'AdminController@view_admin_modules_insert_item');
+                Route::match(['get', 'post'], '/insert', 'AdminController@view_admin_modules_insert_item');
 
-                Route::match (['get', 'post'], '/{id}', 'AdminController@view_admin_modules_select_item')->where(['id' => '[0-9]+']);
+                Route::match(['get', 'post'], '/{id}', 'AdminController@view_admin_modules_select_item')->where(['id' => '[0-9]+']);
             });
             // Route::match(['get', 'post'], '/config', 'AdminController@view_admin_modules_config');
         });

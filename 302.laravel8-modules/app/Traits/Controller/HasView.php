@@ -101,7 +101,7 @@ trait HasView
         $return = array_merge([
             "prefix" => $this->prefix ?? 'home',
             "query" => $request->all(),
-            "view" => View::exists($this->prefix . '.index') ? $this->prefix . '.index' : 'index',
+            "view" => \View::exists($this->prefix . '.index') ? $this->prefix . '.index' : 'index',
             "current_page" => request()->input('page', '1'),
             "last_page" => 1,
         ], $request->input('$return', []), );
@@ -186,7 +186,7 @@ trait HasView
         return $this->view_index($request);
         $return = array_merge([
             "prefix" => $this->prefix ?? 'home',
-            "view" => View::exists($this->prefix . '.meta') ? $this->prefix . '.meta' : '_view.meta',
+            "view" => \View::exists($this->prefix . '.meta') ? $this->prefix . '.meta' : '_view.meta',
         ], $request->input('$return', []), );
         $return = array_merge($this->view_index($request)->getData(), $return);
         echo "<script>window.\$data=" . json_encode($return, JSON_UNESCAPED_UNICODE) . "</script>";
@@ -197,7 +197,7 @@ trait HasView
     {
         $return = array_merge([
             "prefix" => $this->prefix ?? 'home',
-            "view" => View::exists($this->prefix . '.meta-form') ? $this->prefix . '.meta-form' : '_view.meta-form',
+            "view" => \View::exists($this->prefix . '.meta-form') ? $this->prefix . '.meta-form' : '_view.meta-form',
         ], $request->input('$return', []), );
         if ($request->method() === "GET") {
             $return['meta'] = $this->getReturn($this->select_meta_item(new Request(['mid' => $mid])));
@@ -213,27 +213,35 @@ trait HasView
      * @param Request $request
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function view_content_item(Request $request, $cid)
+    public function view_content_item(Request $request, $cid = 0)
     {
         $_logs = [__METHOD__, ['$request->all()', $request->all()], $cid];
 
+        $request->merge(['cid' => $cid]);
         $return = [
-            'view' => 'content-item',
-            'content' => \App\Models\Content::with([
+            'view' => $request->input('$view', 'content-item'),
+        ];
+        if ($request->method() == 'POST') {
+            // var_dump($request->method());
+        }
+        if ($cid == 0) {
+            $return['content'] = new \App\Models\Content();
+        } else {
+            $return['content'] = \App\Models\Content::with([
                 'metas',
                 'fields',
                 'links',
                 'comments'
-            ])
-        ];
-        if (!in_array($this->module, ['Home'])) {
-            $return['content'] = $return['content']->whereHas("fields", function ($query) {
-                $query->where([['name', 'module_' . strtolower($this->module)]]);
+            ]);
+            if (!in_array($this->module, ['Home', 'Admin'])) {
+                $return['content'] = $return['content']->whereHas("fields", function ($query) {
+                    $query->where([['name', 'module_' . strtolower($this->module)]]);
 
-            });
+                });
+            }
+            $return['content'] = $return['content']->find($cid);
         }
-        $return['content'] = $return['content']->find($cid);
-        // var_dump($return['content']);
+        // var_dump($return);
         if (empty($return['content']))
             abort(404);
         $return['content'] = $return['content']->toArray();
@@ -242,7 +250,7 @@ trait HasView
 
         $return = array_merge([
             "prefix" => $this->prefix ?? 'home',
-            "view" => View::exists($this->prefix . '.content') ? $this->prefix . '.content' : '_view.content',
+            "view" => \View::exists($this->prefix . '.content') ? $this->prefix . '.content' : '_view.content',
         ], $request->input('$return', []), );
         if ((int) $cid === 0) {
             // 发现
@@ -297,7 +305,7 @@ trait HasView
     {
         $return = array_merge([
             "prefix" => $this->prefix ?? 'home',
-            "view" => View::exists($this->prefix . '.content-item-form') ? $this->prefix . '.content-item-form' : '_view.content-item-form',
+            "view" => \View::exists($this->prefix . '.content-item-form') ? $this->prefix . '.content-item-form' : '_view.content-item-form',
         ], $request->input('$return', []), );
         if ((int) $cid === 0) {
             $return['content'] = new $this->ContentModel(['parent' => null]);
@@ -333,11 +341,19 @@ trait HasView
         $request->merge(['$return' => $return, 'cid' => $cid]);
         return $this->view_index($request);
     }
+    public function view_content_list(Request $request)
+    {
+        $return = [
+            'view' => $request->input('$view', 'content-list'),
+            'contents' => \App\Models\Content::paginate(20),
+        ];
+        return $this->view($return);
+    }
     public function view_content_list_form(Request $request)
     {
         $return = array_merge([
             "prefix" => $this->prefix ?? 'home',
-            "view" => View::exists($this->prefix . '.content-list-form') ? $this->prefix . '.content-list-form' : '_view.content-list-form',
+            "view" => \View::exists($this->prefix . '.content-list-form') ? $this->prefix . '.content-list-form' : '_view.content-list-form',
         ], $request->input('$return', []), );
         $request->merge(['$return' => $return]);
         return $this->view_index($request);
@@ -346,7 +362,7 @@ trait HasView
     {
         $return = array_merge([
             "prefix" => $this->prefix ?? 'home',
-            "view" => View::exists($this->prefix . '.' . $field) ? $this->prefix . '.' . $field : '_view.' . $field,
+            "view" => \View::exists($this->prefix . '.' . $field) ? $this->prefix . '.' . $field : '_view.' . $field,
         ], $request->input('$return', []), );
         if (request()->filled('source') && request()->filled('url')) {
             $source = (new SpiderController)->select_content_item(new Request(['cid' => request()->input('source')]));
@@ -381,7 +397,7 @@ trait HasView
     {
         $return = array_merge([
             "prefix" => $this->prefix ?? 'home',
-            "view" => View::exists($this->prefix . '.discover') ? $this->prefix . '.discover' : '_view.discover',
+            "view" => \View::exists($this->prefix . '.discover') ? $this->prefix . '.discover' : '_view.discover',
         ], $request->input('$return', []), );
         $return['sources'] = (new SpiderController)->select_content_list(new Request(['$where' => [], 'type' => "post_" . $this->prefix]));
         return $this->view($return['view'], $return);
@@ -391,7 +407,7 @@ trait HasView
     {
         $return = array_merge([
             "prefix" => $this->prefix ?? 'home',
-            "view" => View::exists($this->prefix . '.list') ? $this->prefix . '.list' : '_view.list',
+            "view" => \View::exists($this->prefix . '.list') ? $this->prefix . '.list' : '_view.list',
         ], $request->input('$return', []), );
         $sources = (new SpiderController)->select_content_list(new Request(['$where' => [], 'type' => "post_" . $this->prefix]));
         $return['sources'] = [];
@@ -428,7 +444,7 @@ trait HasView
         // dump(__METHOD__);
         $return = array_merge([
             "prefix" => $this->prefix ?? 'home',
-            "view" => View::exists($this->prefix . '.index') ? $this->prefix . '.index' : '_view.index',
+            "view" => \View::exists($this->prefix . '.index') ? $this->prefix . '.index' : '_view.index',
             "current_page" => request()->input('page', '1'),
             "discover_index" => $discover_index,
             "last_page" => 1,
@@ -499,7 +515,7 @@ trait HasView
     {
         $return = array_merge([
             "prefix" => $this->prefix ?? 'home',
-            "view" => View::exists($this->prefix . '.options') ? $this->prefix . '.options' : '_view.options',
+            "view" => \View::exists($this->prefix . '.options') ? $this->prefix . '.options' : '_view.options',
         ], $request->input('$return', []), );
         echo "<script>window.\$data=" . json_encode($return, JSON_UNESCAPED_UNICODE) . "</script>";
         return $this->view($return['view'], $return);
@@ -514,7 +530,7 @@ trait HasView
     {
         $return = array_merge([
             "prefix" => $this->prefix ?? 'home',
-            "view" => View::exists($this->prefix . '.404') ? $this->prefix . '.404' : '_view.404',
+            "view" => \View::exists($this->prefix . '.404') ? $this->prefix . '.404' : '_view.404',
         ], $request->input('$return', []), );
         echo "<script>window.\$data=" . json_encode($return, JSON_UNESCAPED_UNICODE) . "</script>";
         return $this->view($return['view'], $return);

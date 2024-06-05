@@ -20,10 +20,10 @@ use Nwidart\Modules\Laravel\Module as LaravelModule;
 // use Nwidart\Modules\Module;
 use App\Support\Module;
 
-class AdminController extends \App\Http\Controllers\Controller
+class AdminController extends AdminApiController
 {
     protected $module = "Admin";
-    use ApiTrait, ViewTrait, ViewWebTrait, ViewAdminTrait;
+    use ViewTrait, ViewWebTrait, ViewAdminTrait;
     /**
      * Display a listing of the resource.
      * @return Renderable
@@ -157,27 +157,17 @@ class AdminController extends \App\Http\Controllers\Controller
         // dump($module_config['menu']);
         return parent::view($view, array_merge(['config' => $config], $data, $mergeData));
     }
-}
-trait ApiTrait
-{
-    function api_login(Request $request)
+
+
+    public function view_content_list(Request $request)
     {
-        Auth::login(new User(['email' => $request->input('email'), 'password' => $request->input('password'),]), true);
+        $request->merge(['$view' => 'data.content-list']);
+        return parent::{__FUNCTION__}($request);
     }
-    function api_logout(Request $request)
+    public function view_content_item(Request $request, $cid = 0)
     {
-    }
-    function api_modules_insert_item(Request $request)
-    {
-    }
-    function api_modules_delete_item(Request $request)
-    {
-    }
-    function api_modules_update_item(Request $request)
-    {
-    }
-    function api_modules_select_list(Request $request)
-    {
+        $request->merge(['$view' => 'data.content-item']);
+        return parent::{__FUNCTION__}($request, $cid);
     }
 }
 

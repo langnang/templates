@@ -11,6 +11,10 @@ return array(
     'ui' => 'adminlte',
     'layout' => 'master',
     'theme' => 'master',
+    'views' => [
+        'content_item' => 'data.content_item',
+        'content_list' => 'data.content_list',
+    ],
     'web' =>
         array(
             'prefix' => NULL,
@@ -61,7 +65,7 @@ return array(
                         ),
                     1 =>
                         array(
-                            'path' => '/table',
+                            'path' => '/data',
                             'title' => '数据管理',
                             'icon' => 'fas fa-database',
                             'slug' => '',
@@ -69,24 +73,35 @@ return array(
                                 [
                                     "path" => '/metas',
                                     'title' => 'Metas',
+                                    'children' => [],
                                 ],
                                 [
                                     "path" => '/contents',
                                     'title' => 'Contents',
+                                    'children' => [
+                                        [
+                                            'path' => '/{cid}',
+                                            'title' => 'Update Content',
+                                            'visible' => false,
+                                        ],
+                                    ],
                                 ],
                                 [
                                     "path" => '/comments',
                                     'title' => 'Comments',
+                                    'children' => [],
                                 ],
                                 [
                                     "path" => '/links',
                                     'title' => 'Links',
+                                    'children' => [],
                                 ],
                                 [
                                     "path" => '/logs',
                                     'title' => 'Logs',
-                                ]
-                            ]
+                                    'children' => [],
+                                ],
+                            ],
                         ),
                     2 =>
                         array(
