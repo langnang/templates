@@ -1,5 +1,6 @@
 <?php
 
 return [
-    'name' => 'Novel'
+    'name' => 'Novel',
+    "nameCn" => "小说",
 ];

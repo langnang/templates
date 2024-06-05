@@ -1,5 +1,6 @@
 <?php
 
 return [
-    'name' => 'News'
+    'name' => 'News',
+    "nameCn" => "资讯",
 ];

@@ -15,7 +15,7 @@
     @section('navbar') @include($config['slug'] . '::shared.' . $config['layout'] . '.navbar') @show
     @section('sidebar') @include($config['slug'] . '::shared.' . $config['layout'] . '.sidebar') @show
     <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
+    <div class="content-wrapper" style="height: calc(100vh - 114px); overflow-y: auto; min-height: auto;">
       <!-- Content Header (Page header) -->
       <div class="content-header">
         <div class="container-fluid">

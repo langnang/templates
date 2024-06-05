@@ -8,10 +8,18 @@ return [
     "api" => [],
     "web" => [],
     // Modules
+    "view_shared" => [
+        'header' => [],
+        'aside' => [],
+        'footer' => [],
+    ],
     "view_index" => [
         "visible" => true,
         "ignore_modules" => [
             "Admin",
+        ],
+        "fixed_modules" => [
+            "Home"
         ],
     ],
 ];

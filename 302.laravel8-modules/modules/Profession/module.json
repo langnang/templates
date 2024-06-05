@@ -1,0 +1,13 @@
+{
+    "name": "Profession",
+    "alias": "profession",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Profession\\Providers\\ProfessionServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

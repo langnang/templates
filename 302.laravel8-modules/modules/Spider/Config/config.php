@@ -2,5 +2,5 @@
 
 return [
     'name' => 'Spider',
-    'nameCn' => '爬虫',
+    'nameCn' => '采集',
 ];

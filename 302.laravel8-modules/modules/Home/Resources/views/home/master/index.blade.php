@@ -6,12 +6,21 @@
       @foreach (Module::all() ?? [] as $moduleName => $module)
         @if (Module::isEnabled($moduleName) && !in_array($moduleName, config('home.view_index.ignore_modules') ?? []))
           @php $moduleSlug = config(strtolower($moduleName) . ".slug") ?? strtolower($moduleName) @endphp
-          <div class="col">
+          <div class="col @if (in_array($moduleName, config('home.view_index.fixed_modules') ?? [])) order-1 @else order-12 @endif">
             <div class="card tab-content mb-3">
               <div class="card-header p-0 pr-1">
                 <ul class="nav nav-tabs border-bottom-0">
+                  <li class="nav-item">
+                    <a class="nav-link px-1" style="font-size: 24px;" href="#">
+                      @if (in_array($moduleName, config('home.view_index.fixed_modules') ?? []))
+                        <i class="bi bi-pin-angle-fill text-primary"></i>
+                      @else
+                        <i class="bi bi-pin-angle"></i>
+                      @endif
+                    </a>
+                  </li>
                   <li class="nav-item mr-auto">
-                    <a class="nav-link px-2" href="/{{ Config::get($moduleSlug . '.slug') ?? $moduleSlug }}">
+                    <a class="nav-link px-1 pl-0" href="/{{ Config::get($moduleSlug . '.slug') ?? $moduleSlug }}">
                       {{ Config::get($moduleSlug . '.nameCn') ?? Config::get($moduleSlug . '.name') }}
                     </a>
                   </li>

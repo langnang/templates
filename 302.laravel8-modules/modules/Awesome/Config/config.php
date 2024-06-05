@@ -1,5 +1,6 @@
 <?php
 
 return [
-    'name' => 'Awesome'
+    'name' => 'Awesome',
+    'nameCn' => "资源推荐",
 ];

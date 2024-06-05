@@ -2,6 +2,7 @@
 
 return [
     'name' => 'Market',
+    'nameCn' => '市场',
     'slug' => "market",
     'title' => "Market",
     'prefix' => 'market',
