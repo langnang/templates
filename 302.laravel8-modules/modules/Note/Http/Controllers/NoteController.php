@@ -9,6 +9,7 @@ use Modules\Note\Models\NoteContent;
 
 class NoteController extends \App\Http\Controllers\Controller
 {
+    protected $module = "Note";
     /**
      * Display a listing of the resource.
      * @return Renderable

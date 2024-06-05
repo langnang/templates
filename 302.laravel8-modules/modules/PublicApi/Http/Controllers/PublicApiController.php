@@ -8,6 +8,7 @@ use Illuminate\Routing\Controller;
 
 class PublicApiController extends \App\Http\Controllers\Controller
 {
+    protected $module = "PublicApi";
     /**
      * Display a listing of the resource.
      * @return Renderable

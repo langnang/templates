@@ -9,6 +9,7 @@ use App\Support\Module;
 
 class ExamplesController extends \App\Http\Controllers\Controller
 {
+    protected $module = "Examples";
     /**
      * Display a listing of the resource.
      * @return Renderable

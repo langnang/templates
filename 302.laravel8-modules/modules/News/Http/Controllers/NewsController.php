@@ -8,6 +8,7 @@ use Illuminate\Routing\Controller;
 
 class NewsController extends \App\Http\Controllers\Controller
 {
+    protected $module = "News";
     /**
      * Display a listing of the resource.
      * @return Renderable

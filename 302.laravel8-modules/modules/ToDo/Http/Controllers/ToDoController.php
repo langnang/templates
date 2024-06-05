@@ -8,6 +8,7 @@ use Illuminate\Routing\Controller;
 
 class ToDoController extends \App\Http\Controllers\Controller
 {
+    protected $module = "ToDo";
     /**
      * Display a listing of the resource.
      * @return Renderable

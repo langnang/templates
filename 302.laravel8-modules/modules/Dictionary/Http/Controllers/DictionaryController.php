@@ -8,6 +8,7 @@ use Illuminate\Routing\Controller;
 
 class DictionaryController extends \App\Http\Controllers\Controller
 {
+    protected $module = "Dictionary";
     /**
      * Display a listing of the resource.
      * @return Renderable

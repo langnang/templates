@@ -8,6 +8,7 @@ use Illuminate\Routing\Controller;
 
 class ProfessionController extends \App\Http\Controllers\Controller
 {
+    protected $module = "Profession";
     /**
      * Display a listing of the resource.
      * @return Renderable

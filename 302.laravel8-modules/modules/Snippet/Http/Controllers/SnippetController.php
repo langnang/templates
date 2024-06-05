@@ -8,6 +8,7 @@ use Illuminate\Routing\Controller;
 
 class SnippetController extends \App\Http\Controllers\Controller
 {
+    protected $module = "Snippet";
     /**
      * Display a listing of the resource.
      * @return Renderable

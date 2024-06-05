@@ -8,6 +8,7 @@ use Illuminate\Routing\Controller;
 
 class DemoController extends \App\Http\Controllers\Controller
 {
+    protected $module = "Demo";
     /**
      * Display a listing of the resource.
      * @return Renderable

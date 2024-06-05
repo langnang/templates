@@ -8,6 +8,7 @@ use Illuminate\Routing\Controller;
 
 class VideoController extends \App\Http\Controllers\Controller
 {
+    protected $module = "Video";
     /**
      * Display a listing of the resource.
      * @return Renderable

@@ -8,6 +8,7 @@ use Illuminate\Routing\Controller;
 
 class NovelController extends \App\Http\Controllers\Controller
 {
+    protected $module = "Novel";
     /**
      * Display a listing of the resource.
      * @return Renderable

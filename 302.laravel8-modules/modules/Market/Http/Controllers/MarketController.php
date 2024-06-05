@@ -15,6 +15,7 @@ use Modules\Market\Support\Market;
 
 class MarketController extends \App\Http\Controllers\Controller
 {
+    protected $module = "Market";
     use StaticTrait, ViewTrait;
     protected $remote_projects;
     protected $remote_project;
@@ -104,7 +105,7 @@ class MarketController extends \App\Http\Controllers\Controller
             $res = ["_original" => $item];
             foreach (\Arr::get($remote, 'response.map') ?? [] as $result_key => $response_key) {
                 // var_dump([$key, $response_key]);
-                if (empty ($response_key))
+                if (empty($response_key))
                     continue;
                 $res[$result_key] = $item[$response_key];
             }

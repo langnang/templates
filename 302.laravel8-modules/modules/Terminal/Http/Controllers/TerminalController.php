@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Artisan;
 
 class TerminalController extends \App\Http\Controllers\Controller
 {
+    protected $module = "Terminal";
     use ViewTrait;
     /**
      * Display a listing of the resource.

@@ -6,7 +6,7 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
-class QuoteController extends Controller
+class QuoteController extends \App\Http\Controllers\Controller
 {
     protected $module = "Quote";
     /**

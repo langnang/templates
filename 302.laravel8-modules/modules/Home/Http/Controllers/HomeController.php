@@ -11,8 +11,6 @@ use Modules\Home\Models\HomeContent;
 class HomeController extends \App\Http\Controllers\Controller
 {
     protected $module = "Home";
-
-    use ViewTrait;
     /**
      * Display a listing of the resource.
      * @return Renderable
@@ -85,10 +83,6 @@ class HomeController extends \App\Http\Controllers\Controller
     public function select_latest_module_contents(Request $request)
     {
     }
-}
-
-trait ViewTrait
-{
     public function view_index(Request $request)
     {
         $return = [

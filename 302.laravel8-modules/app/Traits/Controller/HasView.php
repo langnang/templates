@@ -33,7 +33,9 @@ trait HasView
         //         : $config['slug'] . '::' . $config['slug'] . '.' . $config['layout'] . '.' . $return['view'])
         //     : $this->match_view($view);
         $return['layout'] = $this->match_layout(empty($config) ? $return['layout'] : $config['layout']);
+        // var_dump($return);
         $return['view'] = $this->match_view($return['view'], empty($config) ? $return['layout'] : $config['layout']);
+        // var_dump($return);
         // var_dump($return);
         if (env('WEB_CONSOLE')) {
             echo "<script>window.\$app=" . json_encode($return, JSON_UNESCAPED_UNICODE) . ";</script>";
@@ -61,7 +63,7 @@ trait HasView
         else if (\View::exists($layout))
             return $layout;
         else
-            abort(404);
+            abort(404, "No Layout");
     }
     public function match_view($view, $layout = 'master', $module = null)
     {
@@ -78,7 +80,7 @@ trait HasView
         else if (\View::exists($view))
             return $view;
         else
-            abort(404);
+            abort(404, 'No View');
     }
     // public function view_index(Request $request)
     // {
@@ -242,8 +244,10 @@ trait HasView
             $return['content'] = $return['content']->find($cid);
         }
         // var_dump($return);
+        // var_dump($return);
         if (empty($return['content']))
-            abort(404);
+            abort(404, 'Null Value');
+        // var_dump($return);
         $return['content'] = $return['content']->toArray();
         // $return['fields'] = $return['content']['fields'];
         return $this->view($return);
