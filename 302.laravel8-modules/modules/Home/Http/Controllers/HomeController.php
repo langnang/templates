@@ -110,10 +110,10 @@ trait ViewTrait
                 // $return['tabs'][$moduleSlug . '-latest'] = new Paginator(Content::factory(30)->raw([], ), 30, 1);
                 // $return['tabs'][$moduleSlug . '-latest'] = \App\Models\Content::latest_updated(30);
                 $return['tabs'][$moduleSlug . '-latest'] =
-                    \App\Models\Field::whereHas('content', function ($query) {
-                        $query->where([['type', 'post'], ['status', 'publish']]);
+                    \App\Models\Content::with(['fields'])->whereHas('fields', function ($query) use ($moduleSlug) {
+                        $query->where([['name', 'module_' . $moduleSlug]]);
                     })
-                        ->where([['name', 'module_' . $moduleSlug]])
+                        ->where([['type', 'post'], ['status', 'publish']])
                         ->latest('updated_at')
                         ->paginate(30);
                 // \App\Models\Field::whereHas('content', function ($query) {

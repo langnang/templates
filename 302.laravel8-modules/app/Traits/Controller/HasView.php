@@ -18,28 +18,67 @@ trait HasView
             'request' => request()->all(),
             'config' => $config = Module::currentConfig(null, $this->module),
             'layout' => "layouts.master",
-        ], is_array($view) ? $view : [], $data);
+        ], is_array($view) ? $view : ['view' => $view], $data);
 
         // var_dump(self::class);
         // var_dump($config);
         //
-        $return['layout'] = empty($config) ? $return['layout'] : $config['slug'] . '::layouts.' . $config['layout'];
-        //
-        $return['view'] = is_array($view)
-            ? (empty($config)
-                ? $return['view']
-                : $config['slug'] . '::' . $config['slug'] . '.' . $config['layout'] . '.' . $return['view'])
-            : $view;
-
+        // var_dump($return);
+        // $return['layout'] = empty($config) ? $return['layout'] : $config['slug'] . '::layouts.' . $config['layout'];
+        // 
+        // var_dump($return);
+        // $return['view'] = is_array($view)
+        //     ? (empty($config)
+        //         ? $return['view']
+        //         : $config['slug'] . '::' . $config['slug'] . '.' . $config['layout'] . '.' . $return['view'])
+        //     : $this->match_view($view);
+        $return['layout'] = $this->match_layout(empty($config) ? $return['layout'] : $config['layout']);
+        $return['view'] = $this->match_view($return['view'], empty($config) ? $return['layout'] : $config['layout']);
+        // var_dump($return);
         if (env('WEB_CONSOLE')) {
             echo "<script>window.\$app=" . json_encode($return, JSON_UNESCAPED_UNICODE) . ";</script>";
-            echo "<script>console.log(`window.\$app`, window.\$app);</script>";
+            echo "<script>console.log(window.\$app);</script>";
         }
-        // dump($view);
-        if (is_array($view) ? !isset($view['view']) : empty($view))
-            abort(404);
+        // var_dump($return);
+        // if (is_array($view) ? !isset($view['view']) : empty($view))
+        //     abort(404);
 
+        // if (!\View::exists($return['view']))
+        //     abort(404);
         return view($return['view'], $return, $mergeData);
+    }
+
+    public function match_layout($layout = 'master', $module = null)
+    {
+        $module = strtolower(empty($module) ? $this->module : $module);
+        $moduleLayout = $module . '::layouts.' . $layout;
+        $globalLayout = 'layouts.' . $layout;
+        if (\View::exists($moduleLayout))
+            return $moduleLayout;
+        // 全局模板页面
+        else if (\View::exists($globalLayout))
+            return $globalLayout;
+        else if (\View::exists($layout))
+            return $layout;
+        else
+            abort(404);
+    }
+    public function match_view($view, $layout = 'master', $module = null)
+    {
+        $module = strtolower(empty($module) ? $this->module : $module);
+        $moduleView = $module . '::' . $module . '.' . $layout . '.' . $view;
+        $globalView = 'pages.' . $view;
+        // var_dump([$view, $layout, $module, $moduleView, $globalView]);
+        // 模块定制页面
+        if (\View::exists($moduleView))
+            return $moduleView;
+        // 全局模板页面
+        else if (\View::exists($globalView))
+            return $globalView;
+        else if (\View::exists($view))
+            return $view;
+        else
+            abort(404);
     }
     // public function view_index(Request $request)
     // {

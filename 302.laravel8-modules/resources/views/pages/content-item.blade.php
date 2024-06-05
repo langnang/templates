@@ -1,4 +1,5 @@
-@extends($config['slug'] . '::layouts.' . $config['layout'])
+@extends($layout)
+
 
 @section('content')
   <div class="container">
