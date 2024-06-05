@@ -7,8 +7,8 @@
       <div class="row">
         <div class="col-12">
           <div class="card">
-            <div class="card-header">
-              <h3 class="card-title">Fixed Header Table</h3>
+            <div class="card-header pl-3">
+              <h3 class="card-title">Content List</h3>
 
               <form class="form-inline card-tools float-right mb-0">
                 <div class="form-group mr-1">
@@ -35,7 +35,7 @@
                     <option value="">--Status--</option>
                   </select>
                 </div>
-                <button type="submit" class="btn btn-sm btn-default">
+                <button type="submit" class="btn btn-sm btn-default form-control form-control-sm">
                   <i class="fas fa-search"></i>
                 </button>
 
