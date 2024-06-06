@@ -91,7 +91,7 @@ class HomeController extends \App\Http\Controllers\Controller
                 'home-latest' => \App\Models\Content::where([['type', 'post'], ['status', 'publish']])->latest('updated_at')->paginate(30),
                 'home-hottest' => \App\Models\Content::where([['type', 'post'], ['status', 'publish']])->orderBy('views', 'desc')->paginate(30),
                 'nofield-latest' => \App\Models\Content::doesntHave('fields')->where([['type', 'post'], ['status', 'publish']])->latest('updated_at')->paginate(30),
-                'nofield-hottest' => \App\Models\Content::doesntHave('fields')->orderBy('views', 'desc')->paginate(30),
+                'nofield-hottest' => \App\Models\Content::doesntHave('fields')->where([['type', 'post'], ['status', 'publish']])->orderBy('views', 'desc')->paginate(30),
             ]
         ];
         foreach (\Module::all() ?? [] as $moduleName => $module) {
