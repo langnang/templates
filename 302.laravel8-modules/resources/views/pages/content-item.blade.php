@@ -23,22 +23,16 @@
           <div class="card-header p-2">
             <div class="card-title mb-0">关联分类</div>
           </div>
-          <div class="card-body"></div>
-          <div class="card-footer"></div>
         </div>
         <div class="card mb-3">
           <div class="card-header p-2">
             <div class="card-title mb-0">关联标签</div>
           </div>
-          <div class="card-body"></div>
-          <div class="card-footer"></div>
         </div>
         <div class="card mb-3">
           <div class="card-header p-2">
             <div class="card-title mb-0">关联链接</div>
           </div>
-          <div class="card-body"></div>
-          <div class="card-footer"></div>
         </div>
         <div class="card mb-3">
           <div class="card-header p-2">
@@ -53,7 +47,6 @@
               @endif
             @endforeach
           </ul>
-          <div class="card-footer"></div>
         </div>
       </div>
     </div>
