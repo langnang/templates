@@ -30,7 +30,8 @@
           </li>
         @else
           <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
+            <a class="nav-link"
+              href="/{{ $config['slug'] }}/{{ $navbar['path'] }}">{{ $navbar['nameCn'] ?? $navbar['name'] }}</a>
           </li>
         @endif
       @endforeach

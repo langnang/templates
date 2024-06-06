@@ -16,6 +16,15 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Arr;
 
+/**
+ * @OA\Info(title="My First API", version="0.1")
+ */
+/**
+ * @OA\Get(
+ *     path="/projects",
+ *     @OA\Response(response="200", description="Display a listing of projects.")
+ * )
+ */
 class Controller extends ApiController
 {
     use \Illuminate\Foundation\Auth\Access\AuthorizesRequests;

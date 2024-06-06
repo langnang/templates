@@ -16,4 +16,6 @@ Route::prefix('novel')->group(function () {
     Route::get('/metas', 'NovelController@view_meta_list');
     Route::get('/contents', 'NovelController@view_content_list');
     Route::get('/content/{cid}', 'NovelController@view_content_item');
+
+    Route::get('/discover', 'NovelController@view_discover');
 });

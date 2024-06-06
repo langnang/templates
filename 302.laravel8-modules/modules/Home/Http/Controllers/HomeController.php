@@ -95,7 +95,6 @@ class HomeController extends \App\Http\Controllers\Controller
             ]
         ];
         foreach (\Module::all() ?? [] as $moduleName => $module) {
-
             if (\Module::isEnabled($moduleName) && !in_array($moduleName, config("home.view_index.ignore_modules") ?? [])) {
                 if ($moduleName == 'Home')
                     continue;
@@ -124,8 +123,6 @@ class HomeController extends \App\Http\Controllers\Controller
             }
 
         }
-
-
 
         return $this->view($return);
     }

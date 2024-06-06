@@ -427,3 +427,21 @@ if (!function_exists("is_lumen")) {
         return class_exists(\Laravel\Lumen\Application::class);
     }
 }
+
+
+if (!function_exists('')) {
+    function enabled_modules()
+    {
+        $modules = json_decode(file_get_contents(__DIR__ . '/../modules_statuses.json'), true);
+        // var_dump($modules);
+        $return = [];
+        foreach ($modules ?? [] as $module => $status) {
+            // var_dump([$module, $status, strtolower($module) . '.name', config(strtolower($module) . '.name')]);
+            if ($status == true) {
+                array_push($return, $module);
+            }
+        }
+        // var_dump($modules);
+        return $return;
+    }
+}

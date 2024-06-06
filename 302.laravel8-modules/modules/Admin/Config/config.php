@@ -12,8 +12,8 @@ return array(
     'layout' => 'master',
     'theme' => 'master',
     'views' => [
-        'content_item' => 'data.content_item',
-        'content_list' => 'data.content_list',
+        'content_item' => 'data.content-item',
+        'content_list' => 'data.content-list',
     ],
     'web' =>
         array(

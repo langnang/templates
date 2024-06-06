@@ -16,6 +16,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Arr;
 
+/**
+ * @OA\Info(title="My First API", version="0.1")
+ */
 class ApiController extends \Illuminate\Routing\Controller
 {
     use \App\Traits\Controller\HasModule;

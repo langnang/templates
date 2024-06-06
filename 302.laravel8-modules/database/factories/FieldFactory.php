@@ -17,12 +17,34 @@ class FieldFactory extends Factory
             return 'module_' . (config(strtolower($moduleName) . ".slug") ?? strtolower($moduleName));
         }, array_keys(\Module::all()));
 
-        return [
+        $return = [
             //
             "cid" => \App\Models\Content::inRandomOrder()->first(),
-            "name" => $this->faker->randomElement(array_merge(['name', 'ico', 'keywords', 'description'], $moduleSlugs)),
+            "name" => $this->faker->randomElement(array_merge(['cids'], $moduleSlugs)),
             // "name" => $this->faker->word(),
-            "type" => $this->faker->randomElement(['str_value', 'float_value', 'int_value', 'text_value', 'object_value']),
+            "type" => $this->faker->randomElement(['str', 'float', 'int', 'text', 'object']),
         ];
+
+        switch ($return['type']) {
+            case 'float':
+                $return['float_value'] = '';
+                break;
+            case 'int':
+                $return['int_value'] = '';
+                break;
+            case 'str':
+                $return['str_value'] = '';
+                break;
+            case 'text':
+                $return['text_value'] = '<!-- markdown -->';
+                break;
+            case 'object':
+                $return['object_value'] = json_encode([], JSON_UNESCAPED_UNICODE);
+                break;
+            default:
+                break;
+        }
+
+        return $return;
     }
 }

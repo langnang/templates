@@ -15,15 +15,19 @@
                   <select class="form-control form-control-sm" name="module" placeholder="Module">
                     <option value="">--Module--</option>
                     @foreach (\Module::all() as $moduleName => $module)
-                      <option value="{{ strtolower($moduleName) }}">{{ $moduleName }}</option>
+                      @php $moduleSlug = strtolower($moduleName); @endphp
+                      <option value="{{ $moduleSlug }}" @if (request()->input('module') == $moduleSlug) selected @endif>
+                        {{ $moduleName }}</option>
                     @endforeach
                   </select>
                 </div>
                 <div class="form-group mr-1">
-                  <input type="text" name="title" class="form-control form-control-sm" placeholder="Title">
+                  <input type="text" name="title" class="form-control form-control-sm" placeholder="Title"
+                    value="{{ request()->input('title') }}">
                 </div>
                 <div class="form-group mr-1">
-                  <input type="text" name="slug" class="form-control form-control-sm" placeholder="Slug">
+                  <input type="text" name="slug" class="form-control form-control-sm" placeholder="Slug"
+                    value="{{ request()->input('slug') }}">
                 </div>
                 <div class="form-group mr-1">
                   <select class="form-control form-control-sm" name="type">
@@ -33,6 +37,8 @@
                 <div class="form-group mr-1">
                   <select class="form-control form-control-sm" name="status">
                     <option value="">--Status--</option>
+                    <option value="publish" @if (request()->input('status') == 'publish') selected @endif>publish</option>
+                    <option value="private" @if (request()->input('status') == 'private') selected @endif>private</option>
                   </select>
                 </div>
                 <button type="submit" class="btn btn-sm btn-default form-control form-control-sm">
@@ -84,22 +90,8 @@
                 <button type="button" class="btn btn-sm btn-danger">删除</button>
                 <button type="button" class="btn btn-sm btn-secondary">Right</button>
               </div>
-              <div class="card-footer__right float-right">
-                <ul class="pagination m-0">
-                  <li class="page-item">
-                    <a class="page-link" href="{{ $contents->previousPageUrl() }}">
-                      <i class="fas fa-angles-left"></i>
-                    </a>
-                  </li>
-                  <li class="page-item"><a class="page-link" href="#">1</a></li>
-                  <li class="page-item"><a class="page-link" href="#">2</a></li>
-                  <li class="page-item"><a class="page-link" href="#">3</a></li>
-                  <li class="page-item">
-                    <a class="page-link" href="{{ $contents->nextPageUrl() }}">
-                      <i class="fas fa-angles-right"></i>
-                    </a>
-                  </li>
-                </ul>
+              <div class="card-footer__right float-right" style="margin-bottom: -1rem;">
+                {{ $contents->withQueryString(['status'])->links() }}
               </div>
             </div>
             <!-- /.card-footer -->

@@ -22,6 +22,7 @@
     }
   </style>
 @endpush
+
 @section('content')
   <div class="container-fluid">
     <div class="row justify-content-center">
@@ -60,7 +61,7 @@
               <div class="card-header p-0 pr-1">
                 <ul class="nav nav-tabs border-bottom-0">
                   <li class="nav-item">
-                    <a class="nav-link px-1" style="font-size: 24px;" href="#">
+                    <a class="nav-link px-1 disabled" style="font-size: 24px;" href="#">
                       @if (in_array($moduleName, config('home.view_index.fixed_modules') ?? []))
                         <i class="bi bi-pin-angle-fill text-primary"></i>
                       @else

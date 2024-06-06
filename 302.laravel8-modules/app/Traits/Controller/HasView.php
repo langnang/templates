@@ -15,7 +15,7 @@ trait HasView
                 'url' => request()->url(),
                 'fullUrl' => request()->fullUrl(),
             ],
-            'request' => request()->all(),
+            '$request' => request()->all(),
             'config' => $config = Module::currentConfig(null, $this->module),
             'layout' => "layouts.master",
         ], is_array($view) ? $view : ['view' => $view], $data);
@@ -358,8 +358,9 @@ trait HasView
     {
         $return = [
             'view' => $request->input('$view', 'content-list'),
-            'contents' => \App\Models\Content::paginate(20),
+            'contents' => \App\Models\Content::with(['fields'])->paginate(20),
         ];
+
         return $this->view($return);
     }
     public function view_content_list_form(Request $request)
@@ -400,6 +401,12 @@ trait HasView
         return $this->view($return['view'], $return);
     }
 
+    public function view_discover(Request $request)
+    {
+        $return = array_merge(['view' => 'discover'], $request->input('$return', []));
+
+        return $this->view($return);
+    }
     /**
      * OPEN /{prefix}/discover/{cid}
      *
