@@ -14,7 +14,10 @@
             <div class="card-footer small px-3 py-1">
               作者: {{ $content['user'] }}
               时间: {{ $content['release_at'] ?? $content['updated_at'] }}
-              分类: {{ $content['metas'] ?? '' }}
+              分类:
+              @foreach ($content['metas'] ?? [] as $meta)
+                <a href="/{{ $config['slug'] }}/meta/{{ $meta['mid'] }}"></a>
+              @endforeach
             </div>
           </div>
         @endforeach
