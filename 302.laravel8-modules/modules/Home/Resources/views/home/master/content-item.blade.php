@@ -33,6 +33,12 @@
           </div>
           <div class="card-body"></div>
         </div>
+        <div class="card mb-3">
+          <div class="card-header p-2">
+            <div class="card-title mb-0">关联模块</div>
+          </div>
+          <div class="card-body"></div>
+        </div>
       </div>
     </div>
   </div>

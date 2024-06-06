@@ -44,6 +44,7 @@ class Controller extends ApiController
     protected $UserModel = \App\Models\User::class;
     protected $OptionModel = \App\Models\Option::class;
     protected $LogModel = \App\Models\Log::class;
+
     /**
      * 函数组对象
      */

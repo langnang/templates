@@ -2,6 +2,33 @@
 
 @section('content')
   <div class="container-fluid">
+    <div class="row justify-content-center">
+      <div class="col-8">
+        <form action="get">
+          <div class="input-group input-group-lg rounded-pill">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="inputGroup-sizing-lg">Brands</span>
+              <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split px-2"
+                data-toggle="dropdown" aria-expanded="false">
+                <span class="sr-only">Toggle Dropdown</span>
+              </button>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="#">百度一下</a>
+                <a class="dropdown-item" href="#">Google</a>
+              </div>
+            </div>
+            <input type="text" class="form-control" aria-label="Sizing example input"
+              aria-describedby="inputGroup-sizing-lg">
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary" type="button" id="button-addon2">
+                <i class="bi bi-search"></i>
+              </button>
+            </div>
+
+          </div>
+        </form>
+      </div>
+    </div>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
       @foreach (Module::all() ?? [] as $moduleName => $module)
         @if (Module::isEnabled($moduleName) && !in_array($moduleName, config('home.view_index.ignore_modules') ?? []))
