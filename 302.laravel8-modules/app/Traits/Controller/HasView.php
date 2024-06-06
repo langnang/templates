@@ -69,7 +69,7 @@ trait HasView
     {
         $module = strtolower(empty($module) ? $this->module : $module);
         $moduleView = $module . '::' . $module . '.' . $layout . '.' . $view;
-        $globalView = 'pages.' . $view;
+        $globalView = 'pages.' . $layout . '.' . $view;
         // var_dump([$view, $layout, $module, $moduleView, $globalView]);
         // 模块定制页面
         if (\View::exists($moduleView))
@@ -101,14 +101,23 @@ trait HasView
         // dump($user);
         // Auth::login($user, true);
         $return = array_merge([
-            "prefix" => $this->prefix ?? 'home',
             "query" => $request->all(),
-            "view" => \View::exists($this->prefix . '.index') ? $this->prefix . '.index' : 'index',
-            "current_page" => request()->input('page', '1'),
+            'view' => $request->input('$view', 'index'),
+            "page" => $request->input('page', '1'),
+            "size" => $request->input('size', '20'),
             "last_page" => 1,
         ], $request->input('$return', []), );
 
-        return $this->view($return['view'], $return);
+        $return['contents'] = \App\Models\Content::with(['fields']);
+        if (!in_array($this->module, ['Home', 'Admin'])) {
+            $return['contents'] = $return['contents']->whereHas("fields", function ($query) {
+                $query->where([['name', 'module_' . strtolower($this->module)]]);
+
+            });
+        }
+        $return['contents'] = $return['contents']->paginate($return['size']);
+
+        return $this->view($return);
 
         $query = $return['$query'] ?? [];
         unset($return['query']['$return']);

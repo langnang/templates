@@ -12,7 +12,7 @@
 */
 
 Route::prefix('dictionary')->group(function () {
-    Route::get('/', 'DictionaryController@index');
+    Route::get('/', 'DictionaryController@view_index');
     Route::get('/metas', 'DictionaryController@view_meta_list');
     Route::get('/contents', 'DictionaryController@view_content_list');
     Route::get('/content/{cid}', 'DictionaryController@view_content_item');

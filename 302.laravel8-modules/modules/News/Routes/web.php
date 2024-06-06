@@ -12,7 +12,7 @@
 */
 
 Route::prefix('news')->group(function () {
-    Route::get('/', 'NewsController@index');
+    Route::get('/', 'NewsController@view_index');
     Route::get('/metas', 'NewsController@view_meta_list');
     Route::get('/contents', 'NewsController@view_content_list');
     Route::get('/content/{cid}', 'NewsController@view_content_item');

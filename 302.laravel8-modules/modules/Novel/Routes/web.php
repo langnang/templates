@@ -12,7 +12,7 @@
 */
 
 Route::prefix('novel')->group(function () {
-    Route::get('/', 'NovelController@index');
+    Route::get('/', 'NovelController@view_index');
     Route::get('/metas', 'NovelController@view_meta_list');
     Route::get('/contents', 'NovelController@view_content_list');
     Route::get('/content/{cid}', 'NovelController@view_content_item');

@@ -11,6 +11,6 @@
 |
 */
 
-Route::prefix('profession')->group(function() {
-    Route::get('/', 'ProfessionController@index');
+Route::prefix('profession')->group(function () {
+    Route::get('/', 'ProfessionController@view_index');
 });

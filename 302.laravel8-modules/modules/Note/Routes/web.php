@@ -18,7 +18,7 @@ use App\Support\Module;
 */
 
 Route::prefix('note')->group(function () {
-    // Route::get('/', 'NoteController@index');
+    // Route::get('/', 'NoteController@view_index');
     Route::get('/', 'NoteController@view_index');
     Route::get('/metas', 'NoteController@view_meta_list');
     Route::get('/contents', 'NoteController@view_content_list');

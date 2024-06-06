@@ -12,7 +12,7 @@
 */
 
 Route::prefix('video')->group(function () {
-    Route::get('/', 'VideoController@index');
+    Route::get('/', 'VideoController@view_index');
     Route::get('/metas', 'VideoController@view_meta_list');
     Route::get('/contents', 'VideoController@view_content_list');
     Route::get('/content/{cid}', 'VideoController@view_content_item');

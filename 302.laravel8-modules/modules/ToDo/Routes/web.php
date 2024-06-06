@@ -12,7 +12,7 @@
 */
 
 Route::prefix('todo')->group(function () {
-    Route::get('/', 'ToDoController@index');
+    Route::get('/', 'ToDoController@view_index');
     Route::get('/metas', 'ToDoController@view_meta_list');
     Route::get('/contents', 'ToDoController@view_content_list');
     Route::get('/content/{cid}', 'ToDoController@view_content_item');

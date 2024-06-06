@@ -12,7 +12,7 @@
 */
 
 Route::prefix('awesome')->group(function () {
-    Route::get('/', 'AwesomeController@index');
+    Route::get('/', 'AwesomeController@view_index');
     Route::get('/metas', 'AwesomeController@view_meta_list');
     Route::get('/contents', 'AwesomeController@view_content_list');
     Route::get('/content/{cid}', 'AwesomeController@view_content_item');

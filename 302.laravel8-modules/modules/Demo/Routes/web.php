@@ -12,7 +12,7 @@
 */
 
 Route::prefix('demo')->group(function () {
-    Route::get('/', 'DemoController@index');
+    Route::get('/', 'DemoController@view_index');
     Route::get('/metas', 'DemoController@view_meta_list');
     Route::get('/contents', 'DemoController@view_content_list');
     Route::get('/content/{cid}', 'DemoController@view_content_item');

@@ -11,6 +11,6 @@
 |
 */
 
-Route::prefix('publicapi')->group(function() {
-    Route::get('/', 'PublicApiController@index');
+Route::prefix('publicapi')->group(function () {
+    Route::get('/', 'PublicApiController@view_index');
 });

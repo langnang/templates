@@ -12,7 +12,7 @@
 */
 
 Route::prefix('dependency')->group(function () {
-    Route::get('/', 'DependencyController@index');
+    Route::get('/', 'DependencyController@view_index');
     Route::get('/metas', 'DependencyController@view_meta_list');
     Route::get('/contents', 'DependencyController@view_content_list');
     Route::get('/content/{cid}', 'DependencyController@view_content_item');

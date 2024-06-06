@@ -12,7 +12,7 @@
 */
 
 Route::prefix('question')->group(function () {
-    Route::get('/', 'QuestionController@index');
+    Route::get('/', 'QuestionController@view_index');
     Route::get('/metas', 'QuestionController@view_meta_list');
     Route::get('/contents', 'QuestionController@view_content_list');
     Route::get('/content/{cid}', 'QuestionController@view_content_item');

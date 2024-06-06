@@ -12,7 +12,7 @@
 */
 
 Route::prefix('spider')->group(function () {
-    Route::get('/', 'SpiderController@index');
+    Route::get('/', 'SpiderController@view_index');
     Route::get('/metas', 'SpiderController@view_meta_list');
     Route::get('/contents', 'SpiderController@view_content_list');
     Route::get('/content/{cid}', 'SpiderController@view_content_item');
