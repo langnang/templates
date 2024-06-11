@@ -49,7 +49,8 @@ class Field extends \App\Support\Model
                 $return['value'] = $return['text_value'];
                 break;
             case "object":
-                $return['value'] = json_decode($return['object_value'], true);
+                $return['value'] = $return['object_value'];
+                // $return['value'] = json_decode($return['object_value'], true);
                 break;
         }
         return $return;
