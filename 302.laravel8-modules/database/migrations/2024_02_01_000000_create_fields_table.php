@@ -25,9 +25,9 @@ class CreateFieldsTable extends Migration
 
             $table->string('type')->nullable()->comment("字段类型");
 
-            $table->string('template')->default(0)->nullable()->comment('模板');
-            $table->string('views')->default(0)->nullable()->comment('视图');
-            $table->string('count')->default(0)->nullable()->comment('计数');
+            $table->integer('template')->default(0)->nullable()->comment('模板');
+            $table->integer('views')->default(0)->nullable()->comment('视图');
+            $table->integer('count')->default(0)->nullable()->comment('计数');
 
             $table->integer("user")->default(0)->comment("用户编号");
 

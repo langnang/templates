@@ -13,25 +13,29 @@ class Content extends \App\Support\Model
         'title',
         'slug',
         'ico',
-        'url',
-        // 'description',
+        'description',
         'text',
         'type',
         'status',
         'user',
+        'template',
+        'views',
         'parent',
         'count',
         'order',
-        'options',
-        'suggestion',
+        'created_at',
+        'updated_at',
         'release_at',
-        'download_urls',
+        'deleted_at',
     ];
     protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
         'release_at' => 'datetime',
-        'options' => 'array',
-        'download_urls' => 'array',
+        'deleted_at' => 'datetime',
     ];
+
+    static $fields = [];
     /**
      * Summary of latest
      * @param mixed $perPage

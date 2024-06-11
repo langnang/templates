@@ -85,11 +85,14 @@ class HomeController extends \App\Http\Controllers\Controller
     }
     public function view_index(Request $request)
     {
+        $request->merge(["page_size" => 30]);
         $return = [
             'view' => 'index',
             "tabs" => [
-                'home-latest' => \App\Models\Content::where([['type', 'post'], ['status', 'publish']])->latest('updated_at')->paginate(30),
-                'home-hottest' => \App\Models\Content::where([['type', 'post'], ['status', 'publish']])->orderBy('views', 'desc')->paginate(30),
+                // 'home-latest' => \App\Models\Content::where([['type', 'post'], ['status', 'publish']])->latest('updated_at')->paginate(30),
+                'home-latest' => $this->select_list($request, 'content', ['where' => [['type', 'post'], ['status', 'publish'],], "orderBy" => ['updated_at', 'desc']]),
+                // 'home-hottest' => \App\Models\Content::where([['type', 'post'], ['status', 'publish']])->orderBy('views', 'desc')->paginate(30),
+                'home-hottest' => $this->select_list($request, 'content', ['where' => [['type', 'post'], ['status', 'publish'],], "orderBy" => ['views', 'desc']]),
                 'nofield-latest' => \App\Models\Content::doesntHave('fields')->where([['type', 'post'], ['status', 'publish']])->latest('updated_at')->paginate(30),
                 'nofield-hottest' => \App\Models\Content::doesntHave('fields')->where([['type', 'post'], ['status', 'publish']])->orderBy('views', 'desc')->paginate(30),
             ]

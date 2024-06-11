@@ -27,7 +27,10 @@ if (!function_exists('disable_functions')) {
 if (!function_exists('markdown_to_html')) {
     function markdown_to_html($mark)
     {
-        return \Str::markdown($mark);
+        // league/commonmark 
+        // https://packagist.org/packages/league/commonmark
+        // https://commonmark.thephpleague.com/
+        return \Str::markdown($mark, config('commonmark'));
         // return Parsedown::instance()->text($mark);
     }
 }

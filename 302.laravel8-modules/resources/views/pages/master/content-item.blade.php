@@ -13,6 +13,7 @@
         </p>
         <div class="card mb-3">
           <div class="card-body px-2">
+            {!! markdown_to_html($content['description'] ?? '') !!}
             {!! markdown_to_html($content['text']) !!}
           </div>
         </div>

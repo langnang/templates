@@ -20,7 +20,13 @@ class Field extends \App\Support\Model
         "object_value",
     ];
 
-
+    protected $casts = [
+        'object_value' => 'array',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+        'release_at' => 'datetime',
+        'deleted_at' => 'datetime',
+    ];
     public function content()
     {
         return $this->belongsTo(\App\Models\Content::class, 'cid', 'cid');

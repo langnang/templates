@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Traits\Crud;
+namespace App\Traits\Controller\Crud;
 
 
 trait CommentCrudTrait

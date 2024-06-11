@@ -13,7 +13,7 @@ return [
                 /*
                  * Route for accessing api documentation interface
                  */
-                'api' => 'api/documentation/default',
+                'api' => 'api/documentation',
             ],
             'paths' => [
                 /*
@@ -84,14 +84,14 @@ return [
                  * Absolute paths to directory containing the swagger annotations are stored.
                  */
                 'annotations' => [
-                    base_path('app'),
+                    base_path('modules/' . $module),
                 ],
 
             ],
         ];
         // var_dump($return);
-        // return [];
-        return $return;
+        return [];
+        // return $return;
     }, [])),
     'defaults' => [
         'routes' => [

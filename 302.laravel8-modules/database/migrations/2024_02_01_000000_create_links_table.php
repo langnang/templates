@@ -23,11 +23,13 @@ class CreateLinksTable extends Migration
             $table->string('description')->nullable()->comment('描述');
             $table->string('type')->nullable()->comment('类型');
             $table->string('status')->nullable()->comment('状态');
-            $table->string('count')->nullable()->default(0)->comment('计数');
-            $table->string('order')->nullable()->default(0)->comment('权重');
-            $table->string('parent')->nullable()->default(0)->comment('父本');
+
+            $table->integer('count')->nullable()->default(0)->comment('计数');
+            $table->integer('order')->nullable()->default(0)->comment('权重');
+            $table->integer('parent')->nullable()->default(0)->comment('父本');
 
             $table->integer("user")->default(0)->comment("用户编号");
+
             $table->timestamps();
             $table->timestamp('release_at')->nullable()->comment('发布时间');
             $table->timestamp('deleted_at')->nullable()->comment('删除时间');

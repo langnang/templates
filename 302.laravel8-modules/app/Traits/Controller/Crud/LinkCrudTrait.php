@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Traits\Crud;
+namespace App\Traits\Controller\Crud;
 
 use Exception;
 use Illuminate\Http\JsonResponse;

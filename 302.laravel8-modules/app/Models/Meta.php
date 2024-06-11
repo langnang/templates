@@ -19,6 +19,16 @@ class Meta extends \App\Support\Model
         'parent',
         'count',
         'order',
+        'created_at',
+        'updated_at',
         'release_at',
+        'deleted_at',
+    ];
+
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+        'release_at' => 'datetime',
+        'deleted_at' => 'datetime',
     ];
 }
