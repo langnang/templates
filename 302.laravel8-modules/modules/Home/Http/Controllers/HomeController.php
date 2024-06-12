@@ -107,13 +107,23 @@ class HomeController extends \App\Http\Controllers\Controller
                 // $return['tabs'][$moduleSlug . '-toplist'] = new Paginator(Content::factory(30)->raw([], ), 30, 1);
                 // $return['tabs'][$moduleSlug . '-latest'] = new Paginator(Content::factory(30)->raw([], ), 30, 1);
                 // $return['tabs'][$moduleSlug . '-latest'] = \App\Models\Content::latest_updated(30);
-                $return['tabs'][$moduleSlug . '-latest'] =
-                    \App\Models\Content::whereHas('fields', function ($query) use ($moduleSlug) {
-                        $query->where([['name', 'module_' . $moduleSlug]]);
-                    })
-                        ->where([['type', 'post'], ['status', 'publish']])
-                        ->latest('updated_at')
-                        ->paginate(30);
+                $return['tabs'][$moduleSlug . '-latest'] = $this->select_list($request, 'content', [
+                    'with' => ['fields'],
+                    'where' => [['type', 'post'], ['status', 'publish'],],
+                    'whereHas' => [
+                        'fields',
+                        function ($query) use ($moduleSlug) {
+                            $query->where([['name', 'module_' . $moduleSlug]]);
+                        }
+                    ],
+                    'orderBy' => ['updated_at', 'desc'],
+                ]);
+                // \App\Models\Content::whereHas('fields', function ($query) use ($moduleSlug) {
+                //     $query->where([['name', 'module_' . $moduleSlug]]);
+                // })
+                //     ->where([['type', 'post'], ['status', 'publish']])
+                // ->latest('updated_at')
+                // ->paginate(30);
                 // \App\Models\Field::whereHas('content', function ($query) {
                 //     $query->where([['type', 'post'], ['status', 'publish']]);
                 // })

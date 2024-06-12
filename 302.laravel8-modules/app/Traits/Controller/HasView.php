@@ -87,6 +87,12 @@ trait HasView
     //     $return = ['view' => 'home.index'];
     //     return $this->view($return);
     // }
+    public function view_on_request(Request $request, $table, $method = null)
+    {
+    }
+    public function view_on_response(Request $request, $table, $method = null)
+    {
+    }
     /**
      * OPEN /{prefix}
      * @param Request $request
@@ -96,7 +102,7 @@ trait HasView
     {
         // dump(Auth::check());
         // Auth::loginUsingId(1, true);
-        $_logs = [__METHOD__, $request->all()];
+        $log = [__METHOD__, $request->all()];
         // $user = $this->UserModel::find(1);
         // dump($user);
         // Auth::login($user, true);
@@ -108,15 +114,24 @@ trait HasView
             "last_page" => 1,
         ], $request->input('$return', []), );
 
-        $return['contents'] = \App\Models\Content::with(['fields']);
-        if (!in_array($this->module, ['Home', 'Admin'])) {
-            $return['contents'] = $return['contents']->whereHas("fields", function ($query) {
-                $query->where([['name', 'module_' . strtolower($this->module)]]);
+        // $return['contents'] = \App\Models\Content::with(['fields']);
+        // if (!in_array($this->module, ['Home', 'Admin'])) {
+        //     $return['contents'] = $return['contents']->whereHas("fields", function ($query) {
+        //         $query->where([['name', 'module_' . strtolower($this->module)]]);
 
-            });
-        }
-        $return['contents'] = $return['contents']->paginate($return['size']);
+        //     });
+        // }
+        // $return['contents'] = $return['contents']->paginate($return['size']);
+        $return['contents'] = $this->select_page($request, 'content', [
+            'whereHas' => [
+                'fields',
+                function ($query) {
+                    $query->where([['name', 'module_' . strtolower($this->module)]]);
 
+                }
+            ]
+        ]);
+        $return['logs'] = $this->logs;
         return $this->view($return);
 
         $query = $return['$query'] ?? [];

@@ -52,6 +52,18 @@ return [
                     ["status", "publish"],
                 ],
             ],
+            "select_page" => [
+                "with" => [
+                    "metas",
+                    // "contents",
+                    "fields",
+                    "relationships",
+                ],
+                "where" => [
+                    ["type", "post"],
+                    ["status", "publish"],
+                ],
+            ],
             "upsert_item" => [
                 "exists" => [
                     ["metas"],
@@ -142,7 +154,19 @@ return [
         "upsert_item" => [],
         "upsert_list" => [],
         "select_item" => [],
-        "select_list" => [],
+        "select_list" => [
+            "required" => [
+                "skip" => 0,
+                "take" => 1000,
+            ],
+            "selectable" => [
+                "name" => null,
+                "title" => null,
+                "type" => null,
+                "status" => null,
+                "created_at" => null,
+            ],
+        ],
         "select_page" => [],
         "select_tree" => [],
         "select_random_item" => [],
@@ -249,6 +273,14 @@ return [
             'orWhereDoesntHave',
             "orderBy",
             "groupBy",
+            // 跳过指定数量的结果
+            "skip",
+            // 限制结果的返回数量
+            "take",
+            "offset",
+            "limit",
+            "",
+
         ],
         "with" => [
             'with',
@@ -267,6 +299,9 @@ return [
             'withoutGlobalScope',
             // 暂时「禁用」模型触发的所有事件
             'withoutEvents',
+            "",
+            "",
+            "",
         ],
         "where" => [
             'where',
@@ -295,13 +330,19 @@ return [
             "whereHas",
             "orWhereHas",
             'whereDoesntHave',
-            'orWhereDoesntHave'
+            'orWhereDoesntHave',
+            "",
+            "",
         ],
         "orderBy" => [
             'orderBy',
+            "",
+            "",
         ],
         "groupBy" => [
             'groupBy',
+            "",
+            "",
         ],
         "relation" => [
             "hasOne",
@@ -312,8 +353,26 @@ return [
             "orHas",
             "doesntHave",
             "orDoesntHave",
+            "",
+            "",
+            "",
         ],
-        "unclassified" => [],
+        "unclassified" => [
+            "inRandomOrder",
+            "whereJsonContains",
+            "whereJsonLength",
+            "latest",
+            "first",
+            "reorder",
+            "having",
+            "skip",
+            "take",
+            "offset",
+            "limit",
+            "",
+            "",
+            "",
+        ],
         "casts" => [
             "with" => "array",
             'without' => "array",
@@ -355,10 +414,11 @@ return [
             'orWhereColumn' => "array",
             'whereHasMorph' => "array",
             'whereDoesntHaveMorph' => "array",
-            "whereHas" => "array",
+            // "whereHas" => "array",
             "orWhereHas" => "array",
             'whereDoesntHave' => "array",
             'orWhereDoesntHave' => "array",
+            "" => "",
         ],
     ],
 ];

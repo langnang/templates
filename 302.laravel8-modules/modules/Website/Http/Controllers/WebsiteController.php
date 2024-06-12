@@ -78,4 +78,10 @@ class WebsiteController extends \App\Http\Controllers\Controller
     {
         //
     }
+
+    // public function view_index(Request $request)
+    // {
+    //     $return = parent::{__METHOD__}($request);
+    //     return $this->view($return);
+    // }
 }

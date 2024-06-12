@@ -49,6 +49,8 @@ Route::match(['get', 'post'], '/staging_{table}_item', "\App\Http\Controllers\Ap
 Route::match(['get', 'post'], '/release_{table}_item', "\App\Http\Controllers\ApiController@release_item");
 Route::match(['get', 'post'], '/faker_{table}_item', "\App\Http\Controllers\ApiController@faker_item");
 
+Route::match(['get', 'post'], '/select_{table}_page', "\App\Http\Controllers\ApiController@select_page");
+
 /**
  * Meta
  */

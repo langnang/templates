@@ -356,12 +356,7 @@ trait BaseCrudTrait
             // offset, limit
             // $return = $return->offset($request->input('$offset', 0))->limit($request->input('$offset', 100));
             \DB::enableQueryLog();
-            $return = $return->paginate(
-                $request->input('page_size', 20),
-                ['*'],
-                'page',
-                $request->input('page', 1)
-            );
+            $return = $return->skip($request->input("skip", 0))->take($request->input("take", 30))->get();
             // $return = $return->get();
             // $return['_logs'] = $_logs;
             $log['queryLogs'] = \DB::getQueryLog();
@@ -378,23 +373,40 @@ trait BaseCrudTrait
      * @param Request $request
      * @return array|JsonResponse|mixed|void
      */
-    function select_page(Request $request)
+    function select_page(Request $request, $table, $config = [])
     {
         try {
-            $_logs = [__METHOD__, $request->all()];
-            $request = $this->on_request($request, __FUNCTION__);
-            // $model = $this->issetModel($request->input('$model', $this->BaseModel));
-            $model = $request->input('$model', $this->BaseModel);
-            $parentColumn = (new $model())->parentColumn;
-            $return = $model::with($this->withClauses($request));
-            // $return = $model::with(['draft' => function ($query) use ($request, $parentColumn) {
-            //   return $this->whereClauses($request, $query, [$parentColumn])->with($this->withClauses($request));
-            // }]);
-            $return = $this->whereClauses($request, $return);
-            unset($model);
-            $return = $this->orderByClauses($request, $return);
-            $return = $return->paginate($request->input('page_size', 15));
-            $return['_logs'] = $_logs;
+            $log = ["method" => __METHOD__, "arguments" => ["request" => $request->all(), 'table' => $table, 'config' => $config]];
+            [
+                "modelConfig" => $modelConfig,
+                "modelClass" => $modelClass,
+                "modelFunConfig" => $modelFunConfig,
+                "modelPrimaryKey" => $modelPrimaryKey,
+                "modelUniqueIndex" => $modelUniqueIndex,
+                "modelParentColumn" => $modelParentColumn,
+            ] = $this->on_request($request, $table);
+
+            $return = $this->queryBuilder(array_merge($modelFunConfig, $config));
+            \DB::enableQueryLog();
+
+            $return = $return->paginate($request->input('size', 20));
+
+            $log['queryLogs'] = \DB::getQueryLog();
+            $this->prependLogs($log);
+            // $_logs = [__METHOD__, $request->all()];
+            // $request = $this->on_request($request, __FUNCTION__);
+            // // $model = $this->issetModel($request->input('$model', $this->BaseModel));
+            // $model = $request->input('$model', $this->BaseModel);
+            // $parentColumn = (new $model())->parentColumn;
+            // $return = $model::with($this->withClauses($request));
+            // // $return = $model::with(['draft' => function ($query) use ($request, $parentColumn) {
+            // //   return $this->whereClauses($request, $query, [$parentColumn])->with($this->withClauses($request));
+            // // }]);
+            // $return = $this->whereClauses($request, $return);
+            // unset($model);
+            // $return = $this->orderByClauses($request, $return);
+            // $return = $return->paginate($request->input('page_size', 15));
+            // $return['_logs'] = $_logs;
             return $this->success($return);
         } catch (\Exception $e) {
             return $this->error($e);
