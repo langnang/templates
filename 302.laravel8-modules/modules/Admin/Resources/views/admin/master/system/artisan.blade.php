@@ -104,7 +104,7 @@
                 <div class="d-flex">
                   <i class="fas fa-layer-group"></i>
                 </div>
-                <p class="text-light">{{ $commands }}</p>
+                {!! markdown_to_html($commands) !!}
               </div>
               <!-- /.card-body -->
 

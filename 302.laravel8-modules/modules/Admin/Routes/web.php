@@ -31,9 +31,21 @@ Route::prefix(Module::currentConfig('web.prefix'))->group(function () {
 
 
     Route::prefix('data')->group(function () {
-        Route::match(['get', 'post'], '/contents', 'AdminController@view_content_list');
-        Route::match(['get', 'post'], '/contents/{cid}', 'AdminController@view_content_item');
-        Route::match(['get', 'post'], '/contents/insert', 'AdminController@view_content_item');
+        Route::match(['get', 'post'], '/meta', 'AdminController@view_meta_list');
+        Route::match(['get', 'post'], '/meta/{id}', 'AdminController@view_meta_item');
+        Route::match(['get', 'post'], '/meta/insert', 'AdminController@view_meta_item');
+
+        Route::match(['get', 'post'], '/content', 'AdminController@view_content_list');
+        Route::match(['get', 'post'], '/content/{id}', 'AdminController@view_content_item');
+        Route::match(['get', 'post'], '/content/insert', 'AdminController@view_content_item');
+
+        Route::match(['get', 'post'], '/comment', 'AdminController@view_comment_list');
+        Route::match(['get', 'post'], '/comment/{id}', 'AdminController@view_comment_item');
+        Route::match(['get', 'post'], '/comment/insert', 'AdminController@view_comment_item');
+
+        Route::match(['get', 'post'], '/link', 'AdminController@view_link_list');
+        Route::match(['get', 'post'], '/link/{id}', 'AdminController@view_link_item');
+        Route::match(['get', 'post'], '/link/insert', 'AdminController@view_link_item');
     });
 
 

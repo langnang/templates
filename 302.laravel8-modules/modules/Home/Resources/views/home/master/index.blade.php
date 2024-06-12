@@ -57,6 +57,7 @@
         @if (Module::isEnabled($moduleName) && !in_array($moduleName, config('home.view_index.ignore_modules') ?? []))
           @php $moduleSlug = config(strtolower($moduleName) . ".slug") ?? strtolower($moduleName) @endphp
           <div class="col @if (in_array($moduleName, config('home.view_index.fixed_modules') ?? [])) order-1 @else order-6 @endif">
+            <iframe class="d-none" src="/{{ Config::get($moduleSlug . '.slug') ?? $moduleSlug }}" frameborder="0"></iframe>
             <div class="card tab-content mb-3">
               <div class="card-header p-0 pr-1">
                 <ul class="nav nav-tabs border-bottom-0">

@@ -71,13 +71,13 @@ return array(
                             'slug' => '',
                             'children' => [
                                 [
-                                    "path" => '/metas',
-                                    'title' => 'Metas',
+                                    "path" => '/meta',
+                                    'title' => 'Meta',
                                     'children' => [],
                                 ],
                                 [
-                                    "path" => '/contents',
-                                    'title' => 'Contents',
+                                    "path" => '/content',
+                                    'title' => 'Content',
                                     'children' => [
                                         [
                                             'path' => '/{cid}',
@@ -87,18 +87,28 @@ return array(
                                     ],
                                 ],
                                 [
-                                    "path" => '/comments',
-                                    'title' => 'Comments',
+                                    "path" => '/comment',
+                                    'title' => 'Comment',
                                     'children' => [],
                                 ],
                                 [
-                                    "path" => '/links',
-                                    'title' => 'Links',
+                                    "path" => '/link',
+                                    'title' => 'Link',
                                     'children' => [],
                                 ],
                                 [
-                                    "path" => '/logs',
-                                    'title' => 'Logs',
+                                    "path" => '/log',
+                                    'title' => 'Log',
+                                    'children' => [],
+                                ],
+                                [
+                                    "path" => '/import',
+                                    'title' => 'Import',
+                                    'children' => [],
+                                ],
+                                [
+                                    "path" => '/export',
+                                    'title' => 'Export',
                                     'children' => [],
                                 ],
                             ],
