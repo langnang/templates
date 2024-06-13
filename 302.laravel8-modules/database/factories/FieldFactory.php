@@ -20,7 +20,8 @@ class FieldFactory extends Factory
         $return = [
             //
             "cid" => \App\Models\Content::inRandomOrder()->first(),
-            "name" => $this->faker->randomElement(array_merge(['cids'], $moduleSlugs)),
+            // "name" => $this->faker->randomElement(array_merge(['cids'], $moduleSlugs)),
+            "name" => 'module_website',
             // "name" => $this->faker->word(),
             "type" => $this->faker->randomElement(['str', 'float', 'int', 'text', 'object']),
         ];
@@ -48,6 +49,27 @@ class FieldFactory extends Factory
 
 
         switch ($return['name']) {
+            case 'module_audio':
+                $return['type'] = 'object';
+                $return['object_value'] = [];
+                break;
+            case 'module_awesome':
+                $return['type'] = 'text';
+                $return['text_value'] = '<!-- markdown -->\r\n';
+                break;
+            case 'module_cheatsheet':
+                $return['type'] = 'text';
+                $return['text_value'] = '<!-- markdown -->\r\n';
+                break;
+            case 'module_novel':
+                $return['type'] = 'object';
+                $return['object_value'] = [];
+                break;
+            case 'module_video':
+                $return['type'] = 'object';
+                $return['object_value'] = [
+                ];
+                break;
             case 'module_website':
                 $return['type'] = 'object';
                 $return['object_value'] = [
@@ -61,9 +83,14 @@ class FieldFactory extends Factory
             case 'module_spider':
                 $return['type'] = 'object';
                 $return['object_value'] = [
-                    'discover' => [
+                    "export" => substr($this->faker->randomElement($moduleSlugs), 7),
+                    "module" => substr($this->faker->randomElement($moduleSlugs), 7),
+                    'find' => [
                         'url' => '',
                         'groups' => '',
+                    ],
+                    'hunt' => [
+                        'url' => '',
                     ],
                     'detail' => [],
                     'chapter' => [],

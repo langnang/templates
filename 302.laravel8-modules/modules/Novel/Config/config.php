@@ -5,8 +5,8 @@ return [
     "nameCn" => "小说",
     'navbar' => [
         [
-            'path' => 'discover',
-            'name' => 'Discover',
+            'path' => 'find',
+            'name' => 'Find',
             'nameCn' => '发现'
         ]
     ]

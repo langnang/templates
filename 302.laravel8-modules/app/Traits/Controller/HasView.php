@@ -9,45 +9,59 @@ trait HasView
 {
     public function view($view = null, $data = [], $mergeData = [])
     {
-        $return = array_merge([
-            '$route' => [
-                'method' => request()->method(),
-                'url' => request()->url(),
-                'fullUrl' => request()->fullUrl(),
-            ],
-            '$request' => request()->all(),
-            'config' => $config = Module::currentConfig(null, $this->module),
-            'layout' => "layouts.master",
-        ], is_array($view) ? $view : ['view' => $view], $data);
+        try {
+            $return = array_merge([
+                '$route' => [
+                    'method' => request()->method(),
+                    'url' => request()->url(),
+                    'fullUrl' => request()->fullUrl(),
+                    'path' => request()->path(),
+                    'pathInfo' => request()->getPathInfo(),
+                ],
+                '$request' => request()->all(),
+                'config' => $config = Module::currentConfig(null, $this->module),
+                'layout' => "layouts.master",
+            ], is_array($view) ? $view : ['view' => $view], $data);
 
-        // var_dump(self::class);
-        // var_dump($config);
-        //
-        // var_dump($return);
-        // $return['layout'] = empty($config) ? $return['layout'] : $config['slug'] . '::layouts.' . $config['layout'];
-        // 
-        // var_dump($return);
-        // $return['view'] = is_array($view)
-        //     ? (empty($config)
-        //         ? $return['view']
-        //         : $config['slug'] . '::' . $config['slug'] . '.' . $config['layout'] . '.' . $return['view'])
-        //     : $this->match_view($view);
-        $return['layout'] = $this->match_layout(empty($config) ? $return['layout'] : $config['layout']);
-        // var_dump($return);
-        $return['view'] = $this->match_view($return['view'], empty($config) ? $return['layout'] : $config['layout']);
-        // var_dump($return);
-        // var_dump($return);
-        if (env('WEB_CONSOLE')) {
-            echo "<script>window.\$app=" . json_encode($return, JSON_UNESCAPED_UNICODE) . ";</script>";
-            echo "<script>console.log(window.\$app);</script>";
+            // var_dump(self::class);
+            // var_dump($config);
+            //
+            // var_dump($return);
+            // $return['layout'] = empty($config) ? $return['layout'] : $config['slug'] . '::layouts.' . $config['layout'];
+            // 
+            // var_dump($return);
+            // $return['view'] = is_array($view)
+            //     ? (empty($config)
+            //         ? $return['view']
+            //         : $config['slug'] . '::' . $config['slug'] . '.' . $config['layout'] . '.' . $return['view'])
+            //     : $this->match_view($view);
+            $return['layout'] = $this->match_layout(empty($config) ? $return['layout'] : $config['layout']);
+            // var_dump($return);
+            $return['view'] = $this->match_view($return['view'], empty($config) ? $return['layout'] : $config['layout']);
+            // var_dump($return);
+            // var_dump($return);
+            if (env('WEB_CONSOLE')) {
+                echo "<script>window.\$app=" . json_encode($return, JSON_UNESCAPED_UNICODE) . ";</script>";
+                echo "<script>console.log(window.\$app);</script>";
+            }
+            // var_dump($return);
+            // if (is_array($view) ? !isset($view['view']) : empty($view))
+            //     abort(404);
+
+            // if (!\View::exists($return['view']))
+            //     abort(404);
+            \Log::channel('mysql')->debug('[' . request()->method() . ']' . request()->getPathInfo(), [
+                "route" => $return["\$route"],
+                "request" => $return["\$request"],
+                "layout" => $return["view"],
+                "view" => $return["view"],
+            ]);
+
+            return view($return['view'], $return, $mergeData);
+        } catch (\Exception $e) {
+            \Log::channel('mysql')->error($e->getMessage() . $e->getFile() . $e->getTraceAsString());
         }
-        // var_dump($return);
-        // if (is_array($view) ? !isset($view['view']) : empty($view))
-        //     abort(404);
 
-        // if (!\View::exists($return['view']))
-        //     abort(404);
-        return view($return['view'], $return, $mergeData);
     }
 
     public function match_layout($layout = 'master', $module = null)
@@ -122,7 +136,7 @@ trait HasView
         //     });
         // }
         // $return['contents'] = $return['contents']->paginate($return['size']);
-        $return['contents'] = $this->select_page($request, 'content', [
+        $return['contents'] = $this->select_list($request, 'content', [
             'whereHas' => [
                 'fields',
                 function ($query) {
@@ -199,8 +213,36 @@ trait HasView
         echo "<script>window.\$data=" . json_encode($return, JSON_UNESCAPED_UNICODE) . "</script>";
         return $this->view($return['view'], $return);
     }
+    /**
+     * Summary of view_hunt
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\View\View
+     */
+    public function view_hunt(Request $request)
+    {
+        $return = ['view' => "hunt"];
+        return $this->view($return);
+    }
+    /**
+     * Summary of view_find
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\View\View
+     */
+    public function view_find(Request $request)
+    {
+        $return = array_merge(['view' => 'find'], $request->input('$return', []));
 
-
+        $return['contents'] = $this->select_list($request, 'content', [
+            'whereHas' => [
+                'fields',
+                function ($query) {
+                    // $query->where([['name', 'module_spider']]);
+                    $query->where([['name', 'module_spider'], ['object_value->module', strtolower($this->module)]]);
+                }
+            ]
+        ]);
+        return $this->view($return);
+    }
     /**
      * OPEN /{prefix}/meta/{mid}
      * @param Request $request
@@ -417,12 +459,7 @@ trait HasView
         return $this->view($return['view'], $return);
     }
 
-    public function view_discover(Request $request)
-    {
-        $return = array_merge(['view' => 'discover'], $request->input('$return', []));
 
-        return $this->view($return);
-    }
     /**
      * OPEN /{prefix}/discover/{cid}
      *

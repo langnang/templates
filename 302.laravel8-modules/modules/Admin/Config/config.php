@@ -80,7 +80,12 @@ return array(
                                     'title' => 'Content',
                                     'children' => [
                                         [
-                                            'path' => '/{cid}',
+                                            'path' => '/insert',
+                                            'title' => 'Create Content',
+                                            'visible' => false,
+                                        ],
+                                        [
+                                            'path' => '/{id}',
                                             'title' => 'Update Content',
                                             'visible' => false,
                                         ],

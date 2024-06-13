@@ -16,7 +16,7 @@
                 <div class="media-body" style="width: 50%;">
                   <h5 class="card-title text-nowrap text-truncate" title="{{ $content['title'] }}">{{ $content['title'] }}
                   </h5>
-                  <p>{{ $field['description'] }}</p>
+                  <p class="mb-0">{{ $field['description'] }}</p>
                 </div>
               </div>
             </div>

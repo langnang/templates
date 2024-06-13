@@ -70,7 +70,7 @@
                           <input class="form-check-input" type="checkbox" value="{{ $content['cid'] }}">
                         </div>
                       </td>
-                      <td><a class="" href="contents/{{ $content['cid'] }}">{{ $content['cid'] }}</a></td>
+                      <td><a class="" href="content/{{ $content['cid'] }}">{{ $content['cid'] }}</a></td>
                       <td>{{ $content['title'] }}</td>
                       <td>{{ $content['type'] }}</td>
                       <td>{{ $content['status'] }}</td>
@@ -86,7 +86,7 @@
             <!-- /.card-body -->
             <div class="card-footer clearfix">
               <div class="card-footer__left float-left">
-                <a type="button" class="btn btn-sm btn-info" href="contents/insert">新增</a>
+                <a type="button" class="btn btn-sm btn-info" href="content/insert">新增</a>
                 <button type="button" class="btn btn-sm btn-danger">删除</button>
                 <button type="button" class="btn btn-sm btn-secondary">Right</button>
               </div>

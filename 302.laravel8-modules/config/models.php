@@ -157,7 +157,11 @@ return [
         "select_list" => [
             "required" => [
                 "skip" => 0,
-                "take" => 1000,
+                "take" => 30,
+                "offset" => 30,
+                "limit" => 0,
+                "size" => 30,
+                "page" => 1
             ],
             "selectable" => [
                 "name" => null,
@@ -166,8 +170,11 @@ return [
                 "status" => null,
                 "created_at" => null,
             ],
+            "orderBy" => [
+                "updated_at",
+                "asc"
+            ],
         ],
-        "select_page" => [],
         "select_tree" => [],
         "select_random_item" => [],
         "select_random_list" => [],

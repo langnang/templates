@@ -15,22 +15,33 @@
             <div class="card-body">
               <div class="form-group">
                 <label>Title</label>
-                <input type="text" class="form-control" name='title' value="{{ $content['title'] ?? '' }}">
+                <input type="text" class="form-control form-control-sm" name='title'
+                  value="{{ $content['title'] ?? '' }}">
               </div>
               <div class="form-group">
                 <label>Slug</label>
-                <input type="text" class="form-control" name='slug' value="{{ $content['slug'] ?? '' }}">
+                <input type="text" class="form-control form-control-sm" name='slug'
+                  value="{{ $content['slug'] ?? '' }}">
               </div>
               <div class="form-group">
                 <label>Text</label>
-                <textarea class="form-control" name='text' rows="3">{{ $content['text'] ?? '' }}</textarea>
+                <textarea class="form-control form-control-sm" name='text' rows="3">{{ $content['text'] ?? '' }}</textarea>
               </div>
             </div>
 
             <!-- /.card-body -->
 
             <div class="card-footer">
-              <button type="submit" class="btn btn-sm btn-primary">Submit</button>
+              <div class="row">
+                <div class="col mr-auto">
+                  <button type="button" class="btn btn-sm btn-secondary">Draft</button>
+                  <button type="submit" class="btn btn-sm btn-primary">Submit</button>
+                  <button type="button" class="btn btn-sm btn-warning">Release</button>
+                </div>
+                <div class="col col-auto">
+                  <button type="button" class="btn btn-sm btn-danger">Faker</button>
+                </div>
+              </div>
             </div>
           </div>
           <div class="card">
@@ -55,12 +66,14 @@
                   <div class="col">
                     <div class="row">
                       <input type="hidden" name="fields[{{ $loop->index }}][action]" value="update">
-                      <div class="form-group col-md-3">
-                        <input type="text" class="form-control" name="fields[{{ $loop->index }}][name]"
-                          placeholder="Name" value="{{ $field['name'] }}">
+                      <div class="form-group form-group-sm col-md-3">
+                        <input type="text" class="form-control form-control-sm"
+                          name="fields[{{ $loop->index }}][name]" placeholder="Name" disabled
+                          value="{{ $field['name'] }}">
                       </div>
-                      <div class="form-group col-md-2">
-                        <select class="form-control" name="fields[{{ $loop->index }}][type]" placeholder="Type">
+                      <div class="form-group form-group-sm col-md-2">
+                        <select class="form-control form-control-sm" name="fields[{{ $loop->index }}][type]"
+                          placeholder="Type" disabled>
                           <option value="str_value" @if ($field['type'] == 'str_value') selected @endif>str</option>
                           <option value="int_value" @if ($field['type'] == 'int_value') selected @endif>int</option>
                           <option value="float_value" @if ($field['type'] == 'float_value') selected @endif>float</option>
@@ -68,25 +81,33 @@
                           <option value="object_value" @if ($field['type'] == 'object_value') selected @endif>object</option>
                         </select>
                       </div>
-                      <div class="form-group col-md-7">
+                      <div class="form-group form-group-sm col-md-7">
                         @switch($field['type'])
                           @case('text_value')
                           @case('object_value')
-                            <textarea class="form-control" name="fields[{{ $loop->index }}][value]" placeholder="Value" rows="1">{{ $field[$field['type']] ?? '' }}</textarea>
+                            <textarea class="form-control form-control-sm" name="fields[{{ $loop->index }}][value]" placeholder="Value" disabled
+                              rows="1">{{ $field[$field['type']] ?? '' }}</textarea>
                           @break
 
                           @default
-                            <input type="text" class="form-control" name="fields[{{ $loop->index }}][value]"
-                              placeholder="Value" value="{{ $field[$field['type']] ?? '' }}">
+                            <input type="text" class="form-control form-control-sm"
+                              name="fields[{{ $loop->index }}][value]" disabled placeholder="Value"
+                              value="{{ $field[$field['type']] ?? '' }}">
                           @break
                         @endswitch
                       </div>
                     </div>
                   </div>
                   <div class="col-auto ml-auto">
-                    <button class="btn btn-danger form-control" type="button" name="delete-field">
-                      <i class="bi bi-patch-minus-fill "></i>
-                    </button>
+                    <div class="btn-group form-control-sm p-0" role="group" aria-label="Basic example">
+                      <button class="btn btn-primary" type="button" name="update-field" data-toggle="modal"
+                        data-target="#exampleModal">
+                        <i class="bi bi-pencil-fill"></i>
+                      </button>
+                      <button class="btn btn-danger" type="button" name="delete-field">
+                        <i class="bi bi-patch-minus-fill"></i>
+                      </button>
+                    </div>
                   </div>
                 </div>
               @endforeach
@@ -152,6 +173,31 @@
       </form>
 
     </div>
+  </section>
+
+  <section>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            ...
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
   </section>
 @endsection
 

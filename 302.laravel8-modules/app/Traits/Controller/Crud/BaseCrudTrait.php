@@ -356,7 +356,8 @@ trait BaseCrudTrait
             // offset, limit
             // $return = $return->offset($request->input('$offset', 0))->limit($request->input('$offset', 100));
             \DB::enableQueryLog();
-            $return = $return->skip($request->input("skip", 0))->take($request->input("take", 30))->get();
+            $return = $return->paginate($request->input('size', 20));
+            // $return = $return->skip($request->input("skip", 0))->take($request->input("take", 30))->get();
             // $return = $return->get();
             // $return['_logs'] = $_logs;
             $log['queryLogs'] = \DB::getQueryLog();

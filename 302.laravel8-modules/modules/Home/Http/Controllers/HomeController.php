@@ -90,11 +90,11 @@ class HomeController extends \App\Http\Controllers\Controller
             'view' => 'index',
             "tabs" => [
                 // 'home-latest' => \App\Models\Content::where([['type', 'post'], ['status', 'publish']])->latest('updated_at')->paginate(30),
-                'home-latest' => $this->select_page($request, 'content', ['where' => [['type', 'post'], ['status', 'publish'],], "orderBy" => ['updated_at', 'desc']]),
+                'home-latest' => $this->select_page($request, 'content', ['where' => [['type', 'post'], ['status', 'publish'],], "orderBy" => ['updated_at', 'asc']]),
                 // 'home-hottest' => \App\Models\Content::where([['type', 'post'], ['status', 'publish']])->orderBy('views', 'desc')->paginate(30),
-                'home-hottest' => $this->select_page($request, 'content', ['where' => [['type', 'post'], ['status', 'publish'],], "orderBy" => ['views', 'desc']]),
+                'home-hottest' => $this->select_page($request, 'content', ['where' => [['type', 'post'], ['status', 'publish'],], "orderBy" => ['views', 'asc']]),
                 'nofield-latest' => \App\Models\Content::doesntHave('fields')->where([['type', 'post'], ['status', 'publish']])->latest('updated_at')->paginate(30),
-                'nofield-hottest' => \App\Models\Content::doesntHave('fields')->where([['type', 'post'], ['status', 'publish']])->orderBy('views', 'desc')->paginate(30),
+                'nofield-hottest' => \App\Models\Content::doesntHave('fields')->where([['type', 'post'], ['status', 'publish']])->orderBy('views', 'asc')->paginate(30),
             ]
         ];
         foreach (\Module::all() ?? [] as $moduleName => $module) {
@@ -116,7 +116,7 @@ class HomeController extends \App\Http\Controllers\Controller
                             $query->where([['name', 'module_' . $moduleSlug]]);
                         }
                     ],
-                    'orderBy' => ['updated_at', 'desc'],
+                    'orderBy' => ['updated_at', 'asc'],
                 ]);
                 // \App\Models\Content::whereHas('fields', function ($query) use ($moduleSlug) {
                 //     $query->where([['name', 'module_' . $moduleSlug]]);

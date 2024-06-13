@@ -15,8 +15,9 @@ class OptionTableSeeder extends Seeder
     public function run()
     {
         //
-        \DB::table('options')->insert(
-            ["name" => "admin.sidebar", 'user' => 0, "value" => 123],
+        \DB::table('options')->upsert(
+            [["name" => "modules", 'user' => 0, "value" => []]],
+            ["name", "user"],
         );
     }
 }

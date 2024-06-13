@@ -167,6 +167,13 @@ class AdminController extends AdminApiController
     public function view_content_item(Request $request, $cid = 0)
     {
         $request->merge(['$view' => 'data.content-item']);
+        if ($request->method() == 'GET') {
+        }
+
+        if ($request->method() == 'POST') {
+            // insert_item
+            // update_item
+        }
         return parent::{__FUNCTION__}($request, $cid);
     }
 }

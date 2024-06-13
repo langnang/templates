@@ -42,6 +42,10 @@ $app->singleton(
     App\Exceptions\Handler::class
 );
 
+// $app->configureMonologUsing(function ($monolog) use ($app) {
+//     $monolog->pushHandler(new Logger\Monolog\Handler\MysqlHandler);
+// });
+
 require_once __DIR__ . '/helpers.php';
 
 Autoload::modules();
