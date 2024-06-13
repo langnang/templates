@@ -16,6 +16,12 @@ return [
         ],
         "log" => [
             "class" => \App\Models\Log::class,
+            "select_list" => [
+                "orderBy" => [
+                    "created_at",
+                    "desc"
+                ],
+            ],
         ],
         "meta" => [
             "class" => \App\Models\Meta::class,

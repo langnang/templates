@@ -55,6 +55,7 @@ trait HasView
                 "request" => $return["\$request"],
                 "layout" => $return["view"],
                 "view" => $return["view"],
+                "logs" => $this->getLogs(),
             ]);
             // var_dump($log);
 

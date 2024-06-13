@@ -817,6 +817,7 @@ trait BaseCrudTrait
         if (empty($table)) {
             throw new \Exception("Not has variables(table).");
         }
+        $request->merge(['table' => $table]);
         $modelConfig = \Arr::get($this->models, $table);
         if (empty($modelConfig)) {
             throw new \Exception("Not has config(" . $table . ").");

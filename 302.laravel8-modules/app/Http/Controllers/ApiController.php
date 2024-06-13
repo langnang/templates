@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Model;
-use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -119,7 +118,7 @@ class ApiController extends \Illuminate\Routing\Controller
      * @description 检测类中是否定义 Model
      * @param string $name
      * @return bool|string
-     * @throws Exception
+     * @throws \Exception
      */
     public function issetModel(string $name)
     {
@@ -182,7 +181,7 @@ class ApiController extends \Illuminate\Routing\Controller
      * @description 检测类中是否使用 Trait
      * @param string $name
      * @return bool
-     * @throws Exception
+     * @throws \Exception
      */
     public function isuseCrudTrait(string $name)
     {
@@ -258,7 +257,7 @@ class ApiController extends \Illuminate\Routing\Controller
 
     public function error($message = '失败')
     {
-        var_dump($message);
+        // var_dump($message);
         artisan_dump($message);
         // Log::info('[' . request()->method() . '] ' . request()->fullUrl(), [
         //   // "attributes" => request()->attributes(),
