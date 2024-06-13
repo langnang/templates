@@ -20,8 +20,8 @@ class CreateFieldsTable extends Migration
             $table->string('str_value')->nullable()->comment("");
             $table->string('int_value')->nullable()->comment("");
             $table->string('float_value')->nullable()->comment("");
-            $table->string('text_value')->nullable()->comment("");
-            $table->string('object_value')->nullable()->comment("");
+            $table->longText('text_value')->nullable()->comment("");
+            $table->longText('object_value')->nullable()->comment("");
 
             $table->string('type')->nullable()->comment("字段类型");
 

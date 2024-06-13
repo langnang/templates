@@ -132,6 +132,7 @@ trait HasView
             ]
         ]);
         $return['logs'] = $this->logs;
+
         return $this->view($return);
 
         $query = $return['$query'] ?? [];

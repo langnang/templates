@@ -48,19 +48,19 @@ class FieldFactory extends Factory
 
 
         switch ($return['name']) {
-            case 'website_module':
+            case 'module_website':
                 $return['type'] = 'object';
-                $return['object_value'] = json_encode([
+                $return['object_value'] = [
                     'title' => $this->faker->sentence(),
                     'url' => $this->faker->url(),
                     'ico' => $this->faker->imageUrl(64, 64),
                     'keywords' => $this->faker->words(),
                     'description' => $this->faker->paragraph(),
-                ], JSON_UNESCAPED_UNICODE);
+                ];
                 break;
-            case 'spider_module':
+            case 'module_spider':
                 $return['type'] = 'object';
-                $return['object_value'] = json_encode([
+                $return['object_value'] = [
                     'discover' => [
                         'url' => '',
                         'groups' => '',
@@ -68,7 +68,7 @@ class FieldFactory extends Factory
                     'detail' => [],
                     'chapter' => [],
                     'episode' => []
-                ], JSON_UNESCAPED_UNICODE);
+                ];
                 break;
             default:
                 break;
