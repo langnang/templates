@@ -56,6 +56,7 @@ trait HasView
                 "layout" => $return["view"],
                 "view" => $return["view"],
             ]);
+            // var_dump($log);
 
             return view($return['view'], $return, $mergeData);
         } catch (\Exception $e) {

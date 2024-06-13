@@ -53,7 +53,7 @@ class MysqlLoggerHandler extends \Monolog\Handler\AbstractProcessingHandler
                 'created_at' => $record['datetime']->format('Y-m-d H:i:s')
             ];
 
-            DB::connection($this->connection)->table($this->table)->insert($data);
+            DB::connection($this->connection)->table($this->table)->insertGetId($data);
             // if (isset($record['context']['exception']) && is_object($record['context']['exception'])) {
             //     $record['context']['exception'] = (array) $record['context']['exception'];
             // }
