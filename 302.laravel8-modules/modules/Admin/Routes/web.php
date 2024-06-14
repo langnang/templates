@@ -53,7 +53,9 @@ Route::prefix(Module::currentConfig('web.prefix'))->group(function () {
         // view_admin_system_database
         Route::match(['get', 'post'], '/database', 'AdminController@view_admin_system_database');
         Route::match(['get', 'post'], '/database/{table?}', 'AdminController@view_admin_system_database');
-        Route::match(['get', 'post'], '/artisan/{part?}', 'AdminController@view_admin_system_artisan');
+
+        Route::match(['get', 'post'], '/artisan', 'AdminController@view_system_artisan');
+
         Route::match(['get', 'post'], '/config', 'AdminController@view_admin_modules_config');
         Route::match(['get'], '/modules', 'AdminController@view_admin_system_modules');
         Route::match(['get', 'post'], '/modules/{table}', 'AdminController@view_admin_system_modules_config')

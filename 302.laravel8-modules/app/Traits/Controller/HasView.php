@@ -7,10 +7,29 @@ use App\Support\Module;
 
 trait HasView
 {
+    /**
+     * Summary of view
+     * @param mixed $view
+     * @param mixed $data
+     * @param mixed $mergeData
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function view($view = null, $data = [], $mergeData = [])
     {
         try {
             $return = array_merge([
+                '$servers' => [],
+                '$constants' => [],
+                '$variables' => [
+                    'route' => [
+                        'method' => request()->method(),
+                        'url' => request()->url(),
+                        'fullUrl' => request()->fullUrl(),
+                        'path' => request()->path(),
+                        'pathInfo' => request()->getPathInfo(),
+                    ],
+                    'request' => request()->all(),
+                ],
                 '$route' => [
                     'method' => request()->method(),
                     'url' => request()->url(),
@@ -42,7 +61,7 @@ trait HasView
             // var_dump($return);
             if (env('WEB_CONSOLE')) {
                 echo "<script>window.\$app=" . json_encode($return, JSON_UNESCAPED_UNICODE) . ";</script>";
-                echo "<script>console.log(window.\$app);</script>";
+                echo "<script>console.log('window.\$app',window.\$app);</script>";
             }
             // var_dump($return);
             // if (is_array($view) ? !isset($view['view']) : empty($view))
@@ -294,6 +313,7 @@ trait HasView
         ];
         if ($request->method() == 'POST') {
             // var_dump($request->method());
+            $return['updated'] = $this->update_item($request, 'content');
         }
         if ($cid == 0) {
             $return['content'] = new \App\Models\Content();

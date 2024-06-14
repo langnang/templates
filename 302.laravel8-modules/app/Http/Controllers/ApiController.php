@@ -22,7 +22,8 @@ class ApiController extends \Illuminate\Routing\Controller
 {
     use \App\Traits\Controller\HasModels,
         \App\Traits\Controller\HasModule,
-        \App\Traits\Controller\HasLogs;
+        \App\Traits\Controller\HasLogs,
+        \App\Traits\Controller\HasArtisan;
 
     use \Illuminate\Foundation\Auth\Access\AuthorizesRequests,
         \Illuminate\Foundation\Bus\DispatchesJobs,
@@ -250,6 +251,20 @@ class ApiController extends \Illuminate\Routing\Controller
             //     unset($return['links']);
             //     unset($return['prev_page_url']);
             // }
+            \Log::channel('mysql')->info('[' . request()->method() . ']' . request()->getPathInfo(), [
+                // "route" => $return["\$route"],
+                "route" => [
+                    'method' => request()->method(),
+                    'url' => request()->url(),
+                    'fullUrl' => request()->fullUrl(),
+                    'path' => request()->path(),
+                    'pathInfo' => request()->getPathInfo(),
+                ],
+                "request" => request()->all(),
+                // "layout" => $return["view"],
+                // "view" => $return["view"],
+                "logs" => $this->getLogs(),
+            ]);
             return response()->json($return);
         } else {
             return $data;
@@ -275,6 +290,20 @@ class ApiController extends \Illuminate\Routing\Controller
         // ]);
         if ($this->isApiRoute() && $message instanceof \Exception) {
             //            $message = '[' . $message->getFile() . '::' . $message->getCode() . '::' . $message->getLine() . ']  ' . $message->getMessage();
+            \Log::channel('mysql')->error('[' . request()->method() . ']' . request()->getPathInfo(), [
+                // "route" => $return["\$route"],
+                "route" => [
+                    'method' => request()->method(),
+                    'url' => request()->url(),
+                    'fullUrl' => request()->fullUrl(),
+                    'path' => request()->path(),
+                    'pathInfo' => request()->getPathInfo(),
+                ],
+                "request" => request()->all(),
+                // "layout" => $return["view"],
+                // "view" => $return["view"],
+                "logs" => $this->getLogs(),
+            ]);
             return response()->json([
                 'status' => 400,
                 'message' => $message->getMessage(),
@@ -377,5 +406,27 @@ class ApiController extends \Illuminate\Routing\Controller
         } catch (Exception $e) {
             $this->error($e);
         }
+    }
+
+    public function proxy(Request $request)
+    {
+        $url = $request->filled('url') ? $request->input('url') : abort(404);
+        $method = $request->filled('method') ? $request->input('method') : 'get';
+
+        $response = Http::{$method}($url);
+
+        echo $response->body();
+    }
+    public function registor(Request $request)
+    {
+    }
+    public function login(Request $request)
+    {
+    }
+    public function logout(Request $request)
+    {
+    }
+    public function forget_password(Request $request)
+    {
     }
 }

@@ -466,17 +466,46 @@ trait ViewAdminTrait
 
         return $this->view($return);
     }
-    function view_admin_system_artisan(Request $request, $part = null)
+    function view_system_artisan(Request $request, $part = null)
     {
         Artisan::call('list');
         $return = [
+            '$dir' => __DIR__,
+            '$file' => __FILE__,
+            '$line' => __LINE__,
+            '$method' => __METHOD__,
+            '$function' => __FUNCTION__,
+            '$class' => __CLASS__,
             '$request' => $request->all(),
             'view' => 'admin::admin.' . Module::currentConfig('layout') . '.system.artisan',
-            'commands' => Artisan::output(),
+            'artisan_list' => Artisan::output(),
+            // 'commands' => preg_split("/\\n/", Artisan::output()),
         ];
+        // $return['artisan_list'] = preg_replace(['/ /'], ['&nbsp;'], $return['artisan_list']);
+        $return['commands'] = array_map(function ($item) {
+            $res = [
+                "command" => $item,
+                "is_group" => false,
+                "is_category" => false,
+                "signature" => "",
+                "description" => "",
+            ];
+            if (substr($item, 0, 2) === '  ') {
+                $res['signature'] = substr($item, 2, strripos($item, '  '));
+                $res['description'] = empty($res['signature']) ? $item : substr($item, strripos($item, '  ') + 2);
+            } else if (substr($item, 0, 1) === ' ') {
+                $res["is_category"] = true;
+            } else {
+                $res["is_group"] = true;
+            }
+            return $res;
+        }, preg_split("/\\n/", $return['artisan_list']));
+        // var_dump($return['commands']);
+        // var_dump($return['commands']);
+        // var_dump(preg_split("/\\n/", $return['commands'], ));
         // explode("\n", Artisan::output())
         // var_dump($return);
-        return $this->view($return['view'], $return);
+        return $this->view($return);
     }
     public function view_admin_system_modules(Request $request)
     {

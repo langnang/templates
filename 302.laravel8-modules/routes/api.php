@@ -20,14 +20,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 // API 接口代理
-Route::match(['get', 'post', 'put', 'delete'], '/proxy', function (Request $request) {
-    $url = $request->filled('url') ? $request->input('url') : abort(404);
-    $method = $request->filled('method') ? $request->input('method') : 'get';
-
-    $response = Http::{$method}($url);
-
-    echo $response->body();
-});
+Route::match(['get', 'post', 'put', 'delete'], '/proxy', "\App\Http\Controllers\ApiController@proxy");
 
 Route::match(['get', 'post'], '/insert_{table}_list', "\App\Http\Controllers\ApiController@insert_list");
 Route::match(['get', 'post'], '/delete_{table}_list', "\App\Http\Controllers\ApiController@delete_list");
@@ -50,6 +43,15 @@ Route::match(['get', 'post'], '/release_{table}_item', "\App\Http\Controllers\Ap
 Route::match(['get', 'post'], '/faker_{table}_item', "\App\Http\Controllers\ApiController@faker_item");
 
 Route::match(['get', 'post'], '/select_{table}_page', "\App\Http\Controllers\ApiController@select_page");
+
+
+Route::match(['get', 'post'], '/artisan/{signature?}', "\App\Http\Controllers\ApiController@artisan");
+
+Route::match(['get', 'post'], '/registor', "\App\Http\Controllers\ApiController@registor");
+Route::match(['get', 'post'], '/login', "\App\Http\Controllers\ApiController@login");
+Route::match(['get', 'post'], '/logout', "\App\Http\Controllers\ApiController@logout");
+Route::match(['get', 'post'], '/forget_password', "\App\Http\Controllers\ApiController@forget_password");
+
 
 /**
  * Meta

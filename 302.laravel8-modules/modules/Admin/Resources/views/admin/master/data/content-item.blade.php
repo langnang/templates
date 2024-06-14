@@ -25,7 +25,7 @@
               </div>
               <div class="form-group">
                 <label>Text</label>
-                <textarea class="form-control form-control-sm" name='text' rows="3">{{ $content['text'] ?? '' }}</textarea>
+                <textarea class="form-control form-control-sm" name='text' rows="3">{!! $content['text'] ?? '' !!}</textarea>
               </div>
             </div>
 
@@ -34,11 +34,11 @@
             <div class="card-footer">
               <div class="row">
                 <div class="col mr-auto">
-                  <button type="button" class="btn btn-sm btn-secondary">Draft</button>
                   <button type="submit" class="btn btn-sm btn-primary">Submit</button>
                   <button type="button" class="btn btn-sm btn-warning">Release</button>
                 </div>
                 <div class="col col-auto">
+                  <button type="button" class="btn btn-sm btn-secondary">Draft</button>
                   <button type="button" class="btn btn-sm btn-danger">Faker</button>
                 </div>
               </div>

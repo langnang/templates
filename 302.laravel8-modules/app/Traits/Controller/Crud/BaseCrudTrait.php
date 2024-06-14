@@ -167,27 +167,42 @@ trait BaseCrudTrait
      * @param Request $request
      * @return array|JsonResponse|mixed|void
      */
-    function update_item(Request $request)
+    function update_item(Request $request, $table, $config = [])
     {
         try {
-            $_logs = [__METHOD__, $request->all()];
-            $request = $this->on_request($request, __FUNCTION__);
+            $log = ["method" => __METHOD__, "arguments" => ["request" => $request->all(), 'table' => $table, 'config' => $config]];
+            // $_logs = [__METHOD__, $request->all()];
+            // var_dump($request->all());
+            [
+                "modelConfig" => $modelConfig,
+                "modelClass" => $modelClass,
+                "modelFunConfig" => $modelFunConfig,
+                "modelPrimaryKey" => $modelPrimaryKey,
+                "modelUniqueIndex" => $modelUniqueIndex,
+                "modelParentColumn" => $modelParentColumn,
+            ] = $this->on_request($request, $table);
             // $model = $this->issetModel($request->input('$model', $this->BaseModel));
-            $model = $request->input('$model', $this->BaseModel);
-            array_push($_logs, "get model($model).");
-            $primaryKey = (new $model())->getKeyName();
-            array_push($_logs, "get primaryKey($primaryKey).");
-            $uniqueIndex = (new $model())->uniqueIndex;
-            array_push($_logs, "get uniqueIndex($uniqueIndex).");
+            // $model = $request->input('$model', $this->BaseModel);
+            // $parentColumn = (new $modelClass())->parentColumn;
+            $return = $this->queryBuilder(array_merge($modelFunConfig, $config));
+            $_logs = [__METHOD__, $request->all()];
+            // $request = $this->on_request($request, __FUNCTION__);
+            // $model = $this->issetModel($request->input('$model', $this->BaseModel));
+            // $model = $request->input('$model', $this->BaseModel);
+            array_push($_logs, "get model($modelClass).");
+            // $modelPrimaryKey = (new $modelClass())->getKeyName();
+            array_push($_logs, "get primaryKey($modelPrimaryKey).");
+            // $modelUniqueIndex = (new $modelClass())->uniqueIndex;
+            array_push($_logs, "get uniqueIndex($modelUniqueIndex).");
             array_push($_logs, "select need to update record.");
 
-            if (!$request->filled($primaryKey) && $request->filled($uniqueIndex)) {
-                $return = $model::where($uniqueIndex, $request->input($uniqueIndex))->firstOrFail();
-                $request->merge([$primaryKey => $return->$primaryKey]);
+            if (!$request->filled($modelPrimaryKey) && $request->filled($modelUniqueIndex)) {
+                $return = $modelClass::where($modelUniqueIndex, $request->input($modelUniqueIndex))->firstOrFail();
+                $request->merge([$modelPrimaryKey => $return->$modelPrimaryKey]);
             }
-            $return = $model::findOrFail($request->input($primaryKey));
+            $return = $modelClass::findOrFail($request->input($modelPrimaryKey));
             array_push($_logs, $return->toArray());
-            unset($model, $primaryKey);
+            unset($modelClass, $modelPrimaryKey);
             if (!$return)
                 throw new \Exception(Lang::get('no exist record.'));
             $return->fill($request->all());
