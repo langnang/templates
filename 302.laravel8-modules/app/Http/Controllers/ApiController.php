@@ -232,6 +232,7 @@ class ApiController extends \Illuminate\Routing\Controller
         //     return ($item['class'] ?? '') . '::' . $item['function'] . '->' . $item['line'];
         //   }, debug_backtrace()),
         // ]);
+        // Log::channel('mysql')->info();
         if ($this->isApiRoute()) {
             $return = [
                 'status' => 200,

@@ -20,5 +20,6 @@
     "Profession": true,
     "PublicApi": true,
     "Software": true,
-    "Application": true
+    "Application": true,
+    "Spot": true
 }
