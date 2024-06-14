@@ -6,8 +6,9 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
-class SoftwareController extends Controller
+class SoftwareController extends \App\Http\Controllers\Controller
 {
+    protected $module = "Software";
     /**
      * Display a listing of the resource.
      * @return Renderable

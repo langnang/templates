@@ -26,20 +26,34 @@
       </div>
 
       <div class="col-3">
+        <form method="GET">
+          <div class="form-group">
+            <div class="input-group input-group-sm">
+              <input type="text" class="form-control form-control-sm" name="title" placeholder="title"
+                value="{{ request()->input('title') }}">
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="submit">
+                  <i class="bi bi-search"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+
         <div class="card mb-3">
-          <div class="card-header px-3">最新文章</div>
+          <div class="card-header p-2">最新文章</div>
         </div>
         <div class="card mb-3">
-          <div class="card-header px-3">最近回复</div>
+          <div class="card-header p-2">最近回复</div>
         </div>
         <div class="card mb-3">
-          <div class="card-header px-3">目录分类</div>
+          <div class="card-header p-2">目录分类</div>
         </div>
         <div class="card mb-3">
-          <div class="card-header px-3">归档</div>
+          <div class="card-header p-2">归档</div>
         </div>
         <div class="card mb-3">
-          <div class="card-header px-3">其它</div>
+          <div class="card-header p-2">其它</div>
         </div>
       </div>
     </div>

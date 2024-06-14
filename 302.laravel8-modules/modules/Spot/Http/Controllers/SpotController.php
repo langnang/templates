@@ -6,8 +6,9 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
-class SpotController extends Controller
+class SpotController extends \App\Http\Controllers\Controller
 {
+    protected $module = "Spot";
     /**
      * Display a listing of the resource.
      * @return Renderable

@@ -11,6 +11,9 @@
 |
 */
 
-Route::prefix('spot')->group(function() {
-    Route::get('/', 'SpotController@index');
+Route::prefix('spot')->group(function () {
+    Route::get('/', 'SpotController@view_index');
+    Route::get('/metas', 'SpotController@view_meta_list');
+    Route::get('/contents', 'SpotController@view_content_list');
+    Route::get('/content/{cid}', 'SpotController@view_content_item');
 });

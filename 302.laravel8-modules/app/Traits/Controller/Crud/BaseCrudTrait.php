@@ -376,6 +376,7 @@ trait BaseCrudTrait
             // $return = $return->get();
             // $return['_logs'] = $_logs;
             $log['queryLogs'] = \DB::getQueryLog();
+            \DB::disableQueryLog();
             $this->prependLogs($log);
             return $this->success($return);
         } catch (\Exception $e) {
@@ -828,19 +829,24 @@ trait BaseCrudTrait
     function on_request(Request $request, $table, $method = null)
     {
         // var_dump($table);
-        $this->prependLogs(["method" => __METHOD__, "arguments" => [$table, $method]]);
+        $log = ["method" => __METHOD__, "function" => __FUNCTION__, "arguments" => [$table, $method]];
         if (empty($table)) {
-            throw new \Exception("Not has variables(table).");
+            $log['error_message'] = "Not has variables(table).";
+            $this->prependLogs($log);
+            throw new \Exception($log['error_message']);
         }
         $request->merge(['table' => $table]);
         $modelConfig = \Arr::get($this->models, $table);
         if (empty($modelConfig)) {
-            throw new \Exception("Not has config(" . $table . ").");
+            $log['error_message'] = "Not has config(" . $table . ").";
+            $this->prependLogs($log);
+            throw new \Exception($log['error_message']);
         }
         // var_dump($modelConfig);
         $modelClass = \Arr::get($modelConfig, 'class');
-        if (empty($method))
+        if (empty($method)) {
             $method = debug_backtrace()[1]['function'];
+        }
         // var_dump($method);
         $modelFunConfig = array_merge(["class" => $modelClass, "method" => $method,], config('models.methods.' . $method) ?? [], \Arr::get($modelConfig, $method) ?? [], );
         // var_dump($modelFunConfig);
@@ -855,7 +861,8 @@ trait BaseCrudTrait
             "modelUniqueIndex" => (new $modelClass)->uniqueIndex,
             "modelParentColumn" => (new $modelClass)->parentColumn,
         ];
-        $this->prependLogs(["method" => __METHOD__, "return" => $return]);
+        $log['return'] = $return;
+        $this->prependLogs($log);
         return $return;
 
     }

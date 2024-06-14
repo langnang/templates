@@ -54,6 +54,8 @@ return [
                     "relationships",
                 ],
                 "where" => [
+                    ["title", "like", "%" . request()->input('title') . "%"],
+                    request()->filled('slug') ? ["slug", request()->input('slug')] : null,
                     ["type", "post"],
                     ["status", "publish"],
                 ],

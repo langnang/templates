@@ -43,7 +43,8 @@ trait HasModels
                 $log["keys"][$key] = $config[$key];
                 $log["casts"][$key] = $cast;
                 if ($cast == 'array') {
-                    $query = $query->{$key}($config[$key]);
+                    // $log["keys"][$key] = array_filter($config[$key]);
+                    $query = $query->{$key}(array_filter($config[$key]));
                 } else {
                     $query = $query->{$key}(...$config[$key]);
                 }

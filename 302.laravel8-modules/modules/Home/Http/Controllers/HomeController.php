@@ -90,9 +90,9 @@ class HomeController extends \App\Http\Controllers\Controller
             'view' => 'index',
             "tabs" => [
                 // 'home-latest' => \App\Models\Content::where([['type', 'post'], ['status', 'publish']])->latest('updated_at')->paginate(30),
-                'home-latest' => $this->select_page($request, 'content', ['where' => [['type', 'post'], ['status', 'publish'],], "orderBy" => ['updated_at', 'asc']]),
+                'home-latest' => $this->select_list($request, 'content', ['where' => [['type', 'post'], ['status', 'publish'],], "orderBy" => ['updated_at', 'asc']]),
                 // 'home-hottest' => \App\Models\Content::where([['type', 'post'], ['status', 'publish']])->orderBy('views', 'desc')->paginate(30),
-                'home-hottest' => $this->select_page($request, 'content', ['where' => [['type', 'post'], ['status', 'publish'],], "orderBy" => ['views', 'asc']]),
+                'home-hottest' => $this->select_list($request, 'content', ['where' => [['type', 'post'], ['status', 'publish'],], "orderBy" => ['views', 'asc']]),
                 'nofield-latest' => \App\Models\Content::doesntHave('fields')->where([['type', 'post'], ['status', 'publish']])->latest('updated_at')->paginate(30),
                 'nofield-hottest' => \App\Models\Content::doesntHave('fields')->where([['type', 'post'], ['status', 'publish']])->orderBy('views', 'asc')->paginate(30),
             ]
@@ -107,7 +107,7 @@ class HomeController extends \App\Http\Controllers\Controller
                 // $return['tabs'][$moduleSlug . '-toplist'] = new Paginator(Content::factory(30)->raw([], ), 30, 1);
                 // $return['tabs'][$moduleSlug . '-latest'] = new Paginator(Content::factory(30)->raw([], ), 30, 1);
                 // $return['tabs'][$moduleSlug . '-latest'] = \App\Models\Content::latest_updated(30);
-                $return['tabs'][$moduleSlug . '-latest'] = $this->select_page($request, 'content', [
+                $return['tabs'][$moduleSlug . '-latest'] = $this->select_list($request, 'content', [
                     'with' => ['fields'],
                     'where' => [['type', 'post'], ['status', 'publish'],],
                     'whereHas' => [

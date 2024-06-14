@@ -484,7 +484,7 @@ trait ViewAdminTrait
         // $return['artisan_list'] = preg_replace(['/ /'], ['&nbsp;'], $return['artisan_list']);
         $return['commands'] = array_map(function ($item) {
             $res = [
-                "command" => $item,
+                "command" => preg_replace(['/ /'], ['&nbsp;'], $item),
                 "is_group" => false,
                 "is_category" => false,
                 "signature" => "",

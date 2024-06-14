@@ -163,7 +163,7 @@
                                 <i class="bi bi-play-circle-fill"></i>
                               </button>
                             </div>
-                            <div class="col col-auto text-success" style="width: 220px;">
+                            <div class="col col-auto text-success px-0" style="width: 220px;">
                               <a class="btn btn-link btn-sm p-0 text-success" data-toggle="collapse"
                                 href="#collapse-{{ str_replace(':', '-', trim($command['signature'])) }}" role="button"
                                 aria-expanded="false"

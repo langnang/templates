@@ -11,6 +11,9 @@
 |
 */
 
-Route::prefix('application')->group(function() {
-    Route::get('/', 'ApplicationController@index');
+Route::prefix('application')->group(function () {
+    Route::get('/', 'ApplicationController@view_index');
+    Route::get('/metas', 'ApplicationController@view_meta_list');
+    Route::get('/contents', 'ApplicationController@view_content_list');
+    Route::get('/content/{cid}', 'ApplicationController@view_content_item');
 });

@@ -38,6 +38,7 @@ trait HasView
                     'pathInfo' => request()->getPathInfo(),
                 ],
                 '$request' => request()->all(),
+                '$logs' => $this->getLogs(),
                 'config' => $config = Module::currentConfig(null, $this->module),
                 'layout' => "layouts.master",
             ], is_array($view) ? $view : ['view' => $view], $data);
@@ -59,6 +60,9 @@ trait HasView
             $return['view'] = $this->match_view($return['view'], empty($config) ? $return['layout'] : $config['layout']);
             // var_dump($return);
             // var_dump($return);
+            $this->prependLogs(['method' => __METHOD__, "layout" => $return["layout"], "view" => $return["view"],]);
+            $return['$logs'] = $this->getLogs();
+
             if (env('WEB_CONSOLE')) {
                 echo "<script>window.\$app=" . json_encode($return, JSON_UNESCAPED_UNICODE) . ";</script>";
                 echo "<script>console.log('window.\$app',window.\$app);</script>";
@@ -70,17 +74,17 @@ trait HasView
             // if (!\View::exists($return['view']))
             //     abort(404);
             \Log::channel('mysql')->debug('[' . request()->method() . ']' . request()->getPathInfo(), [
-                "route" => $return["\$route"],
-                "request" => $return["\$request"],
-                "layout" => $return["view"],
+                "route" => $return['$route'],
+                "request" => $return['$request'],
+                "layout" => $return["layout"],
                 "view" => $return["view"],
-                "logs" => $this->getLogs(),
+                "logs" => $return['$logs'],
             ]);
             // var_dump($log);
-
             return view($return['view'], $return, $mergeData);
         } catch (\Exception $e) {
             \Log::channel('mysql')->error($e->getMessage() . $e->getFile() . $e->getTraceAsString());
+            abort(503);
         }
 
     }
@@ -90,15 +94,22 @@ trait HasView
         $module = strtolower(empty($module) ? $this->module : $module);
         $moduleLayout = $module . '::layouts.' . $layout;
         $globalLayout = 'layouts.' . $layout;
-        if (\View::exists($moduleLayout))
+        $log = ["method" => __METHOD__, "layout" => $layout, "module" => $module, "moduleLayout" => $moduleLayout, "globalLayout" => $globalLayout];
+        if (\View::exists($moduleLayout)) {
+            $this->prependLogs(array_merge($log, ['return' => $moduleLayout]));
             return $moduleLayout;
+        }
         // 全局模板页面
-        else if (\View::exists($globalLayout))
+        else if (\View::exists($globalLayout)) {
+            $this->prependLogs(array_merge($log, ['return' => $globalLayout]));
             return $globalLayout;
-        else if (\View::exists($layout))
+        } else if (\View::exists($layout)) {
+            $this->prependLogs(array_merge($log, ['return' => $layout]));
             return $layout;
-        else
+        } else {
+            $this->prependLogs(array_merge($log, ['return' => null]));
             abort(404, "No Layout");
+        }
     }
     public function match_view($view, $layout = 'master', $module = null)
     {
@@ -106,16 +117,22 @@ trait HasView
         $moduleView = $module . '::' . $module . '.' . $layout . '.' . $view;
         $globalView = 'pages.' . $layout . '.' . $view;
         // var_dump([$view, $layout, $module, $moduleView, $globalView]);
+        $log = ["method" => __METHOD__, "view" => $view, "layout" => $layout, "module" => $module, "moduleView" => $moduleView, "globalView" => $globalView];
         // 模块定制页面
-        if (\View::exists($moduleView))
+        if (\View::exists($moduleView)) {
+            $this->prependLogs(array_merge($log, ['return' => $moduleView]));
             return $moduleView;
+        }
         // 全局模板页面
-        else if (\View::exists($globalView))
+        else if (\View::exists($globalView)) {
+            $this->prependLogs(array_merge($log, ['return' => $globalView]));
             return $globalView;
-        else if (\View::exists($view))
+        } else if (\View::exists($view)) {
+            $this->prependLogs(array_merge($log, ['return' => $view]));
             return $view;
-        else
+        } else {
             abort(404, 'No View');
+        }
     }
     // public function view_index(Request $request)
     // {
@@ -166,7 +183,7 @@ trait HasView
                 }
             ]
         ]);
-        $return['logs'] = $this->logs;
+        // $return['logs'] = $this->getL;
 
         return $this->view($return);
 
@@ -311,9 +328,19 @@ trait HasView
         $return = [
             'view' => $request->input('$view', 'content-item'),
         ];
-        if ($request->method() == 'POST') {
+        if ($request->method() == 'POST' && $request->filled('action')) {
             // var_dump($request->method());
             $return['updated'] = $this->update_item($request, 'content');
+            switch ($request->input('action')) {
+                case "insert":
+                case "delete":
+                case "update":
+                case "upsert":
+                case "select":
+                    break;
+                default:
+                    break;
+            }
         }
         if ($cid == 0) {
             $return['content'] = new \App\Models\Content();
