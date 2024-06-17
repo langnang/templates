@@ -4,6 +4,7 @@ namespace App\Traits\Controller;
 
 use Illuminate\Http\Request;
 use App\Support\Module;
+use Illuminate\Support\Facades\View;
 
 trait HasView
 {
@@ -94,16 +95,25 @@ trait HasView
         $module = strtolower(empty($module) ? $this->module : $module);
         $moduleLayout = $module . '::layouts.' . $layout;
         $globalLayout = 'layouts.' . $layout;
-        $log = ["method" => __METHOD__, "layout" => $layout, "module" => $module, "moduleLayout" => $moduleLayout, "globalLayout" => $globalLayout];
-        if (\View::exists($moduleLayout)) {
+        $log = [
+            "method" => __METHOD__,
+            "module" => $module,
+            "layout" => $layout,
+            "exists_layout" => View::exists($layout),
+            "moduleLayout" => $moduleLayout,
+            "exists_moduleLayout" => View::exists($moduleLayout),
+            "globalLayout" => $globalLayout,
+            "exists_globalLayout" => View::exists($globalLayout),
+        ];
+        if (View::exists($moduleLayout)) {
             $this->prependLogs(array_merge($log, ['return' => $moduleLayout]));
             return $moduleLayout;
         }
         // 全局模板页面
-        else if (\View::exists($globalLayout)) {
+        else if (View::exists($globalLayout)) {
             $this->prependLogs(array_merge($log, ['return' => $globalLayout]));
             return $globalLayout;
-        } else if (\View::exists($layout)) {
+        } else if (View::exists($layout)) {
             $this->prependLogs(array_merge($log, ['return' => $layout]));
             return $layout;
         } else {
@@ -117,17 +127,28 @@ trait HasView
         $moduleView = $module . '::' . $module . '.' . $layout . '.' . $view;
         $globalView = 'pages.' . $layout . '.' . $view;
         // var_dump([$view, $layout, $module, $moduleView, $globalView]);
-        $log = ["method" => __METHOD__, "view" => $view, "layout" => $layout, "module" => $module, "moduleView" => $moduleView, "globalView" => $globalView];
+        $log = [
+            "method" => __METHOD__,
+            "module" => $module,
+            "view" => $view,
+            "exists_view" => View::exists($view),
+            "layout" => $layout,
+            "exists_layout" => View::exists($layout),
+            "moduleView" => $moduleView,
+            "exists_moduleView" => View::exists($moduleView),
+            "globalView" => $globalView,
+            "exists_globalView" => View::exists($globalView),
+        ];
         // 模块定制页面
-        if (\View::exists($moduleView)) {
+        if (View::exists($moduleView)) {
             $this->prependLogs(array_merge($log, ['return' => $moduleView]));
             return $moduleView;
         }
         // 全局模板页面
-        else if (\View::exists($globalView)) {
+        else if (View::exists($globalView)) {
             $this->prependLogs(array_merge($log, ['return' => $globalView]));
             return $globalView;
-        } else if (\View::exists($view)) {
+        } else if (View::exists($view)) {
             $this->prependLogs(array_merge($log, ['return' => $view]));
             return $view;
         } else {
