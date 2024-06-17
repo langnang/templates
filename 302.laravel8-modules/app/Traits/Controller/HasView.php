@@ -102,13 +102,13 @@ trait HasView
             "layout" => $layout,
             "exists_layout" => View::exists($layout),
             "moduleLayout" => $moduleLayout,
-            // "exists_moduleLayout" => [View::exists($moduleLayout), module_path($module, config('modules.paths.generator.views-layout') . SPE . $layout . '.blade.php'), file_exists(module_path($module, ))],
-            "exists_moduleLayout" => [View::exists($moduleLayout), module_path($module, 'Resources' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'layouts' . DIRECTORY_SEPARATOR . $layout . '.blade.php'), file_exists(module_path($module, 'Resources' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'layouts' . DIRECTORY_SEPARATOR . $layout . '.blade.php'))],
+            "exists_moduleLayout" => [View::exists($moduleLayout), module_path($module, config('modules.paths.generator.views-layout.path') . DIRECTORY_SEPARATOR . $layout . '.blade.php'), file_exists(module_path($module, config('modules.paths.generator.views-layout.path') . DIRECTORY_SEPARATOR . $layout . '.blade.php'))],
+            // "exists_moduleLayout" => [View::exists($moduleLayout), module_path($module, 'Resources' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'layouts' . DIRECTORY_SEPARATOR . $layout . '.blade.php'), file_exists(module_path($module, 'Resources' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'layouts' . DIRECTORY_SEPARATOR . $layout . '.blade.php'))],
 
             "globalLayout" => $globalLayout,
-            "exists_globalLayout" => [View::exists($globalLayout)],
+            "exists_globalLayout" => [View::exists($globalLayout),],
         ];
-        if (View::exists($moduleLayout)) {
+        if (View::exists($moduleLayout) || file_exists(module_path($module, config('modules.paths.generator.views-layout.path') . DIRECTORY_SEPARATOR . $layout . '.blade.php'))) {
             $this->prependLogs(array_merge($log, ['return' => $moduleLayout]));
             return $moduleLayout;
         }
@@ -135,16 +135,16 @@ trait HasView
             "method" => __METHOD__,
             "module" => $module,
             "view" => $view,
-            "exists_view" => View::exists($view),
+            "exists_view" => [View::exists($view)],
             "layout" => $layout,
-            "exists_layout" => View::exists($layout),
+            "exists_layout" => [View::exists($layout)],
             "moduleView" => $moduleView,
-            "exists_moduleView" => View::exists($moduleView),
+            "exists_moduleView" => [View::exists($moduleView), module_path($module, config('modules.paths.generator.views.path') . DIRECTORY_SEPARATOR . $module . DIRECTORY_SEPARATOR . $layout . DIRECTORY_SEPARATOR . $view . '.blade.php'), file_exists(module_path($module, config('modules.paths.generator.views.path') . DIRECTORY_SEPARATOR . $module . DIRECTORY_SEPARATOR . $layout . DIRECTORY_SEPARATOR . $view . '.blade.php'))],
             "globalView" => $globalView,
-            "exists_globalView" => View::exists($globalView),
+            "exists_globalView" => [View::exists($globalView)],
         ];
         // 模块定制页面
-        if (View::exists($moduleView)) {
+        if (View::exists($moduleView) || file_exists(module_path($module, config('modules.paths.generator.views.path') . DIRECTORY_SEPARATOR . $module . DIRECTORY_SEPARATOR . $layout . DIRECTORY_SEPARATOR . $view . '.blade.php'))) {
             $this->prependLogs(array_merge($log, ['return' => $moduleView]));
             return $moduleView;
         }
