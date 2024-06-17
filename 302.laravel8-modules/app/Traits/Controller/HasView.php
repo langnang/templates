@@ -92,7 +92,7 @@ trait HasView
 
     public function match_layout($layout = 'master', $module = null)
     {
-        $module = strtolower(empty($module) ? $this->module : $module);
+        $module = is_linux() ? (empty($module) ? $this->module : $module) : (strtolower(empty($module) ? $this->module : $module));
         $moduleLayout = $module . '::layouts.' . $layout;
         $globalLayout = 'layouts.' . $layout;
         $log = [
@@ -123,7 +123,7 @@ trait HasView
     }
     public function match_view($view, $layout = 'master', $module = null)
     {
-        $module = strtolower(empty($module) ? $this->module : $module);
+        $module = is_linux() ? (empty($module) ? $this->module : $module) : (strtolower(empty($module) ? $this->module : $module));
         $moduleView = $module . '::' . $module . '.' . $layout . '.' . $view;
         $globalView = 'pages.' . $layout . '.' . $view;
         // var_dump([$view, $layout, $module, $moduleView, $globalView]);
