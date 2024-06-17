@@ -55,7 +55,7 @@ return [
                 ],
                 "where" => [
                     app()->runningInConsole() ? null : ["title", "like", "%" . request()->input('title') . "%"],
-                    app()->runningInConsole() ? null : request()->filled('slug') ? ["slug", request()->input('slug')] : null,
+                    app()->runningInConsole() ? null : (request()->filled('slug') ? ["slug", request()->input('slug')] : null),
                     ["type", "post"],
                     ["status", "publish"],
                 ],
