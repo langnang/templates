@@ -73,7 +73,7 @@ trait HasView
 
             // if (!\View::exists($return['view']))
             //     abort(404);
-            \Log::channel('mysql')->debug('[' . request()->method() . ']' . request()->getPathInfo(), [
+            \Log::channel('mysql')->debug(request()->getPathInfo(), [
                 "route" => $return['$route'],
                 "request" => $return['$request'],
                 "layout" => $return["layout"],
@@ -358,8 +358,10 @@ trait HasView
                 });
             }
             $return['content'] = $return['content']->find($cid);
+            $return['module_field'] = $return['content']['fields'][0]->toArray();
         }
-        // var_dump($return);
+        // var_dump($return['content']);
+        // var_dump($return['content']['fields']);
         // var_dump($return);
         if (empty($return['content']))
             abort(404, 'Null Value');

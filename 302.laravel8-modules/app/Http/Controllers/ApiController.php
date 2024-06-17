@@ -251,7 +251,7 @@ class ApiController extends \Illuminate\Routing\Controller
             //     unset($return['links']);
             //     unset($return['prev_page_url']);
             // }
-            \Log::channel('mysql')->info('[' . request()->method() . ']' . request()->getPathInfo(), [
+            \Log::channel('mysql')->info(request()->getPathInfo(), [
                 // "route" => $return["\$route"],
                 "route" => [
                     'method' => request()->method(),
@@ -290,7 +290,7 @@ class ApiController extends \Illuminate\Routing\Controller
         // ]);
         if ($this->isApiRoute() && $message instanceof \Exception) {
             //            $message = '[' . $message->getFile() . '::' . $message->getCode() . '::' . $message->getLine() . ']  ' . $message->getMessage();
-            \Log::channel('mysql')->error('[' . request()->method() . ']' . request()->getPathInfo(), [
+            \Log::channel('mysql')->error(request()->getPathInfo(), [
                 // "route" => $return["\$route"],
                 "route" => [
                     'method' => request()->method(),
