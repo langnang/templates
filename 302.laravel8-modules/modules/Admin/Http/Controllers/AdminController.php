@@ -477,7 +477,7 @@ trait ViewAdminTrait
             '$function' => __FUNCTION__,
             '$class' => __CLASS__,
             '$request' => $request->all(),
-            'view' => 'admin::admin.' . Module::currentConfig('layout') . '.system.artisan',
+            'view' => 'system.artisan',
             'artisan_list' => Artisan::output(),
             // 'commands' => preg_split("/\\n/", Artisan::output()),
         ];
