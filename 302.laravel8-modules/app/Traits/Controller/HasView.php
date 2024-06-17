@@ -92,7 +92,8 @@ trait HasView
 
     public function match_layout($layout = 'master', $module = null)
     {
-        $module = is_linux() ? (empty($module) ? $this->module : $module) : (strtolower(empty($module) ? $this->module : $module));
+        $module = strtolower(empty($module) ? $this->module : $module);
+        // $module = is_linux() ? (empty($module) ? $this->module : $module) : (strtolower(empty($module) ? $this->module : $module));
         $moduleLayout = $module . '::layouts.' . $layout;
         $globalLayout = 'layouts.' . $layout;
         $log = [
@@ -101,9 +102,11 @@ trait HasView
             "layout" => $layout,
             "exists_layout" => View::exists($layout),
             "moduleLayout" => $moduleLayout,
-            "exists_moduleLayout" => View::exists($moduleLayout),
+            // "exists_moduleLayout" => [View::exists($moduleLayout), module_path($module, config('modules.paths.generator.views-layout') . SPE . $layout . '.blade.php'), file_exists(module_path($module, ))],
+            "exists_moduleLayout" => [View::exists($moduleLayout), module_path($module, 'Resources' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'layouts' . DIRECTORY_SEPARATOR . $layout . '.blade.php'), file_exists(module_path($module, 'Resources' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'layouts' . DIRECTORY_SEPARATOR . $layout . '.blade.php'))],
+
             "globalLayout" => $globalLayout,
-            "exists_globalLayout" => View::exists($globalLayout),
+            "exists_globalLayout" => [View::exists($globalLayout)],
         ];
         if (View::exists($moduleLayout)) {
             $this->prependLogs(array_merge($log, ['return' => $moduleLayout]));
@@ -123,7 +126,8 @@ trait HasView
     }
     public function match_view($view, $layout = 'master', $module = null)
     {
-        $module = is_linux() ? (empty($module) ? $this->module : $module) : (strtolower(empty($module) ? $this->module : $module));
+        $module = strtolower(empty($module) ? $this->module : $module);
+        // $module = is_linux() ? (empty($module) ? $this->module : $module) : (strtolower(empty($module) ? $this->module : $module));
         $moduleView = $module . '::' . $module . '.' . $layout . '.' . $view;
         $globalView = 'pages.' . $layout . '.' . $view;
         // var_dump([$view, $layout, $module, $moduleView, $globalView]);

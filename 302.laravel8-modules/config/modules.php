@@ -123,7 +123,7 @@ return [
             'views' => ['path' => 'Resources' . DIRECTORY_SEPARATOR . 'views', 'generate' => true],
             'views-admin' => ['path' => 'Resources' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'admin', 'generate' => true],
             'views-market' => ['path' => 'Resources' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'market', 'generate' => true],
-            'views-layout' => ['path' => 'Resources' . DIRECTORY_SEPARATOR . 'views/layouts', 'generate' => true],
+            'views-layout' => ['path' => 'Resources' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'layouts', 'generate' => true],
             'component-view' => ['path' => 'Resources' . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'components', 'generate' => true],
             'public' => ['path' => 'Public', 'generate' => false],
             'test' => ['path' => 'Tests' . DIRECTORY_SEPARATOR . 'Unit', 'generate' => false],
