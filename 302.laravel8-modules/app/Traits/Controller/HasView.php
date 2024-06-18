@@ -108,7 +108,8 @@ trait HasView
             "globalLayout" => $globalLayout,
             "exists_globalLayout" => [View::exists($globalLayout),],
         ];
-        if (View::exists($moduleLayout) || file_exists(module_path($module, config('modules.paths.generator.views-layout.path') . DIRECTORY_SEPARATOR . $layout . '.blade.php'))) {
+        // if (View::exists($moduleLayout) || file_exists(module_path($module, config('modules.paths.generator.views-layout.path') . DIRECTORY_SEPARATOR . $layout . '.blade.php'))) {
+        if (View::exists($moduleLayout)) {
             $this->prependLogs(array_merge($log, ['return' => $moduleLayout]));
             return $moduleLayout;
         }
@@ -144,7 +145,8 @@ trait HasView
             "exists_globalView" => [View::exists($globalView)],
         ];
         // 模块定制页面
-        if (View::exists($moduleView) || file_exists(module_path($module, config('modules.paths.generator.views.path') . DIRECTORY_SEPARATOR . $module . DIRECTORY_SEPARATOR . $layout . DIRECTORY_SEPARATOR . $view . '.blade.php'))) {
+        // if (View::exists($moduleView) || file_exists(module_path($module, config('modules.paths.generator.views.path') . DIRECTORY_SEPARATOR . $module . DIRECTORY_SEPARATOR . $layout . DIRECTORY_SEPARATOR . $view . '.blade.php'))) {
+        if (View::exists($moduleView)) {
             $this->prependLogs(array_merge($log, ['return' => $moduleView]));
             return $moduleView;
         }
