@@ -5,22 +5,30 @@
   <div class="container">
     <div class="row">
       <div class="col-9">
-        <h3>{{ $content['title'] }}</h3>
-        <p class="small">
-          作者：{{ $content['user'] ?? '' }}
-          时间：{{ $content['release_at'] ?? $content['updated_at'] }}
-          分类：{{ $content['categories'] ?? '' }}
-        </p>
-        <div class="card mb-3">
-          <div class="card-body px-2">
-            {!! markdown_to_html($content['description'] ?? '') !!}
-            {!! markdown_to_html($content['text']) !!}
-          </div>
+        <div class="mb-3">
+          <h3>{{ $content['title'] }}</h3>
+          <p class="mb-0">{{ $content['description'] ?? '' }}</p>
+          <hr class="my-2">
+          <p class="small">
+            作者：{{ $content['user'] ?? '' }}
+            时间：{{ $content['release_at'] ?? $content['updated_at'] }}
+            分类：{{ $content['categories'] ?? '' }}
+            标签：{{ $content['tags'] ?? '' }}
+          </p>
         </div>
-        <p class="small">标签：{{ $content['tags'] ?? '' }}</p>
+        {{-- @php dump($config['slug'] . '::components.'.($config['layout']??'master').'.field-item');@endphp --}}
+        @if (\View::exists($config['slug'] . '::components.' . ($config['layout'] ?? 'master') . '.field-item'))
+          @include($config['slug'] . '::components.' . ($config['layout'] ?? 'master') . '.field-item')
+        @else
+          <div class="card mb-3">
+            <div class="card-body px-2">
+              {!! markdown_to_html($module_field['text_value'] ?? ($content['text'] ?? '')) !!}
+            </div>
+          </div>
+        @endif
       </div>
       <div class="col-3">
-        <div class="card my-3">
+        <div class="card mb-3">
           <div class="card-header p-2">
             <div class="card-title mb-0">关联分类</div>
           </div>
