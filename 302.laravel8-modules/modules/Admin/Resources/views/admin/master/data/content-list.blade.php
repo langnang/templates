@@ -22,16 +22,23 @@
                   </select>
                 </div>
                 <div class="form-group mr-1">
-                  <input type="text" name="title" class="form-control form-control-sm" placeholder="Title"
-                    value="{{ request()->input('title') }}">
-                </div>
-                <div class="form-group mr-1">
                   <input type="text" name="slug" class="form-control form-control-sm" placeholder="Slug"
                     value="{{ request()->input('slug') }}">
                 </div>
                 <div class="form-group mr-1">
+                  <input type="text" name="title" class="form-control form-control-sm" placeholder="Title"
+                    value="{{ request()->input('title') }}">
+                </div>
+                <div class="form-group mr-1">
                   <select class="form-control form-control-sm" name="type">
                     <option value="">--Type--</option>
+                    <option value="post" @if (request()->input('type') == 'post') selected @endif>post</option>
+                    <option value="page" @if (request()->input('type') == 'page') selected @endif>page</option>
+                    <option value="template" @if (request()->input('type') == 'template') selected @endif>template</option>
+                    <option value="draft-post" @if (request()->input('type') == 'draft-post') selected @endif>draft-post</option>
+                    <option value="draft-page" @if (request()->input('type') == 'draft-page') selected @endif>draft-page</option>
+                    <option value="draft-template" @if (request()->input('type') == 'draft-template') selected @endif>draft-template
+                    </option>
                   </select>
                 </div>
                 <div class="form-group mr-1">
@@ -54,12 +61,13 @@
                   <tr>
                     <th width="14px">#</th>
                     <th>ID</th>
-                    <th>title</th>
-                    <th>type</th>
-                    <th>status</th>
-                    <th>created_at</th>
-                    <th>updated_at</th>
-                    <th>release_at</th>
+                    <th>Slug</th>
+                    <th>Title</th>
+                    <th>Type</th>
+                    <th>Status</th>
+                    <th>Created At</th>
+                    <th>Updated At</th>
+                    <th>Release At</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -71,6 +79,7 @@
                         </div>
                       </td>
                       <td><a class="" href="content/{{ $content['cid'] }}">{{ $content['cid'] }}</a></td>
+                      <td>{{ $content['slug'] }}</td>
                       <td>{{ $content['title'] }}</td>
                       <td>{{ $content['type'] }}</td>
                       <td>{{ $content['status'] }}</td>

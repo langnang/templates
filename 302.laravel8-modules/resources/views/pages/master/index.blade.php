@@ -8,9 +8,11 @@
         @foreach ($contents ?? [] as $content)
           <div class="card mb-3">
             <a class="card-header px-3" href="/{{ $config['slug'] }}/content/{{ $content['cid'] }}">
-              {{ $content['title'] }}
+              {{ $content['title'] ?? '' }}
             </a>
-            <div class="card-body py-3 px-2"></div>
+            <div class="card-body py-3 px-2">
+              {{ $content['description'] ?? '' }}
+            </div>
             <div class="card-footer small px-3 py-1">
               作者: {{ $content['user'] }}
               时间: {{ $content['release_at'] ?? $content['updated_at'] }}

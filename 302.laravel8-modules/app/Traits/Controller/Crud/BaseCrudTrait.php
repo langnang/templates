@@ -263,13 +263,35 @@ trait BaseCrudTrait
      * @param Request $request
      * @return array|JsonResponse|mixed|void
      */
-    function select_item(Request $request)
+    function select_item(Request $request, $table, $config = [])
     {
         $_logs = [__METHOD__];
         try {
-            $request = $this->on_request($request, __FUNCTION__);
+            $log = ["method" => __METHOD__, "arguments" => ["request" => $request->all(), 'table' => $table, 'config' => $config]];
+
+            [
+                "modelConfig" => $modelConfig,
+                "modelClass" => $modelClass,
+                "modelFunConfig" => $modelFunConfig,
+                "modelPrimaryKey" => $modelPrimaryKey,
+                "modelUniqueIndex" => $modelUniqueIndex,
+                "modelParentColumn" => $modelParentColumn,
+            ] = $this->on_request($request, $table);
+            $return = $this->queryBuilder(array_merge($modelFunConfig, $config));
+
+            \DB::enableQueryLog();
+            $return = $return->find($request->input($modelPrimaryKey));
+            // $return = $return->skip($request->input("skip", 0))->take($request->input("take", 30))->get();
+            // $return = $return->get();
+            // $return['_logs'] = $_logs;
+            $log['queryLogs'] = \DB::getQueryLog();
+            \DB::disableQueryLog();
+            $this->prependLogs($log);
+            return $this->success($return);
+
+            // $request = $this->on_request($request, __FUNCTION__);
             // $model = $this->issetModel($request->input('$model', $this->BaseModel));
-            $model = $request->input('$model', $this->BaseModel);
+            // $model = $request->input('$model', $this->BaseModel);
             $primaryKey = (new $model())->getKeyName();
             $parentColumn = (new $model())->parentColumn;
             $with = $this->withClauses($request);

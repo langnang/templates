@@ -26,6 +26,7 @@
               <div class="form-group">
                 <label>Text</label>
                 <textarea class="form-control form-control-sm" name='text' rows="3">{!! $content['text'] ?? '' !!}</textarea>
+
               </div>
             </div>
 
@@ -173,12 +174,17 @@
       </form>
 
     </div>
+    <div>
+      <div id="editor">
+        {!! $content['text'] ?? '' !!}
+      </div>
+    </div>
   </section>
 
   <section>
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
+      <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
@@ -187,7 +193,7 @@
             </button>
           </div>
           <div class="modal-body">
-            ...
+            <form></form>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -203,12 +209,46 @@
 
 
 @push('scripts')
+  {{-- <script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script> --}}
+  <script src="https://cdn.jsdelivr.net/npm/ckeditor5@41.4.2/dist/browser/index.umd.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ckeditor5@41.4.2/dist/browser/index.min.css">
   <script>
     $(document).on('click', '[name="insert-field"]', function(e) {
       console.log(e, $(this))
     })
     $(document).on('click', '[name="delete-field"]', function(e) {
       console.log(e, $(this))
+    })
+  </script>
+  <script>
+    $(document).ready(() => {
+      ckeditor5.ClassicEditor
+        .create(document.querySelector('#editor'), {
+          toolbar: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote'],
+          heading: {
+            options: [{
+                model: 'paragraph',
+                title: 'Paragraph',
+                class: 'ck-heading_paragraph'
+              },
+              {
+                model: 'heading1',
+                view: 'h1',
+                title: 'Heading 1',
+                class: 'ck-heading_heading1'
+              },
+              {
+                model: 'heading2',
+                view: 'h2',
+                title: 'Heading 2',
+                class: 'ck-heading_heading2'
+              }
+            ]
+          }
+        })
+        .catch(error => {
+          console.error(error);
+        });
     })
   </script>
 @endpush

@@ -372,20 +372,21 @@ trait HasView
         if ($cid == 0) {
             $return['content'] = new \App\Models\Content();
         } else {
-            $return['content'] = \App\Models\Content::with([
-                'metas',
-                'fields',
-                'links',
-                'comments'
-            ]);
-            if (!in_array($this->module, ['Home', 'Admin'])) {
-                $return['content'] = $return['content']->whereHas("fields", function ($query) {
-                    $query->where([['name', 'module_' . strtolower($this->module)]]);
+            $return['content'] = $this->select_item($request, 'content');
+            // $return['content'] = \App\Models\Content::with([
+            //     'metas',
+            //     'fields',
+            //     'links',
+            //     'comments'
+            // ]);
+            // if (!in_array($this->module, ['Home', 'Admin'])) {
+            //     $return['content'] = $return['content']->whereHas("fields", function ($query) {
+            //         $query->where([['name', 'module_' . strtolower($this->module)]]);
 
-                });
-            }
-            $return['content'] = $return['content']->find($cid);
-            $return['module_field'] = $return['content']['fields'][0]->toArray();
+            //     });
+            // }
+            // $return['content'] = $return['content']->find($cid);
+            // $return['module_field'] = $return['content']['fields'][0]->toArray();
         }
         // var_dump($return['content']);
         // var_dump($return['content']['fields']);
@@ -449,7 +450,12 @@ trait HasView
         // echo "<script>window.\$data=" . json_encode($return, JSON_UNESCAPED_UNICODE) . "</script>";
         return $this->view($return['view'], $return);
     }
-
+    /**
+     * Summary of view_content_item_form
+     * @param \Illuminate\Http\Request $request
+     * @param mixed $cid
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function view_content_item_form(Request $request, $cid = 0)
     {
         $return = array_merge([
@@ -490,15 +496,25 @@ trait HasView
         $request->merge(['$return' => $return, 'cid' => $cid]);
         return $this->view_index($request);
     }
+    /**
+     * Summary of view_content_list
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function view_content_list(Request $request)
     {
         $return = [
             'view' => $request->input('$view', 'content-list'),
-            'contents' => \App\Models\Content::with(['fields'])->paginate(20),
+            'contents' => $this->select_list($request, 'content'),
         ];
 
         return $this->view($return);
     }
+    /**
+     * Summary of view_content_list_form
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function view_content_list_form(Request $request)
     {
         $return = array_merge([
@@ -508,33 +524,46 @@ trait HasView
         $request->merge(['$return' => $return]);
         return $this->view_index($request);
     }
-    public function view_field_item(Request $request, $field, $id)
+    /**
+     * 
+     * @param \Illuminate\Http\Request $request
+     * @param mixed $cid
+     * @param mixed $field_name
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
+    public function view_field_item(Request $request, $cid, $field_name)
     {
-        $return = array_merge([
-            "prefix" => $this->prefix ?? 'home',
-            "view" => \View::exists($this->prefix . '.' . $field) ? $this->prefix . '.' . $field : '_view.' . $field,
-        ], $request->input('$return', []), );
-        if (request()->filled('source') && request()->filled('url')) {
-            $source = (new SpiderController)->select_content_item(new Request(['cid' => request()->input('source')]));
-            $return['source'] = $source;
-            $field = $source->text[$field] ?? [];
-            $spider = new PhpSpiderHelper;
-            $url = $spider->fill_url(request()->input('url'), $source['slug']);
+        $request->merge(['cid' => $cid, 'field_name' => $field_name]);
+        $return = [
+            'view' => $request->input('$view', 'field-item'),
+            'field' => $this->select_item($request, 'field'),
+        ];
+        return $this->view($return);
+        // $return = array_merge([
+        //     "prefix" => $this->prefix ?? 'home',
+        //     "view" => \View::exists($this->prefix . '.' . $field) ? $this->prefix . '.' . $field : '_view.' . $field,
+        // ], $request->input('$return', []), );
+        // if (request()->filled('source') && request()->filled('url')) {
+        //     $source = (new SpiderController)->select_content_item(new Request(['cid' => request()->input('source')]));
+        //     $return['source'] = $source;
+        //     $field = $source->text[$field] ?? [];
+        //     $spider = new PhpSpiderHelper;
+        //     $url = $spider->fill_url(request()->input('url'), $source['slug']);
 
-            $fields = $source->get_source_fields($field, [], ["{{url}}" => $url]);
+        //     $fields = $source->get_source_fields($field, [], ["{{url}}" => $url]);
 
-            $spider = new PhpSpiderHelper(["fields" => $fields]);
+        //     $spider = new PhpSpiderHelper(["fields" => $fields]);
 
-            $fields = $spider->unit($url);
-            $return['extracted_fields'] = $fields;
-            $return = array_merge($return, $fields, $this->import_tree(new Request((array) $fields)) ?? []);
-        } else {
-        }
-        $return['latest_contents'] = $this->get_view_latest_contents(new Request());
-        $return['toplist_contents'] = $this->get_view_latest_contents(new Request());
-        // var_dump($return);
-        echo "<script>window.\$data=" . json_encode($return, JSON_UNESCAPED_UNICODE) . "</script>";
-        return $this->view($return['view'], $return);
+        //     $fields = $spider->unit($url);
+        //     $return['extracted_fields'] = $fields;
+        //     $return = array_merge($return, $fields, $this->import_tree(new Request((array) $fields)) ?? []);
+        // } else {
+        // }
+        // $return['latest_contents'] = $this->get_view_latest_contents(new Request());
+        // $return['toplist_contents'] = $this->get_view_latest_contents(new Request());
+        // // var_dump($return);
+        // echo "<script>window.\$data=" . json_encode($return, JSON_UNESCAPED_UNICODE) . "</script>";
+        // return $this->view($return['view'], $return);
     }
 
 

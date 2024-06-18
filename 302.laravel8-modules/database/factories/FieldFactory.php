@@ -21,7 +21,7 @@ class FieldFactory extends Factory
             //
             "cid" => \App\Models\Content::inRandomOrder()->first(),
             // "name" => $this->faker->randomElement(array_merge(['cids'], $moduleSlugs)),
-            "name" => 'module_website',
+            "name" => 'module_awesome',
             // "name" => $this->faker->word(),
             "type" => $this->faker->randomElement(['str', 'float', 'int', 'text', 'object']),
         ];

@@ -37,7 +37,8 @@ Route::prefix(Module::currentConfig('web.prefix'))->group(function () {
 
         Route::match(['get', 'post'], '/content', 'AdminController@view_content_list');
         Route::match(['get', 'post'], '/content/{id}', 'AdminController@view_content_item');
-        Route::match(['get', 'post'], '/content/insert', 'AdminController@view_content_item');
+        Route::match(['get', 'post'], '/content/{id}/{field}', 'AdminController@view_field_item');
+        // Route::match(['get', 'post'], '/content/insert', 'AdminController@view_content_item');
 
         Route::match(['get', 'post'], '/comment', 'AdminController@view_comment_list');
         Route::match(['get', 'post'], '/comment/{id}', 'AdminController@view_comment_item');

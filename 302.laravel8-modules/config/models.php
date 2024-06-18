@@ -46,6 +46,13 @@ return [
             ],
             "delete_item" => [],
             "delete_list" => [],
+            "select_item" => [
+                "with" => [
+                    "metas",
+                    "fields",
+                    "relationships",
+                ],
+            ],
             "select_list" => [
                 "with" => [
                     "metas",
@@ -56,8 +63,8 @@ return [
                 "where" => [
                     app()->runningInConsole() ? null : ["title", "like", "%" . request()->input('title') . "%"],
                     app()->runningInConsole() ? null : (request()->filled('slug') ? ["slug", request()->input('slug')] : null),
-                    ["type", "post"],
-                    ["status", "publish"],
+                    app()->runningInConsole() ? null : ["type", request()->input('type', 'post')],
+                    app()->runningInConsole() ? null : ["status", request()->input('status', 'publish')],
                 ],
             ],
             "select_page" => [
