@@ -22,7 +22,7 @@ use App\Support\Module;
 // var_dump(Module::current());
 // var_dump(Module::currentConfig('name'));
 Route::prefix(Module::currentConfig('web.prefix'))->group(function () {
-    Route::get('/', 'AdminController@view_index');
+    Route::get('/', 'AdminController@view_index')->name(Module::currentConfig('slug'));
     Route::match(['get', 'post'], '/register', 'AdminController@view_register');
     Route::match(['get', 'post'], '/login', 'AdminController@view_login');
     Route::match(['get', 'post'], '/forgot-password', 'AdminController@view_forgot_password');

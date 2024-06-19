@@ -40,14 +40,15 @@
 
   @sectionMissing('main')
     @section('header')
-      @if (View::exists('shared.master.header'))
+      @if (View::exists('shared.master.header') && !empty($config))
         @include('shared.master.header')
       @endif
     @show
 
     @yield('sidebar')
 
-    <div class="wrapper-content" style="min-height: calc(100vh - 152px)">
+    <div class="wrapper-content"
+      style="min-height: calc(100vh - @empty($config) 88px @else 152px @endif)">
       @yield('content')
     </div>
 
@@ -59,19 +60,11 @@
   @endif
 
   <x-scripts :props="[
-      ['axios', 'axios.min'],
-      ['jquery', 'jquery.min'],
-      ['popper.js', 'popper.min'],
-      ['bootstrap', 'js/bootstrap.min'],
-      ['lodash', 'lodash.min'],
-      ['holderjs', 'holder.min'],
-      ['mockjs', 'mock-min'],
-      ['moment', 'moment'],
-      ['masonry-layout', 'masonry.pkgd.min'],
-      ['/public/app/js/app'],
-  ]"></x-scripts>
+      ['axios', 'axios.min' ], ['jquery', 'jquery.min' ], ['popper.js', 'popper.min' ], ['bootstrap', 'js/bootstrap.min'
+      ], ['lodash', 'lodash.min' ], ['holderjs', 'holder.min' ], ['mockjs', 'mock-min' ], ['moment', 'moment' ],
+      ['masonry-layout', 'masonry.pkgd.min' ], ['/public/app/js/app'], ]"></x-scripts>
 
-  @stack('scripts')
+      @stack('scripts')
 </body>
 
 </html>

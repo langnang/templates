@@ -20,14 +20,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 // API 接口代理
-Route::match(['get', 'post', 'put', 'delete'], '/proxy', "\App\Http\Controllers\ApiController@proxy");
+Route::match(['get', 'post', 'put', 'delete'], '/proxy', "\App\Http\Controllers\ApiController@proxy")->name('proxy');
 
-Route::match(['get', 'post'], '/insert_{table}_list', "\App\Http\Controllers\ApiController@insert_list");
-Route::match(['get', 'post'], '/delete_{table}_list', "\App\Http\Controllers\ApiController@delete_list");
-Route::match(['get', 'post'], '/update_{table}_list', "\App\Http\Controllers\ApiController@update_list");
-Route::match(['get', 'post'], '/select_{table}_list', "\App\Http\Controllers\ApiController@select_list");
-Route::match(['get', 'post'], '/upsert_{table}_list', "\App\Http\Controllers\ApiController@upsert_list");
-Route::match(['get', 'post'], '/faker_{table}_list', "\App\Http\Controllers\ApiController@faker_list");
+Route::match(['get', 'post'], '/insert_{table}_list', "\App\Http\Controllers\ApiController@insert_list")->name('content.insert.list');
+Route::match(['get', 'post'], '/delete_{table}_list', "\App\Http\Controllers\ApiController@delete_list")->name('content.delete.list');
+Route::match(['get', 'post'], '/update_{table}_list', "\App\Http\Controllers\ApiController@update_list")->name('content.update.list');
+Route::match(['get', 'post'], '/select_{table}_list', "\App\Http\Controllers\ApiController@select_list")->name('content.select.list');
+Route::match(['get', 'post'], '/upsert_{table}_list', "\App\Http\Controllers\ApiController@upsert_list")->name('content.upsert.list');
+Route::match(['get', 'post'], '/faker_{table}_list', "\App\Http\Controllers\ApiController@faker_list")->name('content.faker.list');
 
 Route::match(['get', 'post'], '/insert_{table}_item', "\App\Http\Controllers\ApiController@insert_item");
 Route::match(['get', 'post'], '/delete_{table}_item', "\App\Http\Controllers\ApiController@delete_item");
