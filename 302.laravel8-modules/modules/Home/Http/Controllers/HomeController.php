@@ -118,6 +118,17 @@ class HomeController extends \App\Http\Controllers\Controller
                     ],
                     'orderBy' => ['updated_at', 'asc'],
                 ]);
+                $return['tabs'][$moduleSlug . '-hottest'] = $this->select_list($request, 'content', [
+                    'with' => ['fields'],
+                    'where' => [['type', 'post'], ['status', 'publish'],],
+                    'whereHas' => [
+                        'fields',
+                        function ($query) use ($moduleSlug) {
+                            $query->where([['name', 'module_' . $moduleSlug]]);
+                        }
+                    ],
+                    'orderBy' => ['views', 'asc'],
+                ]);
                 // \App\Models\Content::whereHas('fields', function ($query) use ($moduleSlug) {
                 //     $query->where([['name', 'module_' . $moduleSlug]]);
                 // })
