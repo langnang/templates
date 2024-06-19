@@ -486,19 +486,36 @@ trait BaseCrudTrait
      * @param Request $request
      * @return array|JsonResponse|mixed|void
      */
-    function select_count(Request $request)
+    function select_count(Request $request, $table, $config = [])
     {
         try {
-            $request = $this->on_request($request, __FUNCTION__);
-            // $model = $this->issetModel($request->input('$model', $this->BaseModel));
-            $model = $request->input('$model', $this->BaseModel);
-            $primaryKey = (new $model())->getKeyName();
-            $parentColumn = (new $model())->parentColumn;
-            //            var_dump($parentColumn);
-            $return = $model::with($this->withClauses($request));
-            unset($model);
-            $return = $this->whereClauses($request, $return);
+            $log = ["method" => __METHOD__, "arguments" => ["request" => $request->all(), 'table' => $table, 'config' => $config]];
+            [
+                "modelConfig" => $modelConfig,
+                "modelClass" => $modelClass,
+                "modelFunConfig" => $modelFunConfig,
+                "modelPrimaryKey" => $modelPrimaryKey,
+                "modelUniqueIndex" => $modelUniqueIndex,
+                "modelParentColumn" => $modelParentColumn,
+            ] = $this->on_request($request, $table);
+
+            $return = $this->queryBuilder(array_merge($modelFunConfig, $config));
+
+            \DB::enableQueryLog();
             $return = $return->count();
+
+            $log['queryLogs'] = \DB::getQueryLog();
+            $this->prependLogs($log);
+            // $request = $this->on_request($request, __FUNCTION__);
+            // $model = $this->issetModel($request->input('$model', $this->BaseModel));
+            // $model = $request->input('$model', $this->BaseModel);
+            // $primaryKey = (new $model())->getKeyName();
+            // $parentColumn = (new $model())->parentColumn;
+            //            var_dump($parentColumn);
+            // $return = $model::with($this->withClauses($request));
+            // unset($model);
+            // $return = $this->whereClauses($request, $return);
+            // $return = $return->count();
             return $this->success($return);
         } catch (\Exception $e) {
             return $this->error($e);

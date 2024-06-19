@@ -16,7 +16,7 @@ class OptionTableSeeder extends Seeder
     {
         //
         \DB::table('options')->upsert(
-            [["name" => "modules", 'user' => 0, "value" => []]],
+            [["name" => "modules", 'user' => 0, "value" => serialize([])]],
             ["name", "user"],
         );
     }

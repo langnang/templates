@@ -16,6 +16,8 @@ class WebsiteDatabaseSeeder extends Seeder
     {
         Model::unguard();
 
+        \Modules\Website\Models\WebsiteField::factory(100)->create();
+
         // $this->call("OthersTableSeeder");
     }
 }

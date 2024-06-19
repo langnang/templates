@@ -294,7 +294,7 @@
       parentNext.find('[data-name="status"]').html(
         `<div class="spinner-grow spinner-grow-sm text-primary" role="status"> </div>`);
       parentNext.find('[data-name="command"]').text(
-        `php artiasn ` + signature + args.join(' '));
+        `php artisan ` + signature + ' ' + args.join(' '));
       parentNext.addClass('show');
       //   var button = $(event) // Button that triggered the modal
       //   var button = $(event.relatedTarget) // Button that triggered the modal

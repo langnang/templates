@@ -210,6 +210,35 @@ trait ViewTrait
         ];
         return $this->view($return);
     }
+    function view_dashboard_index(Request $request)
+    {
+        $return = [
+            'view' => "dashboard.index",
+            "count" => [
+                "user" => $this->select_count($request, 'user'),
+                "meta" => $this->select_count($request, 'meta'),
+                "link" => $this->select_count($request, 'link'),
+                "content" => $this->select_count($request, 'content'),
+                "field" => $this->select_count($request, 'field'),
+                "comment" => $this->select_count($request, 'comment'),
+            ],
+        ];
+        return $this->view($return);
+    }
+    function view_dashboard_index2(Request $request)
+    {
+        $return = [
+            'view' => "dashboard.index2"
+        ];
+        return $this->view($return);
+    }
+    function view_dashboard_index3(Request $request)
+    {
+        $return = [
+            'view' => "dashboard.index3"
+        ];
+        return $this->view($return);
+    }
     function view_index(Request $request)
     {
 

@@ -2,6 +2,9 @@
 
 return [
     "models" => [
+        "user" => [
+            "class" => \App\Models\User::class,
+        ],
         "option" => [
             "class" => \App\Models\Option::class,
             "insert_item" => [

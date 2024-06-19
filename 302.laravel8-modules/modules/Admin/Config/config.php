@@ -33,7 +33,7 @@ return array(
                 array(
                     0 =>
                         array(
-                            'path' => '',
+                            'path' => '/dashboard',
                             'title' => '总览面板',
                             'icon' => 'fas fa-tachometer-alt',
                             'slug' => '',
@@ -42,7 +42,7 @@ return array(
                                 array(
                                     0 =>
                                         array(
-                                            'path' => '',
+                                            'path' => '/index',
                                             'title' => 'Dashboard v1',
                                             'children' =>
                                                 array(),

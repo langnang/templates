@@ -29,6 +29,11 @@ Route::prefix(Module::currentConfig('web.prefix'))->group(function () {
     Route::get('/config', 'AdminController@view_config');
     Route::get('/basic', 'AdminController@view_admin_basic_index');
 
+    Route::prefix('dashboard')->group(function () {
+        Route::match(['get',], '/index', 'AdminController@view_dashboard_index');
+        Route::match(['get',], '/index2', 'AdminController@view_dashboard_index2');
+        Route::match(['get',], '/index3', 'AdminController@view_dashboard_index3');
+    });
 
     Route::prefix('data')->group(function () {
         Route::match(['get', 'post'], '/meta', 'AdminController@view_meta_list');

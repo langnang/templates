@@ -14,7 +14,7 @@ class LinkFactory extends Factory
     public function definition()
     {
         return [
-            "lid" => $this->faker->randomNumber(),
+            // "lid" => $this->faker->randomNumber(),
             "slug" => $this->faker->slug(),
             //
             "title" => $this->faker->sentence(),
