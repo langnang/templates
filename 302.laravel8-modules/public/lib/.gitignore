@@ -9,6 +9,8 @@
 !bootstrap/**
 !bootstrap-icons
 !bootstrap-icons/**
+!codemirror
+!codemirror/**
 !googlefonts
 !googlefonts/**
 !holderjs
@@ -27,4 +29,5 @@
 !normalize.css/**
 !popper.js
 !popper.js/**
-
+!summernote
+!summernote/**
