@@ -66,9 +66,16 @@ return [
                 "where" => [
                     app()->runningInConsole() ? null : ["title", "like", "%" . request()->input('title') . "%"],
                     app()->runningInConsole() ? null : (request()->filled('slug') ? ["slug", request()->input('slug')] : null),
-                    app()->runningInConsole() ? null : ["type", request()->input('type', 'post')],
-                    app()->runningInConsole() ? null : ["status", request()->input('status', 'publish')],
+                    app()->runningInConsole() ? null : ["type", request()->input('type', 'post') ?? 'post'],
+                    app()->runningInConsole() ? null : ["status", empty(request()->input('status', 'publish')) ?? 'publish'],
                 ],
+                "whereHas" => app()->runningInConsole() ? null : (request()->filled('module') && !empty(request()->input('module')) ? [
+                    'fields',
+                    function ($query) {
+                        $query->where([['name', 'module_' . request()->input('module')]]);
+
+                    }
+                ] : null),
             ],
             "select_page" => [
                 "with" => [

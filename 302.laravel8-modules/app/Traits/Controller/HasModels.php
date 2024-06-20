@@ -23,6 +23,7 @@ trait HasModels
         $log = ["method" => __METHOD__, "arguments" => ["modelFunConfig" => $modelFunConfig]];
         $class = $modelFunConfig['class'];
         $query = $class::select();
+        // var_dump($modelFunConfig);
         $query = $this->queueClauses($modelFunConfig, $query);
         // $query = $this->whereClauses($modelFunConfig, $query);
         // $query = $this->orderByClauses($modelFunConfig, $query);
@@ -45,7 +46,7 @@ trait HasModels
                 if ($cast == 'array') {
                     // $log["keys"][$key] = array_filter($config[$key]);
                     $query = $query->{$key}(array_filter($config[$key]));
-                } else {
+                } else if (!empty($config[$key])) {
                     $query = $query->{$key}(...$config[$key]);
                 }
             }

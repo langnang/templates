@@ -31,7 +31,6 @@
                 </div>
                 <div class="form-group mr-1">
                   <select class="form-control form-control-sm" name="type">
-                    <option value="">--Type--</option>
                     <option value="post" @if (request()->input('type') == 'post') selected @endif>post</option>
                     <option value="page" @if (request()->input('type') == 'page') selected @endif>page</option>
                     <option value="template" @if (request()->input('type') == 'template') selected @endif>template</option>
@@ -43,7 +42,6 @@
                 </div>
                 <div class="form-group mr-1">
                   <select class="form-control form-control-sm" name="status">
-                    <option value="">--Status--</option>
                     <option value="publish" @if (request()->input('status') == 'publish') selected @endif>publish</option>
                     <option value="private" @if (request()->input('status') == 'private') selected @endif>private</option>
                   </select>
