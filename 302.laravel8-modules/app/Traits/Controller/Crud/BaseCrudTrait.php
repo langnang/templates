@@ -402,7 +402,7 @@ trait BaseCrudTrait
             $this->prependLogs($log);
             return $this->success($return);
         } catch (\Exception $e) {
-            //   var_dump($e);
+            var_dump($e);
             return $this->error($e);
         }
     }
@@ -877,7 +877,7 @@ trait BaseCrudTrait
         $request->merge(['table' => $table]);
         $modelConfig = \Arr::get($this->models, $table);
         if (empty($modelConfig)) {
-            $log['error_message'] = "Not has config(" . $table . ").";
+            $log['error_message'] = "Not has model config(" . $table . ").";
             $this->prependLogs($log);
             throw new \Exception($log['error_message']);
         }

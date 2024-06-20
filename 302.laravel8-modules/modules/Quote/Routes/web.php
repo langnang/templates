@@ -13,7 +13,7 @@
 
 Route::prefix('quote')->group(function () {
     Route::get('/', 'QuoteController@view_index');
-    Route::get('/metas', 'WorkController@view_meta_list');
-    Route::get('/contents', 'WorkController@view_content_list');
-    Route::get('/content/{cid}', 'WorkController@view_content_item');
+    Route::get('/metas', 'QuoteController@view_meta_list');
+    Route::get('/contents', 'QuoteController@view_content_list');
+    Route::get('/content/{cid}', 'QuoteController@view_content_item');
 });

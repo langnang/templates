@@ -355,19 +355,19 @@ trait HasView
         $return = [
             'view' => $request->input('$view', 'content-item'),
         ];
-        if ($request->method() == 'POST' && $request->filled('action')) {
+        if ($request->method() == 'POST') {
             // var_dump($request->method());
             $return['updated'] = $this->update_item($request, 'content');
-            switch ($request->input('action')) {
-                case "insert":
-                case "delete":
-                case "update":
-                case "upsert":
-                case "select":
-                    break;
-                default:
-                    break;
-            }
+            // switch ($request->input('action')) {
+            //     case "insert":
+            //     case "delete":
+            //     case "update":
+            //     case "upsert":
+            //     case "select":
+            //         break;
+            //     default:
+            //         break;
+            // }
         }
         if ($cid == 0) {
             $return['content'] = new \App\Models\Content();
@@ -503,12 +503,17 @@ trait HasView
      */
     public function view_content_list(Request $request)
     {
-        $return = [
-            'view' => $request->input('$view', 'content-list'),
-            'contents' => $this->select_list($request, 'content'),
-        ];
+        try {
 
-        return $this->view($return);
+            $return = [
+                'view' => $request->input('$view', 'content-list'),
+                'contents' => $this->select_list($request, 'content'),
+            ];
+
+            return $this->view($return);
+        } catch (\Exception $e) {
+            $this->error($e);
+        }
     }
     /**
      * Summary of view_content_list_form

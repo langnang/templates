@@ -19,7 +19,6 @@ use wapmorgan\UnifiedArchive\UnifiedArchive;
 
 class MarketAdminController extends \Modules\Admin\Http\Controllers\AdminController
 {
-    use ViewTrait, InstallPiplineTrait, SelectTrait;
     /**
      * Display a listing of the resource.
      * @return Renderable
@@ -146,7 +145,7 @@ class MarketAdminController extends \Modules\Admin\Http\Controllers\AdminControl
                         $res = [];
                         foreach (Arr::get($branch, $method . '.response_keys') ?? [] as $result_key => $response_key) {
                             // var_dump([$key, $response_key]);
-                            if (empty ($response_key))
+                            if (empty($response_key))
                                 continue;
                             $res[$result_key] = $item[$response_key];
                         }
@@ -171,10 +170,6 @@ class MarketAdminController extends \Modules\Admin\Http\Controllers\AdminControl
 
         return $this->view($return['view'], $return);
     }
-}
-
-trait ViewTrait
-{
     function view_index(Request $request)
     {
         $return = $request->all();
@@ -210,15 +205,11 @@ trait ViewTrait
         echo "<script>window.\$data=" . json_encode($return, JSON_UNESCAPED_UNICODE) . "</script>";
         return view('admin.market.index', $return);
     }
-    function view_content_item(Request $request, $content)
+    function view_content_item(Request $request, $cid = 0)
     {
         $return = $request->all();
         return view('admin.market.content', $return);
     }
-}
-
-trait InstallPiplineTrait
-{
     public $package_path_prefix = "";
     public $module_path_prefix = "";
     public function install_pipline(Request $request)
@@ -435,10 +426,6 @@ trait InstallPiplineTrait
     function install_pipline_of_finish(Request $request)
     {
     }
-}
-
-trait SelectTrait
-{
     function select_meta_item(Request $request)
     {
         $return = $this->getStorageData("metas");
@@ -454,7 +441,7 @@ trait SelectTrait
         $return = $this->getStorageData("metas");
         if ($request->filled('type')) {
             $return = Arr::where($return, function ($value, $key) use ($request) {
-                return !empty ($value['type']) && $value['type'] == $request->input('type');
+                return !empty($value['type']) && $value['type'] == $request->input('type');
             });
         }
         return $this->response_success($return);
@@ -464,12 +451,12 @@ trait SelectTrait
         $return = $this->getStorageData("contents");
         if ($request->filled('type')) {
             $return = Arr::where($return, function ($item, $key) use ($request) {
-                return !empty ($item['type']) && $item['type'] == $request->input('type');
+                return !empty($item['type']) && $item['type'] == $request->input('type');
             });
         }
         if ($request->filled('meta')) {
             $return = Arr::where($return, function ($item, $key) use ($request) {
-                return !empty ($item['metas']) && in_array($request->input('meta'), $item['metas']);
+                return !empty($item['metas']) && in_array($request->input('meta'), $item['metas']);
             });
         }
         return $this->response_success($return);
@@ -488,15 +475,6 @@ trait SelectTrait
         return $this->response_success($return);
     }
     function select_package_list(Request $request)
-    {
-    }
-}
-trait UpdateTrait
-{
-    function update_content_item()
-    {
-    }
-    function update_content_list()
     {
     }
 }

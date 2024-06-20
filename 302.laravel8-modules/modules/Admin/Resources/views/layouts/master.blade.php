@@ -1,7 +1,12 @@
 @extends('layouts.master')
 
 @push('styles')
-  <x-styles :props="[['modules/Admin/Public/admin/master/css/adminlte.min.css']]"></x-styles>
+  <x-styles :props="[
+      ['modules/Admin/Public/admin/master/css/adminlte.min.css'],
+      ['summernote', 'summernote-bs4.min'],
+      ['codemirror', 'codemirror'],
+      ['codemirror', 'theme/monokai'],
+  ]"></x-styles>
   <style>
     .nav-sidebar .nav-treeview {
       padding-left: .5rem;
@@ -48,5 +53,10 @@
 @endsection
 
 @push('scripts')
-  <x-scripts :props="[['modules/Admin/Public/admin/master/js/adminlte.min']]"></x-scripts>
+  <x-scripts :props="[
+      ['modules/Admin/Public/admin/master/js/adminlte.min'],
+      ['summernote', 'summernote-bs4.min'],
+      ['codemirror', 'codemirror'],
+      ['codemirror', 'mode/markdown/markdown'],
+  ]"></x-scripts>
 @endpush

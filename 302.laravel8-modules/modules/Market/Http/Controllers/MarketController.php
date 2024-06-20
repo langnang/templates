@@ -16,7 +16,6 @@ use Modules\Market\Support\Market;
 class MarketController extends \App\Http\Controllers\Controller
 {
     protected $module = "Market";
-    use StaticTrait, ViewTrait;
     protected $remote_projects;
     protected $remote_project;
     /**
@@ -142,17 +141,10 @@ class MarketController extends \App\Http\Controllers\Controller
         return new LengthAwarePaginator($return, $options['total'], $options['per_page'], $options['current_page'], $options);
     }
 
-
-}
-trait StaticTrait
-{
     public static function admin_view($view = null, $data = [], $mergeData = [])
     {
         return self::view($view, $data, $mergeData);
     }
-}
-trait ViewTrait
-{
     function view_index(Request $request)
     {
         // $market = json_decode(app('files')->get('modules/Market/market.json'), true);
@@ -178,10 +170,6 @@ trait ViewTrait
     {
         return self::admin_view('market::module.install', ['module' => $module]);
     }
-}
-
-trait InstallProgressTrait
-{
     function install_progress(Request $request)
     {
     }

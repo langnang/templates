@@ -18,4 +18,7 @@ Route::get('/', "\App\Http\Controllers\Controller@view_index");
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home123', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+require_once __DIR__ . '/web.modules.php';

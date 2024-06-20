@@ -25,6 +25,17 @@ class AdminController extends AdminApiController
     protected $module = "Admin";
     use ViewTrait, ViewWebTrait, ViewAdminTrait;
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+        parent::{__FUNCTION__}();
+    }
+
+    /**
      * Display a listing of the resource.
      * @return Renderable
      */
