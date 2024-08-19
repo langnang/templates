@@ -28,4 +28,40 @@ const iFrameOnLoad = (element) => {
 
 const app = new Vue({
   el: "#app",
+  data: {
+    active: "https://langnang.github.io/sites",
+    frames: [
+    ],
+  },
+  computed: {
+    sidebar() {
+      let html;
+      console.log(`sidebar`, this.frames)
+      if (this.frames.length == 0) return '';
+      if (this.frames[0].type == 'site') {
+        html = '';
+      } else if (this.frames[0].type == 'group') {
+        html = '';
+      }
+      return '';
+    }
+  },
+  created() {
+    this.fetchData();
+  },
+  methods: {
+    handleActive(site) {
+      if (site.disabled) return;
+      console.log(`handleActive`, site);
+      this.active = site.url;
+    },
+    fetchData() {
+      fetch("./data.json").then(res => res.json()).then(res => {
+        console.log(`fetchData`, res)
+        const { active, frames } = res;
+        this.active = active;
+        this.frames = frames;
+      })
+    }
+  }
 })
