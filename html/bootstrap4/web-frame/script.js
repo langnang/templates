@@ -16,6 +16,9 @@ const iFrameOnLoad = (element) => {
   }
 }
 
+const imgLoadError = (element) => {
+  console.log(`imgLoadError`, element);
+}
 // $(document).on('click', '.nav-item', function (element) {
 //   // console.log(`click .list-group-item`, element)
 //   const src = $(element.target).attr('data-src');
@@ -30,8 +33,7 @@ const app = new Vue({
   el: "#app",
   data: {
     active: "https://langnang.github.io/sites",
-    frames: [
-    ],
+    frames: [],
   },
   computed: {
     sidebar() {
