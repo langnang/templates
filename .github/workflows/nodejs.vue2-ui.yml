@@ -1,30 +1,30 @@
-name: 🚀 Deploy vue3-ui on push with FTP
+name: 🚀 Deploy vue2-ui on push with FTP
 
 on:
   push:
     branches:
       - master
     paths:
-      - "200.vue3-ui/**"
+      - "nodejs/vue2-ui/**"
 
 jobs:
   deploy:
-    name: 🎉 Deploy to templates.22web.org/200.vue3-ui
+    name: 🎉 Deploy to templates.22web.org/nodejs/vue2-ui
     runs-on: ubuntu-latest
     steps:
       - name: 🚚 Get latest code
         uses: actions/checkout@v2
 
-      - name: Use Node.js 18.x
+      - name: Use Node.js 14.x
         uses: actions/setup-node@v2
         with:
-          node-version: 18.x
+          node-version: 14.x
 
       - name: Install node dependencies
-        run: cd 200.vue3-ui && yarn install
+        run: cd nodejs/vue2-ui && yarn install
 
       - name: Build pages
-        run: cd 200.vue3-ui && npm run build
+        run: cd nodejs/vue2-ui && npm run build
 
       # - name: Install composer dependencies
       #   run: composer install
@@ -39,9 +39,9 @@ jobs:
           # ftp password
           password: ${{ secrets.ftp_password }}
           # local dir
-          local-dir: ./200.vue3-ui/dist/
+          local-dir: ./nodejs/vue2-ui/dist/
           # Path to upload to on the server. Must end with trailing slash /
-          server-dir: /templates.22web.org/htdocs/200.vue3-ui/
+          server-dir: /templates.22web.org/htdocs/nodejs/vue2-ui/
           # File to Exclude
           exclude: |
             **/.git*

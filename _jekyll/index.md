@@ -6,11 +6,11 @@
 
 ## Node
 
-- 200.node
-- 200.npm-package
-- 200.react18-ui
-- 200.vue2-ui
-- 200.vue3-ui
+- nodejs/node
+- nodejs/npm-package
+- nodejs/react18-ui
+- nodejs/vue2-ui
+- nodejs/vue3-ui
 
 ## PHP
 
