@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WebFrame - Bootstrap v4</title>
+
+  <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.2/css/bootstrap-theme.min.css">
+
+  <!-- <link rel="stylesheet" href="style.css"> -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/langnang/templates/html/bootstrap4/web-frames/style.css ">
+
+</head>
+
+<body>
+  <div id="app" class="container-fluid">
+    <div class="row" style="height: calc(100vh - 62px + 57px);">
+      <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+        <h3 class="text-center pt-2 pb-0 mb-0">WebFrame</h3>
+        <div class="sidebar-sticky pt-3">
+          <div v-for="(item,index) in frames" :key="index" :class="{'d-none':item.visible===false}">
+            <h6 v-if="item.title" class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-2 mb-1 text-muted">
+              <span>{{item.title}}</span>
+            </h6>
+            <ul class="nav flex-column pl-2">
+              <li v-for="site in item.children" :class="{'nav-item':true,}" @click="handleActive(site)">
+                <a :class="{'nav-link py-1':true,'active':site.url==active,'d-none':site.visible===false,'disabled':site.disabled==true}" :data-src="site.url">
+                  <img class="nav-ico" :src="site.ico||site.url+'/favicon.ico'">
+                  <span> {{site.title}} </span>
+                </a>
+              </li>
+            </ul>
+
+          </div>
+        </div>
+      </nav>
+      <div class="col-md-9 ml-sm-auto col-lg-10 px-0">
+        <iframe id="iframe" class="w-100 h-100" :src="active" frameborder="0" onload="iFrameOnLoad(this)"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.slim.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.2/js/bootstrap.bundle.min.js"></script>
+  <script src="https://unpkg.com/vue@2.7.16/dist/vue.min.js"></script>
+
+  <!-- <script src="script.js"></script> -->
+  <script src="https://cdn.jsdelivr.net/gh/langnang/templates/html/bootstrap4/web-frames/script.js"></script>
+
+</body>
+
+</html>
