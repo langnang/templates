@@ -29,6 +29,34 @@ const imgLoadError = (element) => {
 //   $(element.target).addClass('active')
 // })
 
+Vue.component('sidebar-menu', {
+  props: ['active', 'frames'],
+  data: () => ({}),
+  template: `
+        <div class="sidebar-sticky pt-3">
+          <div v-for="(item,index) in frames" :key="index" :class="{'d-none':item.visible===false}">
+            <h6 v-if="item.title" class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-2 mb-1 text-muted">
+              <span>{{item.title}}</span>
+            </h6>
+            <ul class="nav flex-column pl-2">
+              <li v-for="site in item.children" :class="{'nav-item':true,}" @click="handleActive(site)">
+                <a :class="{'nav-link py-1':true,'active':site.url==active,'d-none':site.visible===false,'disabled':site.disabled==true}" :data-src="site.url">
+                  <img class="nav-ico" :src="site.ico||site.url+'/favicon.ico'" onerror="imgLoadError(this)">
+                  <span> {{site.title}} </span>
+                </a>
+              </li>
+            </ul>
+
+          </div>
+        </div>
+  `,
+  methods: {
+    handleActive(item) {
+      this.$emit('click', item)
+    }
+  },
+})
+
 const app = new Vue({
   el: "#app",
   data: {
