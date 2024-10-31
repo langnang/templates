@@ -9,7 +9,7 @@ on:
 
 jobs:
   deploy_vue2_ui:
-    name: 🎉 Deploy to langnang.byethost14.com
+    name: 🎉 Deploy to langnang.byethost32.com
     runs-on: ubuntu-latest
     steps:
       - name: 🚚 Get latest code
@@ -50,7 +50,7 @@ jobs:
             **/node_modules/**
 
   deploy_vue3_ui:
-    name: 🎉 Deploy to langnang.byethost14.com
+    name: 🎉 Deploy to langnang.byethost32.com
     runs-on: ubuntu-latest
     steps:
       - name: 🚚 Get latest code
