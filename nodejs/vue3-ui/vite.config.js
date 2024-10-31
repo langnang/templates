@@ -5,7 +5,7 @@ import vue from '@vitejs/plugin-vue'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/nodejs/vue3-ui/',
+  base: '/templates/nodejs/vue3-ui/',
   plugins: [
     vue(),
   ],

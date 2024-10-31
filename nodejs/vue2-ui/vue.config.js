@@ -1,6 +1,6 @@
 module.exports = {
   // 基本路径
-  publicPath: process.env.NODE_ENV === "production" ? "/nodejs/vue2-ui/" : "/",
+  publicPath: process.env.NODE_ENV === "production" ? "/templates/nodejs/vue2-ui/" : "/",
   // 构建时的输入目录
   outputDir: "dist",
   // 配置 webpack-dev-server 行为
