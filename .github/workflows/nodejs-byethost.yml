@@ -1,4 +1,4 @@
-name: 🚀 Deploy nodejs on push with FTP
+name: 🚀 Deploy nodejs directory on push with FTP
 
 on:
   push:
