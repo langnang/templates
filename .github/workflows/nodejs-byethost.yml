@@ -9,7 +9,7 @@ on:
 
 jobs:
   deploy_vue2_ui:
-    name: 🎉 Deploy to langnang.byethost32.com
+    name: 🎉 Deploy vue2-ui to langnang.byethost32.com
     runs-on: ubuntu-latest
     steps:
       - name: 🚚 Get latest code
@@ -50,7 +50,7 @@ jobs:
             **/node_modules/**
 
   deploy_vue3_ui:
-    name: 🎉 Deploy to langnang.byethost32.com
+    name: 🎉 Deploy vue3-ui to langnang.byethost32.com
     runs-on: ubuntu-latest
     steps:
       - name: 🚚 Get latest code
@@ -91,7 +91,7 @@ jobs:
             **/node_modules/**
 
   deploy_react18_ui:
-    name: 🎉 Deploy to langnang.byethost32.com
+    name: 🎉 Deploy react18-ui to langnang.byethost32.com
     runs-on: ubuntu-latest
     steps:
       - name: 🚚 Get latest code
@@ -131,7 +131,7 @@ jobs:
             **/.github*/**
             **/node_modules/**
   deploy_vue2_element_admin:
-    name: 🎉 Deploy to langnang.byethost32.com
+    name: 🎉 Deploy vue2-element-admin to langnang.byethost32.com
     runs-on: ubuntu-latest
     steps:
       - name: 🚚 Get latest code
@@ -171,7 +171,7 @@ jobs:
             **/.github*/**
             **/node_modules/**
   deploy_vue2_element_ui:
-    name: 🎉 Deploy to langnang.byethost32.com
+    name: 🎉 Deploy vue2-element-ui to langnang.byethost32.com
     runs-on: ubuntu-latest
     steps:
       - name: 🚚 Get latest code
